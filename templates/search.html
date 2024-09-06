@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='search_style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='org.ico')}}">
+    <title>Search</title>
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: {{ secondary_color }};
+            --text-color: {{ text_color }};
+            --org-logo: {{ org_logo }}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Database</h1>
+        
+        <!-- Image container -->
+        <div class="image-container">
+            <img src="{{ org_logo }}">
+        </div>
+
+        <form method="POST" class="search-form">
+            <!-- Date Range -->
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date">
+            <br>
+
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date">
+            <br>
+
+            <!-- Time Range -->
+            <label for="start_time">Start Time:</label>
+            <input type="time" id="start_time" name="start_time">
+            <br>
+
+            <label for="end_time">End Time:</label>
+            <input type="time" id="end_time" name="end_time">
+            <br>
+
+            <!-- Email -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <br>
+
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

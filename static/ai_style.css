@@ -1,0 +1,173 @@
+/* Existing Image Container */
+.image-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.image-container img {
+    max-width: 50px; /* Small size for the logo */
+    height: auto;
+    display: block;
+    margin: 0;
+}
+
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Chat Container Styles */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Take up available space */
+    max-width: 92%; /* Adjust as needed */
+    margin: 0 auto; /* Center container */
+    box-sizing: border-box;
+    height: 500px; /* Adjust height as needed */
+    overflow-y: auto;
+}
+
+/* Messages Styles */
+.messages {
+    flex: 1; /* Take up available space */
+    overflow-y: auto; /* Enable scrolling if messages overflow */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none;  /* Hide scrollbar for Internet Explorer and Edge */
+}
+
+.messages::-webkit-scrollbar {
+    display: none; 
+}
+
+/* Message Styles */
+.message {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ai-message {
+    background-color: var(--text-color); /* Background for AI messages */
+    color: var(--primary-color); /* Text color for AI messages */
+    padding: 10px;
+    border-radius: 10px;
+    align-self: flex-start; /* Align to the left */
+    max-width: 70%;
+    font-size: 13px;
+}
+
+.user-message {
+    background-color: var(--primary-color); /* Background for User messages */
+    color: var(--text-color); /* Text color for User messages */
+    padding: 10px;
+    border-radius: 10px;
+    align-self: flex-end; /* Align to the right */
+    max-width: 70%;
+    font-size: 13px;
+}
+
+/* Chat Box Styles */
+.chat-box {
+    background-color: var(--primary-color);
+    padding: 10px;
+    border-top: 1px solid var(--text-color);
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    position: sticky;
+    bottom: 5px; /* Space between the bottom of the screen and chat box */
+    border-radius: 10px; /* Round the edges like other containers */
+    gap: 10px; /* Space between textarea and button */
+    width: calc(100% - 20px); /* Full width minus padding */
+    max-width: 1200px; /* Ensure it doesn’t stretch too wide */
+    margin: 0 auto; /* Center the chat-box */
+}
+
+/* Input Group Styles */
+.input-group {
+    display: flex;
+    gap: 10px; /* Space between textarea and button */
+    width: 100%; /* Ensure input-group takes full width */
+}
+
+textarea {
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid var(--text-color);
+    border-radius: 5px;
+    background-color: var(--primary-color); /* Background for textarea */
+    color: var(--text-color);
+    flex: 1; /* Take up all available space within the input group */
+    box-sizing: border-box;
+    resize: none; /* Prevent resizing */
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+button {
+    padding: 10px;
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    border: 2px solid var(--text-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    width: 70px; /* Fixed width for the button */
+    height: 40px;
+    margin-left: 10px; /* Space between textarea and button */
+}
+
+button:hover {
+    background-color: var(--text-color);
+    color: var(--primary-color);
+}
+
+ /* Custom styles for formatting */
+ .formatted-text {
+    line-height: 1.6;
+    margin: 20px;
+}
+
+/* Popup Styles */
+.popup {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9); /* Darker background for better visibility */
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    z-index: 1000; /* Ensure it’s on top of other elements */
+    text-align: center;
+    font-size: 20px; /* Larger text for better visibility */
+    width: 300px; /* Fixed width for consistency */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+}
+
+/* Backdrop Styles */
+.backdrop {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Blur effect */
+    z-index: 999; /* Just below the popup */
+}

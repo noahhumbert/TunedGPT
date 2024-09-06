@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='search_results_style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='org.ico')}}">
+    <title>Search Results</title>
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: {{ secondary_color }};
+            --text-color: {{ text_color }};
+            --org-logo: {{ org_logo }}
+        }
+    </style>
+    <script>
+        function toggleResponse(id) {
+            var response = document.getElementById(id);
+            var menuItem = document.getElementById('menu-' + id);
+
+            if (response.classList.contains('show')) {
+                response.classList.remove('show');
+                setTimeout(function() {
+                    response.style.display = 'none';
+                }, 300); // Delay to match the animation duration
+                menuItem.classList.remove('open', 'active');
+            } else {
+                response.style.display = 'block';
+                setTimeout(function() {
+                    response.classList.add('show');
+                }, 10); // Short delay to ensure display is applied before fading in
+                menuItem.classList.add('open', 'active');
+            }
+}
+    </script>
+</head>
+<body>
+    <!-- Image container -->
+    <div class="image-container">
+        <img src="{{ org_logo }}">
+    </div>
+    
+    <div class="container">
+        <h1>Search Results</h1>
+        {% for result in search %}
+        <div>
+            <div id="menu-{{ loop.index }}" class="menu-item" onclick="toggleResponse('{{ loop.index }}')">
+                {{ result[0] }} | {{ result[1] }} | {{ result[2] }} | {{ result[3] }} | {{ result[4] }} | {{ result[6] }} | {{ result[7] }}
+            </div>
+            <div id="{{ loop.index }}" class="response">
+                <p><strong>Response:</strong> {{ result[5] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_users_style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='org.ico') }}">
+    <title>Add Users</title>
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: {{ secondary_color }};
+            --text-color: {{ text_color }};
+            --org-logo: {{ org_logo }}
+        }
+    </style>
+</head>
+<body>
+    <form action="/add_users" method="POST" enctype="multipart/form-data">
+        <h1>Add User</h1>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <br><br>
+
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="User">User</option>
+            <option value="Admin">Admin</option>
+            <option value="Zone">Zone</option>
+        </select>
+        <br><br>
+
+        <label for="file">CSV File:</label>
+        <input type="file" id="file" name="file" accept=".csv">
+        <br><br>
+
+        <button type="submit">Submit</button>
+
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+    </form>
+</body>
+</html>

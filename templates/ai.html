@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai_style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='org.ico') }}">
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: {{ secondary_color }};
+            --text-color: {{ text_color }};
+            --org-logo: {{ org_logo }};
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+</head>
+<body>
+    <div class="image-container">
+        <img src="{{ url_for('static', filename='org.ico') }}" alt="Organization Logo">
+    </div>
+    
+    <div class="chat-container" id="chat-container">
+        <div class="messages", id="messages-container":>
+            {% for search in searches %}
+            <div class="message">
+                <div class="user-message">
+                    <p>{{ search[4] }}</p> <!-- User question -->
+                </div>
+                <div class="ai-message formatted-text">
+                    <p>{{ search[5]|safe }}</p> <!-- AI response with safe filter -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="chat-box">
+        <form id="chat-form" method="POST">
+            <div class="input-group">
+                <textarea name="user_prompt" id="user_prompt" rows="1" placeholder="Type your message here..." required></textarea>
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Backdrop Element -->
+    <div id="backdrop" class="backdrop"></div>
+
+    <!-- Popup Element -->
+    <div id="popup" class="popup">Prompting AI...</div>
+    
+    <!-- Link to external JavaScript file -->
+    <script src="{{ url_for('static', filename='ai_script.js') }}"></script>
+</body>
+<footer>
+    <script>
+        const chatContainer = document.getElementById('messages-container');
+        
+        setTimeout(function() {
+            var height = chatContainer.scrollHeight;
+            chatContainer.scroll(0, height);
+        }, 200);
+    </script>
+</footer>
+</html>

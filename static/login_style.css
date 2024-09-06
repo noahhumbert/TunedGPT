@@ -1,0 +1,79 @@
+/* Reset some default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* Background styling */
+body {
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secondary-color);
+}
+
+/* Container styling */
+form {
+    background: var(--primary-color); /* Semi-transparent background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    text-align: center;
+}
+
+/* Heading styling */
+h1 {
+    text-align: center; /* Center text horizontally */
+    position: absolute; /* Position heading absolutely */
+    top: 180px; /* Align to the top of the page */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Offset the element by half its width */
+    width: 100%; /* Ensure full width for centering */
+    margin: 20px 0; /* Adjust margin as needed */
+    padding: 0; /* Reset any default padding */
+    color: #000;
+}
+
+/* Label and input styling */
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color)
+}
+
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 20px); /* Full width with padding adjustment */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: var(--primary-color);
+}
+
+/* Button styling */
+button {
+    background-color: var(--text-color); /* Blue color */
+    color: var(--primary-color);
+    border: 5px;
+    border-color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    color: var(--text-color);
+    background-color: var(--primary-color); /* Darker blue on hover */
+    border-color: var(--text-color);
+    border-style: solid;
+    border-width: 1px;
+}
+
+
