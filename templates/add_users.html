@@ -16,6 +16,31 @@
     </style>
 </head>
 <body>
+    <div class="top-bar">
+        <div class="logo-label-container">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='org.ico') }}" alt="Organization Logo">
+            </div>
+        </div>
+        <a href="{{ url_for('ai') }}" class="label no-link-style">{{ org_name }}</a>
+        <div class="hamburger-menu">
+            <span>&#9776;</span> <!-- Hamburger icon -->
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdown-menu">
+        <ul>
+            <li><a href="{{ url_for('ai') }}">AI Dashboard</a></li>
+            {% if is_admin %}
+                <li><a href="{{ url_for('search') }}">Search Database</a></li>
+            {% endif %}
+            {% if is_zone %}
+                <li><a href="{{ url_for('styling') }}">Organization Styling</a></li>
+                <li><a href="{{ url_for('add_users') }}">Add Users</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
     <form action="/add_users" method="POST" enctype="multipart/form-data">
         <h1>Add User</h1>
         <label for="email">Email:</label>
@@ -45,4 +70,16 @@
         {% endif %}
     </form>
 </body>
+<footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+        
+            hamburgerMenu.addEventListener('click', function () {
+                dropdownMenu.classList.toggle('show');
+            });
+        });
+    </script>
+</footer>
 </html>

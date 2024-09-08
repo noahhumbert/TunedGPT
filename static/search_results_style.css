@@ -11,6 +11,10 @@ body {
     overflow: auto; /* Ensure body scrolls if content exceeds viewport height */
 }
 
+body::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+}
+
 .container {
     background-color: var(--primary-color); /* Background of the container */
     padding-left: 40px;
@@ -125,15 +129,109 @@ h1 {
     --text-color: {{ text_color | default('#212529') }};
 }
 
+/* Top Bar Styles */
+.top-bar {
+    background-color: white;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Use fixed to keep it at the top */
+    top: 0; /* Ensure it is positioned at the top */
+    left: 0; /* Ensure it starts at the very left edge */
+    right: 0; /* Ensure it stretches to the right edge */
+    width: 100%; /* Span full width */
+    z-index: 1000; /* Ensure it is above other elements */
+}
+
+/* Move Hamburger Menu to the Right */
+.hamburger-menu {
+    cursor: pointer;
+    font-size: 30px;
+    display: flex;
+    margin-left: auto; /* Push it to the right */
+    padding: 0 40px; /* Add padding if needed */
+}
+
+/* Existing Image Container */
 .image-container {
     position: absolute;
     top: 10px;
     left: 10px;
 }
 
+/* Adjust logo size */
 .image-container img {
-    max-width: 50px; /* Small size for the logo */
+    width: 40px; /* Increased logo size */
     height: auto;
+    position: absolute;
+    top: -5px;
     display: block;
     margin: 0;
+}
+
+/* Label Styles */
+.label {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-left: 30px; /* Move label 40px to the right */
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+    display: none; /* Hide menu by default */
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    background-color: white;
+    width: 200px; /* Set a fixed width */
+    max-width: 100%; /* Ensure it doesn't exceed the viewport */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.dropdown-menu.show {
+    display: block; /* Show menu when .show class is added */
+}
+
+/* Remove bullet points from the list */
+.dropdown-menu ul {
+    list-style-type: none; /* Remove default bullets */
+    margin: 0;
+    padding: 0;
+}
+
+/* Style list items */
+.dropdown-menu li {
+    padding: 0; /* Remove padding if necessary */
+}
+
+/* Style links inside the dropdown */
+.dropdown-menu li a {
+    padding: 10px 20px; /* Set padding inside a tag for full hover area */
+    text-decoration: none; /* Remove underline */
+    color: var(--text-color);
+    display: block;
+    width: 100%; /* Ensure it takes full width */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: var(--text-color);
+    color: var(--primary-color);
+}
+
+.no-link-style {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Keep the color the same as the surrounding text */
+    cursor: pointer; /* Keep the pointer cursor */
+}
+
+.no-link-style:hover {
+    color: inherit; /* Prevent hover effect from changing the color */
+    text-decoration: none; /* No underline on hover */
 }

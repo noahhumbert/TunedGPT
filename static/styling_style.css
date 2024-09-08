@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Stack items vertically */
     align-items: center;
     height: 100vh;
 }
@@ -20,6 +20,7 @@ body {
     width: 100%;
     max-width: 600px; /* Adjust as needed */
     box-sizing: border-box;
+    margin-top: 120px;
 }
 
 /* Header Styles */
@@ -91,15 +92,107 @@ button:hover {
     color: var(--primary-color);
 }
 
+.top-bar {
+    background-color: white;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 30px; /* Increased height for better visibility */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width of the page */
+    position: fixed; /* Keep it fixed at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Move Hamburger Menu to the Right */
+.hamburger-menu {
+    cursor: pointer;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Push it to the right */
+    margin-right: 40px;
+}
+
+/* Existing Image Container */
 .image-container {
     position: absolute;
     top: 10px;
     left: 10px;
 }
 
+/* Adjust logo size */
 .image-container img {
-    max-width: 50px; /* Small size for the logo */
+    width: 40px; /* Increased logo size */
     height: auto;
+    position: absolute;
+    top: -5px;
     display: block;
     margin: 0;
+}
+
+/* Label Styles */
+.label {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-left: 30px; /* Move label 40px to the right */
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    background-color: white;
+    width: 200px; /* Set a fixed width */
+    max-width: 100%; /* Ensure it doesn't exceed the viewport */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Checkbox to control the dropdown */
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0px;
+}
+
+/* Dropdown Menu Hover Effect Fix */
+.dropdown-menu li {
+    padding: 0; /* Remove padding from li to let a tag control the space */
+}
+
+.dropdown-menu li a {
+    padding: 10px 20px; /* Set padding inside a tag for full hover area */
+    text-decoration: none;
+    color: var(--text-color);
+    display: block;
+    width: 100%; /* Ensure it takes full width */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: var(--text-color);
+    color: var(--primary-color);
+}
+
+.no-link-style {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Keep the color the same as the surrounding text */
+    cursor: pointer; /* Keep the pointer cursor */
+}
+
+.no-link-style:hover {
+    color: inherit; /* Prevent hover effect from changing the color */
+    text-decoration: none; /* No underline on hover */
 }

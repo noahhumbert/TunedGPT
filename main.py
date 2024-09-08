@@ -26,12 +26,10 @@ userdata = ['', '', '', '']
 # Home Screen
 @app.route('/')
 def home():
-    org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
-
-    if 'is_admin' in session or 'is_zone' in session:
-        return render_template('home.html', is_admin=True, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+    if 'logged_in' in session:
+        return redirect(url_for('login'))  
     else:
-        return render_template('home.html', is_admin=False, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)    
+        return redirect(url_for('login'))   
 
 # Login Screen
 @app.route('/login', methods=['GET', 'POST'])
@@ -41,7 +39,7 @@ def login():
 
     # Check if Logged in already in the session
     if 'logged_in' in session:
-        return redirect(url_for('home'))
+        return redirect(url_for('ai'))
 
     org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
 
@@ -69,7 +67,7 @@ def login():
 
             org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
 
-            return redirect(url_for('home'))
+            return redirect(url_for('ai'))
 
     # If it fails, restart the login
     return render_template('login.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
@@ -95,7 +93,6 @@ def ai():
             search[4] = format_text(search[4])
             search[5] = format_text(search[5])
 
-        answer = ''
         if request.method == 'POST':
             # Grab the prompt from the form
             user_prompt = request.form.get('user_prompt')
@@ -115,20 +112,12 @@ def ai():
                 search[4] = format_text(search[4])
                 search[5] = format_text(search[5])
 
-        return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+        if 'is_admin' in session:
+            return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata[2])
+        elif 'is_zone' in session:
+            return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_zone=True, is_admin=True, org_name=userdata[2])
     else:
-       return redirect(url_for('login'))
-
-# Admin Panel Screen
-@app.route('/admin')
-def admin():
-    org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
-
-    if 'is_admin' in session or 'is_zone' in session:
-        return render_template('admin.html', is_zone=True, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
-    else:
-        return redirect(url_for('home'))
-
+        return redirect(url_for('login'))
 
 # Search Panel Screen
 @app.route('/search', methods=['GET', 'POST'])
@@ -137,8 +126,11 @@ def search():
     
     org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
 
-    if not 'is_admin' in session and not 'is_zone' in session:
-        return redirect(url_for('home'))
+    if 'logged_in' in session:
+        if not 'is_admin' in session and not 'is_zone' in session:
+            return redirect(url_for('ai'))
+    else:
+        return redirect(url_for('login'))
 
     if request.method == 'POST':
         # Grab all data
@@ -156,7 +148,10 @@ def search():
         return redirect(url_for('search_results'))
 
     # Render Template
-    return render_template('search.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+    if 'is_admin' in session:
+        return render_template('search.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata[2])
+    elif 'is_zone' in session:
+        return render_template('search.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
 
 # Displays search results
 @app.route('/search_results', methods=['GET', 'POST'])
@@ -165,16 +160,22 @@ def search_results():
 
     org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
 
-    if not 'is_admin' in session and not 'is_zone' in session:
-        return redirect(url_for('home'))
-
-    return render_template('search_results.html', search=search_data, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
-
+    if 'logged_in' in session:
+        if 'is_admin' in session or 'is_zone' in session:
+            return render_template('search_results.html', search=search_data, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
+        else:
+            return redirect(url_for('ai'))
+    else:
+        return redirect(url_for('login'))
+    
 # Opens the organization customizer
 @app.route('/styling', methods=['GET', 'POST'])
 def styling():
-    if not 'is_zone' in session:
-        return redirect(url_for('home'))
+    if 'logged_in' in session:
+        if not 'is_zone' in session:
+            return redirect(url_for('ai'))
+    else:
+        return redirect(url_for('login'))
 
     # Pre-populate the fields
     og_image_link,og_primary_color,og_secondary_color,og_text_color = style_grab(userdata[2])
@@ -190,9 +191,8 @@ def styling():
 
         # Pre-populate the fields
         og_image_link,og_primary_color,og_secondary_color,og_text_color = style_grab(userdata[2])
-
     # Run the template
-    return render_template('styling.html', organization_name=userdata[2], image_link=og_image_link, primary_color=og_primary_color, secondary_color=og_secondary_color, text_color=og_text_color)
+    return render_template('styling.html', organization_name=userdata[2], image_link=og_image_link, primary_color=og_primary_color, secondary_color=og_secondary_color, text_color=og_text_color, is_admin=True, is_zone=True, org_name=userdata[2])
 
 # Add Users to Organization
 @app.route('/add_users', methods=['GET', 'POST'])
@@ -201,15 +201,11 @@ def add_users():
 
     org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
 
-    # Check if admin
-    if userdata[3] == "Admin":
-        session['is_admin'] = True
-
-    if userdata[3] == "Zone":
-        session['is_zone'] = True
-
-    if not 'is_zone' in session:
-        return redirect(url_for('home'))
+    if 'logged_in' in session:
+        if not 'is_zone' in session:
+            return redirect(url_for('ai'))
+    else:
+        return redirect(url_for('login'))
     
     # Grab data from the form
     if request.method == 'POST':
@@ -251,12 +247,12 @@ def add_users():
         if not file.filename == '':
             os.remove(filename)
 
-        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
     
     if message == None:
-        return render_template('add_users.html', message='', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+        return render_template('add_users.html', message='', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
     else:
-        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
 
 # Run Webapp
 with app.app_context():
