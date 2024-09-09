@@ -16,24 +16,29 @@ body {
 }
 
 /* Container styling */
+.container {
+    text-align: center; /* Center content horizontally */
+    position: relative; /* Positioning context for h1 */
+}
+
+/* Form styling */
 form {
     background: var(--primary-color); /* Semi-transparent background */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
     width: 300px;
-    text-align: center;
+    margin: 0 auto; /* Center form horizontally */
+    position: relative; /* Position form relative to container */
 }
 
 /* Heading styling */
 h1 {
-    text-align: center; /* Center text horizontally */
-    position: absolute; /* Position heading absolutely */
-    top: 180px; /* Align to the top of the page */
+    position: absolute; /* Position heading absolutely within container */
+    top: -50px; /* Adjust to position heading 50px above the form */
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Offset the element by half its width */
-    width: 100%; /* Ensure full width for centering */
-    margin: 20px 0; /* Adjust margin as needed */
+    margin: 0; /* Reset any default margin */
     padding: 0; /* Reset any default padding */
     color: #000;
 }

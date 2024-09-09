@@ -50,7 +50,11 @@
                     <p>{{ search[4] }}</p> <!-- User question -->
                 </div>
                 <div class="ai-message formatted-text">
-                    <p>{{ search[5]|safe }}</p> <!-- AI response with safe filter -->
+                    {% if search[7] == 'image' %}
+                        <p><img src="{{ url_for('static', filename='imgcache/' ~ search[5]) }}" alt="AI Image" class="resized-image"/></p>
+                    {% else %}
+                        <p>{{ search[5]|safe }}</p> <!-- AI response with safe filter -->
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -61,6 +65,14 @@
         <form id="chat-form" method="POST">
             <div class="input-group">
                 <textarea name="user_prompt" id="user_prompt" rows="1" placeholder="Type your message here..." required></textarea>
+                <div class="chat-model">
+                    <button type="button" id="model-button" class="model-button">Chat-GPT 4O</button>
+                    <div class="chat-model-options">
+                        <button type="button" class="dropdown-option" data-value="chatgpt" aria-selected="true">Chat-GPT 4O</button>
+                        <button type="button" class="dropdown-option" data-value="imagegen">Image Generation</button>
+                    </div>
+                    <input type="hidden" name="model_option" id="model_option" value=>
+                </div>
                 <button type="submit">Send</button>
             </div>
         </form>
@@ -75,14 +87,4 @@
     <!-- Link to external JavaScript file -->
     <script src="{{ url_for('static', filename='ai_script.js') }}"></script>
 </body>
-<footer>
-    <script>
-        const chatContainer = document.getElementById('messages-container');
-        
-        setTimeout(function() {
-            var height = chatContainer.scrollHeight;
-            chatContainer.scroll(0, height);
-        }, 200);
-    </script>
-</footer>
 </html>

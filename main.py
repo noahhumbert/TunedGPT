@@ -1,5 +1,6 @@
 # Grab functions from modules that are needed
 from modules.add_users import add_users_file, add_users_individual
+from modules.clean_images import clean_images
 from modules.email_login import email_login
 from modules.format_text import format_text
 from modules.inject_prompt import inject_prompt
@@ -96,13 +97,18 @@ def ai():
         if request.method == 'POST':
             # Grab the prompt from the form
             user_prompt = request.form.get('user_prompt')
+            model_option = request.form.get('model_option')
 
             # Send the prompt to AI and grab the data
-            data = process_prompt(user_prompt)
+            data = process_prompt(user_prompt, searches, model_option)
+            print(data)
             answer = data[3]
 
             # Send the data and user to inject into the database
             injected = inject_prompt(userdata[0], userdata[2], data)
+
+            # Clean up the image cache
+            clean_images()
 
             # Search for searches
             searches = []
@@ -110,7 +116,10 @@ def ai():
 
             for search in searches:
                 search[4] = format_text(search[4])
-                search[5] = format_text(search[5])
+                if search[7] == 'image':
+                    pass
+                else:
+                    search[5] = format_text(search[5])
 
         if 'is_admin' in session:
             return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata[2])

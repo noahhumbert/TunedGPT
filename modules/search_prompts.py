@@ -8,6 +8,7 @@ from datetime import datetime
 
 # Search
 def search_prompts(email, organization, start_date, end_date, start_time, end_time):
+    print(email, organization, start_date, end_date, start_time, end_time)
     # Grab the database
     database = []
     with open(".\\databases\\prompts.csv", mode='r', newline='') as file:
@@ -30,9 +31,8 @@ def search_prompts(email, organization, start_date, end_date, start_time, end_ti
     else:
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
-
         for org in organization_list:
-            time = datetime.strptime(org[2], '%Y-%m-%d')
+            time = datetime.strptime(str(org[2]), '%Y-%m-%d')
             if start_date <= time <= end_date or end_date <= time <= start_date:
                 date_list.append(org)
 
@@ -59,5 +59,4 @@ def search_prompts(email, organization, start_date, end_date, start_time, end_ti
         for address in time_list:
             if address[0] == email:
                 search.append(address)
-
     return search
