@@ -11,8 +11,8 @@ key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI
 supabase: Client = create_client(url, key)
 
 def calculate_cost(tokens, images):
-    cost_per_token = float(0.000000150)
-    cost_per_image = float(0.4)
+    cost_per_token = float(0.000002)
+    cost_per_image = float(0.5)
 
     return (cost_per_token * tokens) + (cost_per_image * images)
 
