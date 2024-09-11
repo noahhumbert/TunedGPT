@@ -4,10 +4,10 @@ from modules.clean_images import clean_images
 from modules.email_login import email_login
 from modules.format_text import format_text
 from modules.inject_prompt import inject_prompt
+from modules.org_stats import update_stats
 from modules.prompt_handler import process_prompt
 from modules.search_prompts import search_prompts
-from modules.style_edits import style_edits
-from modules.style_grab import style_grab
+from modules.style_edits import style_edits, style_grab
 
 # Imports
 from flask import Flask, request, render_template, redirect, url_for, session
@@ -28,7 +28,10 @@ userdata = ['', '', '', '']
 @app.route('/')
 def home():
     if 'logged_in' in session:
-        return redirect(url_for('login'))  
+        if 'is_op' in session:
+            return redirect(url_for('op'))
+        else:
+            return redirect(url_for('ai')) 
     else:
         return redirect(url_for('login'))   
 
@@ -38,11 +41,13 @@ def login():
     # Grab the global userdata variable
     global userdata
 
-    # Check if Logged in already in the session
+    # Check if already logged in via the session
     if 'logged_in' in session:
         return redirect(url_for('ai'))
 
-    org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
+    # Set default style for the login page
+    # Access organization from the list if userdata is not None, otherwise use 'default_org'
+    org_logo, primary_color, secondary_color, text_color = style_grab('default_org')
 
     # Open the request form
     if request.method == 'POST':
@@ -50,27 +55,32 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        # Attempt a Login
+        # Attempt a login
         valid, user_data = email_login(email, password)
 
-        # Check if the Login was successful, if so set needed variables and send to ai, if not have them retry
-        if valid == True:
+        # Check if the login was successful
+        if valid:
             session['logged_in'] = True
             session['username'] = email
-            userdata = user_data
+            userdata = user_data  # This will still be a list from Supabase
 
-            # See if admin panel should show up.
-            if userdata[3] == "Admin":
+            # See if admin panel should show up based on user role
+            if userdata['role'] == "Admin":  # userdata[3] refers to the Role
                 session['is_admin'] = True
-
-            if userdata[3] == "Zone":
+            if userdata['role'] == "Zone":
                 session['is_zone'] = True
+            if userdata['role'] == "OP":
+                session['is_op'] = True
 
-            org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
+            # Grab the organization-specific styles again after login
+            org_logo, primary_color, secondary_color, text_color = style_grab(userdata['organization'])
 
-            return redirect(url_for('ai'))
+            if 'is_op' in session:
+                return redirect(url_for('op'))
+            else:
+                return redirect(url_for('ai'))
 
-    # If it fails, restart the login
+    # If login fails or is not yet attempted, render the login page again
     return render_template('login.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
 
 # AI Prompt screen
@@ -78,7 +88,7 @@ def login():
 def ai():
     # Check if the user is logged in, if so go to the screen and await form submittion, if not get sent to login
     if 'logged_in' in session:
-        org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
+        org_logo, primary_color, secondary_color, text_color = style_grab(userdata['organization'])
 
         # Format date and time
         now = datetime.now()
@@ -87,12 +97,14 @@ def ai():
         seven_days_ago_date = seven_days_ago.date()
 
         # Search for searches
-        searches = []
-        searches = search_prompts(userdata[0], userdata[2], str(seven_days_ago_date), str(current_date), '', '')
+        searches = search_prompts(userdata['email'], userdata['organization'], str(seven_days_ago_date), str(current_date), '', '')
 
-        for search in searches:
-            search[4] = format_text(search[4])
-            search[5] = format_text(search[5])
+        for row in searches:
+            question = row['question']
+            response = row['response']
+
+            question = format_text(question)
+            response = format_text(response)
 
         if request.method == 'POST':
             # Grab the prompt from the form
@@ -101,30 +113,30 @@ def ai():
 
             # Send the prompt to AI and grab the data
             data = process_prompt(user_prompt, searches, model_option)
-            print(data)
-            answer = data[3]
 
             # Send the data and user to inject into the database
-            injected = inject_prompt(userdata[0], userdata[2], data)
+            injected_data = inject_prompt(userdata['email'], userdata['organization'], data)
+
+            # Update the orgstats db
+            update_stats(injected_data)
 
             # Clean up the image cache
             clean_images()
 
             # Search for searches
-            searches = []
-            searches = search_prompts(userdata[0], userdata[2], str(seven_days_ago_date), str(current_date), '', '')
+            searches = search_prompts(userdata['email'], userdata['organization'], str(seven_days_ago_date), str(current_date), '', '')
 
-            for search in searches:
-                search[4] = format_text(search[4])
-                if search[7] == 'image':
-                    pass
-                else:
-                    search[5] = format_text(search[5])
+            for row in searches:
+                question = row['question']
+                response = row['response']
+
+                question = format_text(question)
+                response = format_text(response)
 
         if 'is_admin' in session:
-            return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata[2])
+            return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata['organization'])
         elif 'is_zone' in session:
-            return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_zone=True, is_admin=True, org_name=userdata[2])
+            return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_zone=True, is_admin=True, org_name=userdata['organization'])
     else:
         return redirect(url_for('login'))
 
@@ -133,7 +145,7 @@ def ai():
 def search():
     global search_data
     
-    org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
+    org_logo, primary_color, secondary_color, text_color = style_grab(userdata['organization'])
 
     if 'logged_in' in session:
         if not 'is_admin' in session and not 'is_zone' in session:
@@ -151,27 +163,26 @@ def search():
         organization = userdata[2]
 
         # Search
-        print(search_email, organization, start_date, end_date, start_time, end_time)
         search_data = search_prompts(search_email, organization, start_date, end_date, start_time, end_time)
 
         return redirect(url_for('search_results'))
 
     # Render Template
     if 'is_admin' in session:
-        return render_template('search.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata[2])
+        return render_template('search.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata['organization'])
     elif 'is_zone' in session:
-        return render_template('search.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
+        return render_template('search.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['organization'])
 
 # Displays search results
 @app.route('/search_results', methods=['GET', 'POST'])
 def search_results():
     global search_data
 
-    org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
+    org_logo, primary_color, secondary_color, text_color = style_grab(userdata['organization'])
 
     if 'logged_in' in session:
         if 'is_admin' in session or 'is_zone' in session:
-            return render_template('search_results.html', search=search_data, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
+            return render_template('search_results.html', search=search_data, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['organization'])
         else:
             return redirect(url_for('ai'))
     else:
@@ -187,7 +198,7 @@ def styling():
         return redirect(url_for('login'))
 
     # Pre-populate the fields
-    og_image_link,og_primary_color,og_secondary_color,og_text_color = style_grab(userdata[2])
+    og_image_link,og_primary_color,og_secondary_color,og_text_color = style_grab(userdata['organization'])
 
     # Grab data from the form
     if request.method == 'POST':
@@ -196,19 +207,19 @@ def styling():
         secondary_color = request.form.get('secondary_color')
         text_color = request.form.get('text_color')
 
-        edits = style_edits(userdata[2], image_link, primary_color, secondary_color, text_color)
+        style_edits(userdata['organization'], image_link, primary_color, secondary_color, text_color)
 
         # Pre-populate the fields
-        og_image_link,og_primary_color,og_secondary_color,og_text_color = style_grab(userdata[2])
+        og_image_link,og_primary_color,og_secondary_color,og_text_color = style_grab(userdata['organization'])
     # Run the template
-    return render_template('styling.html', organization_name=userdata[2], image_link=og_image_link, primary_color=og_primary_color, secondary_color=og_secondary_color, text_color=og_text_color, is_admin=True, is_zone=True, org_name=userdata[2])
+    return render_template('styling.html', organization_name=userdata['organization'], image_link=og_image_link, primary_color=og_primary_color, secondary_color=og_secondary_color, text_color=og_text_color, is_admin=True, is_zone=True, org_name=userdata['organization'])
 
 # Add Users to Organization
 @app.route('/add_users', methods=['GET', 'POST'])
 def add_users():
     message = None
 
-    org_logo, primary_color, secondary_color, text_color = style_grab(userdata[2])
+    org_logo, primary_color, secondary_color, text_color = style_grab(userdata['organization'])
 
     if 'logged_in' in session:
         if not 'is_zone' in session:
@@ -240,11 +251,11 @@ def add_users():
         if (email == '' or password == '' or role == '') and file.filename == '':
             message = 'Make sure you give either a file directory, or email, password, and role'
         elif not file.filename == '':
-            success = add_users_file(filename, userdata[2])
+            success = add_users_file(filename, userdata['organization'])
         elif email == '' or password == '' or role == '':
             message = 'If you are not using a file, make sure you input a email, password, and a role'
         else:
-            success = add_users_individual(email, password, userdata[2], role)
+            success = add_users_individual(email, password, userdata['organization'], role)
 
         # Give a success message if successful
         if success == True:
@@ -256,12 +267,12 @@ def add_users():
         if not file.filename == '':
             os.remove(filename)
 
-        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
+        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['organization'])
     
     if message == None:
-        return render_template('add_users.html', message='', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
+        return render_template('add_users.html', message='', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['organization'])
     else:
-        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata[2])
+        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['organization'])
 
 # Run Webapp
 with app.app_context():
