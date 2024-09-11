@@ -28,10 +28,7 @@ userdata = ['', '', '', '']
 @app.route('/')
 def home():
     if 'logged_in' in session:
-        if 'is_op' in session:
-            return redirect(url_for('op'))
-        else:
-            return redirect(url_for('ai')) 
+        return redirect(url_for('ai')) 
     else:
         return redirect(url_for('login'))   
 
@@ -69,16 +66,11 @@ def login():
                 session['is_admin'] = True
             if userdata['role'] == "Zone":
                 session['is_zone'] = True
-            if userdata['role'] == "OP":
-                session['is_op'] = True
 
             # Grab the organization-specific styles again after login
             org_logo, primary_color, secondary_color, text_color = style_grab(userdata['organization'])
 
-            if 'is_op' in session:
-                return redirect(url_for('op'))
-            else:
-                return redirect(url_for('ai'))
+            return redirect(url_for('ai'))
 
     # If login fails or is not yet attempted, render the login page again
     return render_template('login.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
