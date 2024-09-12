@@ -271,4 +271,4 @@ with app.app_context():
         print("Registered Routes:")
         for rule in app.url_map.iter_rules():
             print(rule)
-app.run(debug=True)
+app.run(debug=True, port=10000)
