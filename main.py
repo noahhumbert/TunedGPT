@@ -20,6 +20,7 @@ session_key = os.urandom(24)
 # Initialize Flask
 app = Flask(__name__)
 app.secret_key = session_key
+app.config.from_object('config.Config')
 
 # Data Variables
 userdata = ['', '', '', '']
