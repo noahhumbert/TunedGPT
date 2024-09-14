@@ -10,7 +10,7 @@ from modules.search_prompts import search_prompts
 from modules.style_edits import style_edits, style_grab
 
 # Imports
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for, session, jsonify
 import os
 from datetime import datetime, timedelta
 
@@ -265,6 +265,11 @@ def add_users():
         return render_template('add_users.html', message='', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['organization'])
     else:
         return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['organization'])
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    # You can add more comprehensive checks here if needed
+    return jsonify(status='healthy'), 200
 
 # Run Webapp
 with app.app_context():
