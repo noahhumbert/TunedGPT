@@ -20,7 +20,6 @@ session_key = os.urandom(24)
 # Initialize Flask
 app = Flask(__name__)
 app.secret_key = session_key
-app.config.from_object('config.Config')
 
 # Data Variables
 userdata = ['', '', '', '']
@@ -277,4 +276,4 @@ with app.app_context():
         print("Registered Routes:")
         for rule in app.url_map.iter_rules():
             print(rule)
-app.run(debug=True, host='0.0.0.0', port=5000)
+app.run(debug=True)
