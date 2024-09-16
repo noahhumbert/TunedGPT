@@ -270,10 +270,3 @@ def add_users():
 def health_check():
     # You can add more comprehensive checks here if needed
     return jsonify(status='healthy'), 200
-
-# Run Webapp
-with app.app_context():
-        print("Registered Routes:")
-        for rule in app.url_map.iter_rules():
-            print(rule)
-app.run(debug=True)
