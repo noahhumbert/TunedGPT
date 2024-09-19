@@ -22,7 +22,7 @@ def update_stats(injected_data):
     data = response.data
     data = data[0]
 
-    if injected_data["tokens"] == "image":
+    if not isinstance(injected_data["tokens"], int):
         data['images'] += 1
         data['images-this-period'] += 1
     else:

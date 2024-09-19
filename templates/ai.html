@@ -37,7 +37,9 @@
             {% endif %}
             {% if is_zone %}
                 <li><a href="{{ url_for('styling') }}">Organization Styling</a></li>
-                <li><a href="{{ url_for('add_users') }}">Add Users</a></li>
+                {% if not is_individual %}
+                    <li><a href="{{ url_for('add_users') }}">Add Users</a></li>
+                {% endif %}
             {% endif %}
         </ul>
     </div>
@@ -51,7 +53,7 @@
                 </div>
                 <div class="ai-message formatted-text">
                     {% if row.tokens == 'image' %}
-                        <p><img src="{{ url_for('static', filename='imgcache/' ~ search[5]) }}" alt="AI Image" class="resized-image"/></p>
+                        <p><img src="{{ row.response }}" alt="AI Image" class="resized-image"/></p>
                     {% else %}
                         <p>{{ row.response|safe }}</p> 
                     {% endif %}

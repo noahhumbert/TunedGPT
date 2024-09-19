@@ -6,6 +6,7 @@ from modules.format_text import format_text
 from modules.inject_prompt import inject_prompt
 from modules.org_stats import update_stats
 from modules.prompt_handler import process_prompt
+from modules.s3_handler import download_file_from_s3, create_presigned_url_GET
 from modules.search_prompts import search_prompts
 from modules.style_edits import style_edits, style_grab
 
@@ -51,26 +52,32 @@ def login():
         # Grab the info submitted
         email = request.form['email']
         password = request.form['password']
+        action = request.form.get('action')
 
-        # Attempt a login
-        valid, user_data = email_login(email, password)
+        if not action == 'register':
+            # Attempt a login
+            valid, user_data = email_login(email, password)
 
-        # Check if the login was successful
-        if valid:
-            session['logged_in'] = True
-            session['username'] = email
-            userdata = user_data  # This will still be a list from Supabase
+            # Check if the login was successful
+            if valid:
+                session['logged_in'] = True
+                session['username'] = email
+                userdata = user_data  # This will still be a list from Supabase
 
-            # See if admin panel should show up based on user role
-            if userdata['role'] == "Admin":  # userdata[3] refers to the Role
-                session['is_admin'] = True
-            if userdata['role'] == "Zone":
-                session['is_zone'] = True
+                # See if admin panel should show up based on user role
+                if userdata['role'] == "Admin":  # userdata[3] refers to the Role
+                    session['is_admin'] = True
+                if userdata['role'] == "Zone":
+                    session['is_zone'] = True
+                if userdata['username'].split('@')[0] == userdata['organization']:
+                    session['is_individual'] = True
 
-            # Grab the organization-specific styles again after login
-            org_logo, primary_color, secondary_color, text_color = style_grab(userdata['organization'])
+                # Grab the organization-specific styles again after login
+                org_logo, primary_color, secondary_color, text_color = style_grab(userdata['organization'])
 
-            return redirect(url_for('ai'))
+                return redirect(url_for('ai'))
+        else:
+            return redirect(url_for('register'))
 
     # If login fails or is not yet attempted, render the login page again
     return render_template('login.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
@@ -94,9 +101,17 @@ def ai():
         for row in searches:
             question = row['question']
             response = row['response']
-
+            
             question = format_text(question)
-            response = format_text(response)
+
+            print(row)
+
+            if row['tokens'] == 'image':
+                # Grab file from S3 and save the link
+                object_key = 'imgcache/' + response
+                row['response'] = create_presigned_url_GET(object_key)
+            else:
+                response = format_text(response)
 
         if request.method == 'POST':
             # Grab the prompt from the form
@@ -112,7 +127,7 @@ def ai():
             # Update the orgstats db
             update_stats(injected_data)
 
-            # Clean up the image cache
+            # Clean Images
             clean_images()
 
             # Search for searches
@@ -121,9 +136,15 @@ def ai():
             for row in searches:
                 question = row['question']
                 response = row['response']
-
+                
                 question = format_text(question)
-                response = format_text(response)
+
+                if row['tokens'] == 'image':
+                    # Grab file from S3 and save the link
+                    object_key = 'imgcache/' + response
+                    row['response'] = create_presigned_url_GET(object_key)
+                else:
+                    response = format_text(response)
 
         if 'is_admin' in session:
             return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata['organization'])
@@ -152,10 +173,16 @@ def search():
         start_time = request.form['start_time']
         end_time = request.form['end_time']
         search_email = request.form['email']    
-        organization = userdata[2]
+        organization = userdata['organization']
 
         # Search
         search_data = search_prompts(search_email, organization, start_date, end_date, start_time, end_time)
+
+        for piece in search_data:
+            if piece['tokens'] == 'image':
+                # Grab file from S3 and save the link
+                object_key = 'imgcache/' + piece['response']
+                piece['response'] = create_presigned_url_GET(object_key)
 
         return redirect(url_for('search_results'))
 
@@ -216,6 +243,8 @@ def add_users():
     if 'logged_in' in session:
         if not 'is_zone' in session:
             return redirect(url_for('ai'))
+        if 'is_individual' in session:
+            return redirect(url_for('ai'))
     else:
         return redirect(url_for('login'))
     
@@ -270,3 +299,9 @@ def add_users():
 def health_check():
     # You can add more comprehensive checks here if needed
     return jsonify(status='healthy'), 200
+
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    return "Register"
+
+app.run(debug=True)

@@ -36,7 +36,9 @@
             {% endif %}
             {% if is_zone %}
                 <li><a href="{{ url_for('styling') }}">Organization Styling</a></li>
-                <li><a href="{{ url_for('add_users') }}">Add Users</a></li>
+                {% if not is_individual %}
+                    <li><a href="{{ url_for('add_users') }}">Add Users</a></li>
+                {% endif %}
             {% endif %}
         </ul>
     </div>

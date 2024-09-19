@@ -21,7 +21,7 @@ def inject_prompt(user, organization, data):
     # Remote the commas from the response to keep the whole thing inside one column
     new_data[4] = new_data[4].replace(",", "").replace("\n", "").replace("#", "").replace('#', '')
     new_data[5] = new_data[5].replace(",", "").replace("\n", "").replace("#", "").replace('#', '')
-
+    
     injected_data = {
         "email": new_data[0],
         "organization": new_data[1],

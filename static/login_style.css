@@ -71,6 +71,8 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    margin-bottom: 20px;
+    width: 250px;
 }
 
 button:hover {
@@ -80,5 +82,3 @@ button:hover {
     border-style: solid;
     border-width: 1px;
 }
-
-

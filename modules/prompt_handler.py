@@ -2,6 +2,9 @@
 # Takes in a prompt for the AI
 # Returns both the prompt and the response.
 
+# Get S3 Handler
+from modules.s3_handler import upload_file_to_s3
+
 # Import Modules
 from openai import OpenAI
 from datetime import datetime
@@ -69,6 +72,14 @@ def process_prompt(prompt, past_prompts, model_option):
             # Open the image and save it to the imgcache folder
             image = Image.open(BytesIO(response.content))
             image.save(filepath)
+
+            # Grab file from imgcache and upload it to S3
+            file_path = '.\\static\\imgcache\\' + filename
+            object_key = 'imgcache/' + filename
+            upload_file_to_s3(file_path, object_key)
+
+            # Delete cached image
+            os.remove('.\\static\\imgcache\\' + filename)
 
             data = [datetime.now().date(), str(datetime.now().time()).split('.')[0], prompt, filename, 'stop', 'image']
 

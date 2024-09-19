@@ -56,7 +56,9 @@
             {% endif %}
             {% if is_zone %}
                 <li><a href="{{ url_for('styling') }}">Organization Styling</a></li>
-                <li><a href="{{ url_for('add_users') }}">Add Users</a></li>
+                {% if not is_individual %}
+                    <li><a href="{{ url_for('add_users') }}">Add Users</a></li>
+                {% endif %}
             {% endif %}
         </ul>
     </div>
@@ -69,7 +71,11 @@
                 {{ result.email }} | {{ result.organization }} | {{ result.date }} | {{ result.time }} | {{ result.question }} | {{ result.stop_reason }} | {{ result.tokens }}
             </div>
             <div id="{{ loop.index }}" class="response">
-                <p><strong>Response:</strong> {{ result.response }}</p>
+                {% if result.tokens == 'image' %}
+                    <p><img src="{{ result.response }}" alt="AI Image" class="resized-image"/></p>
+                {% else %}
+                    <p><strong>Response:</strong> {{ result.response }}</p>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
