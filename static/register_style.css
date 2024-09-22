@@ -1,0 +1,58 @@
+/* General styling */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--secondary-color);
+}
+
+/* Wrapper to align content vertically */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Container for links */
+.container {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between elements */
+}
+
+/* Styling for both square links */
+.square-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 400px;
+    background-color: var(--text-color); /* Default background color */
+    color: var(--secondary-color); /* Default text color */
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    border: 5px solid #000; /* Black border when not hovered */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+/* Hover effect for both links */
+.square-link:hover {
+    background-color: #000; /* Swap to secondary color on hover */
+    color: #fff; /* Swap text to the original background color */
+    border-color: #000; /* Swap border to match the original background color */
+}
+
+/* Styling for the h1 */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #000; /* Adjust as per your color scheme */
+    text-align: center;
+}

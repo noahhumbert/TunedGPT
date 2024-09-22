@@ -3,7 +3,7 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
-    background-color: var(--secondary-color); /* Background of the website */
+    background-color: var(--primary-color); /* Background of the website */
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Align items to the top */
@@ -16,7 +16,7 @@ body::-webkit-scrollbar {
 }
 
 .container {
-    background-color: var(--primary-color); /* Background of the container */
+    background-color: var(--secondary-color); /* Background of the container */
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 30px;
@@ -55,7 +55,7 @@ body::-webkit-scrollbar {
     opacity: 0;
     transform: translateY(-20px); /* Start with a slight upward offset */
     padding: 10px;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     border: 1px solid var(--text-color); /* Add black outline to dropdown */
     border-radius: 5px;
     margin-top: 0; /* Remove margin between menu item and response */
@@ -77,7 +77,7 @@ body::-webkit-scrollbar {
 .menu-item {
     cursor: pointer;
     padding: 15px;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     border: 1px solid var(--text-color);
     border-radius: 5px;
     margin-bottom: 0; /* Remove margin to make it look attached */
@@ -90,16 +90,16 @@ body::-webkit-scrollbar {
 
 .menu-item:hover {
     background-color: var(--text-color);
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .menu-item.active:hover {
     background-color: var(--text-color);
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .menu-item.active {
-    background-color: var(--secondary-color); /* Button color when dropdown is active */
+    background-color: var(--primary-color); /* Button color when dropdown is active */
     color: var(--text-color);
 }
 
@@ -131,7 +131,7 @@ h1 {
 
 /* Top Bar Styles */
 .top-bar {
-    background-color: white;
+    background-color: var(--secondary-color);
     color: var(--text-color);
     display: flex;
     justify-content: space-between;
@@ -186,7 +186,7 @@ h1 {
     position: absolute;
     top: 50px;
     right: 0px;
-    background-color: white;
+    background-color: var(--secondary-color);
     width: 200px; /* Set a fixed width */
     max-width: 100%; /* Ensure it doesn't exceed the viewport */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -222,7 +222,7 @@ h1 {
 
 .dropdown-menu li a:hover {
     background-color: var(--text-color);
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .no-link-style {

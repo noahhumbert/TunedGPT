@@ -2,6 +2,7 @@
 from modules.add_users import add_users_file, add_users_individual
 from modules.clean_images import clean_images
 from modules.email_login import email_login
+from modules.email_registration import email_registration
 from modules.format_text import format_text
 from modules.inject_prompt import inject_prompt
 from modules.org_stats import update_stats
@@ -143,6 +144,8 @@ def ai():
                 else:
                     response = format_text(response)
 
+            return redirect(url_for('ai'))
+
         if 'is_admin' in session:
             return render_template('ai.html', searches=searches, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, org_name=userdata['Organization'])
         elif 'is_zone' in session:
@@ -227,12 +230,14 @@ def styling():
 
         # Pre-populate the fields
         og_image_link,og_primary_color,og_secondary_color,og_text_color = style_grab(userdata['Organization'])
+        return redirect(url_for('styling'))
     # Run the template
     return render_template('styling.html', Organization_name=userdata['Organization'], image_link=og_image_link, primary_color=og_primary_color, secondary_color=og_secondary_color, text_color=og_text_color, is_admin=True, is_zone=True, org_name=userdata['Organization'])
 
 # Add Users to Organization
 @app.route('/add_users', methods=['GET', 'POST'])
 def add_users():
+    global userdata
     message = None
 
     org_logo, primary_color, secondary_color, text_color = style_grab(userdata['Organization'])
@@ -287,7 +292,7 @@ def add_users():
         if not file.filename == '':
             os.remove(filename)
 
-        return render_template('add_users.html', message=message, primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['Organization'])
+        return redirect(url_for('add_users'))
     
     if message == None:
         return render_template('add_users.html', message='', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo, is_admin=True, is_zone=True, org_name=userdata['Organization'])
@@ -299,6 +304,65 @@ def health_check():
     # You can add more comprehensive checks here if needed
     return jsonify(status='healthy'), 200
 
-@app.route('/register', methods=["GET", "POST"])
+@app.route('/register')
 def register():
-    return "Register"
+    if 'logged_in' in session:
+        return redirect(url_for('ai'))
+
+    # Access Organization from the list if userdata is not None, otherwise use 'default_org'
+    org_logo, primary_color, secondary_color, text_color = style_grab('default_org')
+
+    return render_template('register.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+    
+@app.route('/new_individual', methods=["GET", "POST"])
+def new_individual():
+    if 'logged_in' in session:
+        return redirect(url_for('ai'))
+
+    # Access Organization from the list if userdata is not None, otherwise use 'default_org'
+    org_logo, primary_color, secondary_color, text_color = style_grab('default_org')
+
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirm-password']
+
+        if not password == confirm_password:
+            return redirect(url_for('new_individual'))
+        
+        accepted = email_registration(email, password, None)
+
+        if accepted:
+            return redirect(url_for('login'))
+        else:
+            return redirect(url_for('new_individual'))
+
+    return render_template('new_ind.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+
+@app.route('/new_organization', methods=["GET", "POST"])
+def new_organization():
+    if 'logged_in' in session:
+        return redirect(url_for('ai'))
+
+    # Access Organization from the list if userdata is not None, otherwise use 'default_org'
+    org_logo, primary_color, secondary_color, text_color = style_grab('default_org')
+
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirm-password']
+        organization = request.form['organization']
+
+        if not password == confirm_password:
+            return redirect(url_for('new_organization'))
+        
+        accepted = email_registration(email, password, organization)
+
+        if accepted:
+            return redirect(url_for('login'))
+        else:
+            return redirect(url_for('new_organization'))
+
+    return render_template('new_org.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
+
+app.run(debug=True)

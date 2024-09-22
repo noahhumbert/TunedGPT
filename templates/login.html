@@ -41,9 +41,12 @@
             <!-- Login button -->
             <button type="button" onclick="handleFormSubmission('login')">Login</button>
             <br>
-            <!-- Register button -->
-            <!-- <button type="button" onclick="handleFormSubmission('register')">Register</button> -->
-        </form>
+            </form>
+        <br>
+        <!-- Register button -->
+        <div id="registerForm">
+            <a href="{{ url_for('register') }}" id="register" class="button">Register</a>
+        </div>
     </div>
 </body>
 <footer>

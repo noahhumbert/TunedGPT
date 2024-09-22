@@ -2,7 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     color: var(--text-color);
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     margin: 0;
     padding: 0;
     display: flex;
@@ -49,7 +49,7 @@ body {
 /* AI Message Styles */
 .ai-message {
     background-color: var(--text-color); /* Background for AI messages */
-    color: var(--primary-color); /* Text color for AI messages */
+    color: var(--secondary-color); /* Text color for AI messages */
     padding: 10px;
     border-radius: 10px;
     align-self: flex-start; /* Align to the left */
@@ -62,7 +62,7 @@ body {
 
 /* User Message Styles */
 .user-message {
-    background-color: var(--primary-color); /* Background for User messages */
+    background-color: var(--secondary-color); /* Background for User messages */
     color: var(--text-color); /* Text color for User messages */
     padding: 10px;
     border-radius: 10px;
@@ -76,7 +76,7 @@ body {
 
 /* Chat Box Styles */
 .chat-box {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     padding: 10px;
     border-top: 1px solid var(--text-color);
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
@@ -103,7 +103,7 @@ textarea {
     font-size: 1em;
     border: 2px solid var(--text-color);
     border-radius: 5px;
-    background-color: var(--primary-color); /* Background for textarea */
+    background-color: var(--secondary-color); /* Background for textarea */
     color: var(--text-color);
     flex: 1; /* Take up all available space within the input group */
     box-sizing: border-box;
@@ -115,7 +115,7 @@ button {
     padding: 10px;
     font-size: 1em;
     color: var(--text-color);
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     border: 2px solid var(--text-color);
     border-radius: 5px;
     cursor: pointer;
@@ -127,7 +127,7 @@ button {
 
 button:hover {
     background-color: var(--text-color);
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 /* Custom styles for formatting */
@@ -169,7 +169,7 @@ button:hover {
 
 /* Top Bar Styles */
 .top-bar {
-    background-color: white;
+    background-color: var(--secondary-color);
     color: var(--text-color);
     display: flex;
     justify-content: space-between;
@@ -221,7 +221,7 @@ button:hover {
     position: absolute;
     top: 50px;
     right: 0px;
-    background-color: white;
+    background-color: var(--secondary-color);
     width: 200px; /* Set a fixed width */
     max-width: 100%; /* Ensure it doesn't exceed the viewport */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -257,7 +257,7 @@ button:hover {
 
 .dropdown-menu li a:hover {
     background-color: var(--text-color);
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .no-link-style {
@@ -280,7 +280,7 @@ button:hover {
 
 /* Dropdown Button Styles */
 .model-button {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--text-color);
     border: 2px solid var(--text-color);
     border-radius: 5px;
@@ -296,7 +296,7 @@ button:hover {
     display: none;
     position: absolute;
     bottom: 100%; /* Position the dropdown above the button */
-    background-color: white;
+    background-color: var(--secondary-color);
     border: 2px solid var(--text-color);
     border-radius: 5px;
     width: 140%; /* Make the dropdown wider */
@@ -309,7 +309,7 @@ button:hover {
 }
 
 .chat-model-options .dropdown-option {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--text-color);
     border: none;
     border-radius: 0px;
@@ -324,7 +324,7 @@ button:hover {
 
 .chat-model-options .dropdown-option:hover {
     background-color: var(--text-color);
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 /* Show the dropdown when active */
