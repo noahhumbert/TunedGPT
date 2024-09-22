@@ -45,10 +45,14 @@ def style_grab(organization):
         text_color = styles['Text-color']
 
         # Download and save the logo as org.ico
-        response = requests.get(org_logo)
-        img = Image.open(BytesIO(response.content))
-        img = img.convert('RGBA')
-        img.save('./static/org.ico', format='ICO', sizes=[(32, 32)])
+        try:
+            response = requests.get(org_logo)
+            img = Image.open(BytesIO(response.content))
+            img = img.convert('RGBA')
+            img.save('./static/org.ico', format='ICO', sizes=[(32, 32)])
+        except:
+            # Copy default favicon
+            shutil.copy('./static/favicon.ico', './static/org.ico')
     except:
         # Default values if no styles are found
         org_logo = './static/favicon.ico'
