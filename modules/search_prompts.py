@@ -3,38 +3,44 @@
 # Outputs a list containing the lists of all the rows that meet the criteria in the database
 
 # Imports
-from supabase import create_client, Client
-from datetime import datetime
+import boto3
+from boto3.dynamodb.conditions import Key, Attr
 
 # Initialize Database
-url: str = "https://cwopkvreemqzoorgalsq.supabase.co/"
-key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3b3BrdnJlZW1xem9vcmdhbHNxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNTkzNjk4MCwiZXhwIjoyMDQxNTEyOTgwfQ.zeQP7mgnuo4AWgbDJ4mV6yGGtNrczqtlXaV1q7QG3EE"
-supabase: Client = create_client(url, key)
+dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
+table = dynamodb.Table('prompts')
 
-def search_prompts(email, organization, start_date, end_date, start_time, end_time):
-    # Start building the quiery
-    query = supabase.table('prompts').select('*')
+def search_prompts(email=None, organization=None, start_date=None, end_date=None, start_time=None, end_time=None):
+    # Prepare date-time range in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+    if start_date and start_time:
+        start_dt_iso = f"{start_date}T{start_time}"
+    else:
+        start_dt_iso = None
+    
+    if end_date and end_time:
+        end_dt_iso = f"{end_date}T{end_time}"
+    else:
+        end_dt_iso = None
+    
+    # Start with query on the Partition Key (Email)
+    query = {
+        'KeyConditionExpression': Key('Email').eq(email)
+    }
 
-    # Filter out organization
-    query = query.eq('organization', organization)
+    # Add the Date-time range filter if provided
+    if start_dt_iso and end_dt_iso:
+        query['KeyConditionExpression'] &= Key('Date-time').between(start_dt_iso, end_dt_iso)
+    elif start_dt_iso:
+        query['KeyConditionExpression'] &= Key('Date-time').gte(start_dt_iso)
+    elif end_dt_iso:
+        query['KeyConditionExpression'] &= Key('Date-time').lte(end_dt_iso)
 
-    # Filter by date range if provided
-    if start_date and end_date:
-        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
-        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
-        query = query.gte('date', start_date).lte('date', end_date)
-
-    # Filter by time range if provided
-    if start_time and end_time:
-        start_time = datetime.strptime(start_time + ":00", '%H:%M:%S').time()
-        end_time = datetime.strptime(end_time + ":00", '%H:%M:%S').time()
-        query = query.gte('time', start_time).lte('time', end_time)
-
-    # Filter by email if provided
-    if email:
-        query = query.eq('email', email)
+    # Add FilterExpression for non-key attributes (like Organization)
+    if organization:
+        query['FilterExpression'] = Attr('Organization').eq(organization)
 
     # Execute the query
-    response = query.execute()
-    
-    return response.data
+    response = table.query(**query)
+
+    # Return the matched items
+    return response['Items']

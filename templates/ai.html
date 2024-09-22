@@ -49,13 +49,13 @@
             {% for row in searches %}
             <div class="message">
                 <div class="user-message">
-                    <p>{{ row.question }}</p> 
+                    <p>{{ row.Question }}</p> 
                 </div>
                 <div class="ai-message formatted-text">
-                    {% if row.tokens == 'image' %}
-                        <p><img src="{{ row.response }}" alt="AI Image" class="resized-image"/></p>
+                    {% if row.Tokens == 'image' %}
+                        <p><img src="{{ row.Response }}" alt="AI Image" class="resized-image"/></p>
                     {% else %}
-                        <p>{{ row.response|safe }}</p> 
+                        <p>{{ row.Response|safe }}</p> 
                     {% endif %}
                 </div>
             </div>

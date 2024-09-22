@@ -3,35 +3,25 @@
 # Returns a True or False, and if True also the username.
 
 # Imports
-import hashlib
-from supabase import Client, create_client
+import boto3
 
-# Initialize Supabase client
-url: str = "https://cwopkvreemqzoorgalsq.supabase.co/"
-key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3b3BrdnJlZW1xem9vcmdhbHNxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNTkzNjk4MCwiZXhwIjoyMDQxNTEyOTgwfQ.zeQP7mgnuo4AWgbDJ4mV6yGGtNrczqtlXaV1q7QG3EE"
-supabase: Client = create_client(url, key)
+# Initialize DynamoDB
+dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
+table = dynamodb.Table('users')
 
 # login check function
 def email_login(email, password):
+    primary_key = {'Email': email}
 
-    # Check for the email in the Supabase 'users' table
-    response = supabase.from_("users").select("*").eq("email", email).execute()
-    data = response.data
+    response = table.get_item(Key=primary_key)
 
-    # If no user is found, return a failed login
-    if not data:
+    item = response.get('Item')
+
+    if not item:
         return False, 'None'
+    
 
-    # Get the user data (there should only be one result since emails are unique)
-    user = data[0]
-
-    # Encrypt the input password to compare with the stored password
-    hash_object = hashlib.sha256()
-    hash_object.update(password.encode('utf-8'))
-    hashed_password = hash_object.hexdigest()
-
-    # Check if the provided password matches the stored one
-    if user['password'] == hashed_password:
-        return True, user
-    else:
-        return False, 'None'
+    if password == item["Password"]:
+        return True, item
+    
+    return False, 'None'

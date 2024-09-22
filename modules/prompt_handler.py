@@ -18,13 +18,14 @@ client = OpenAI()
 chatmodel = 'gpt-4o-mini'
 imgmodel = 'dall-e-3'
 temperature = 0.7
+
 # Process the prompt.
 def process_prompt(prompt, past_prompts, model_option): 
     # Process the past prompts
     thepast = ''
     for past_prompt in past_prompts:
-        question = past_prompt['question']
-        response = past_prompt['response']
+        question = past_prompt['Question']
+        response = past_prompt['Response']
 
         thepast = thepast + "\n Question: " + question + " Answer: " + response
 
@@ -67,19 +68,19 @@ def process_prompt(prompt, past_prompts, model_option):
 
             # Generate filename based on the current date and time
             filename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.png'
-            filepath = os.path.join('.\\static\\imgcache', filename)
+            filepath = os.path.join('./static/imgcache', filename)
 
             # Open the image and save it to the imgcache folder
             image = Image.open(BytesIO(response.content))
             image.save(filepath)
 
             # Grab file from imgcache and upload it to S3
-            file_path = '.\\static\\imgcache\\' + filename
+            file_path = './static/imgcache/' + filename
             object_key = 'imgcache/' + filename
             upload_file_to_s3(file_path, object_key)
 
             # Delete cached image
-            os.remove('.\\static\\imgcache\\' + filename)
+            os.remove('./static/imgcache/' + filename)
 
             data = [datetime.now().date(), str(datetime.now().time()).split('.')[0], prompt, filename, 'stop', 'image']
 
