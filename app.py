@@ -364,5 +364,3 @@ def new_organization():
             return redirect(url_for('new_organization'))
 
     return render_template('new_org.html', primary_color=primary_color, secondary_color=secondary_color, text_color=text_color, org_logo=org_logo)
-
-app.run(debug=True)
