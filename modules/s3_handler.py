@@ -9,7 +9,7 @@ import requests
 
 # Initialize Bucket
 bucket_name = 'x1ai'
-region_name = "us-east-2"
+region_name = "us-east-1"
 s3_client = boto3.client('s3', region_name=region_name)
 
 # Get presigned URL for Upload to S3

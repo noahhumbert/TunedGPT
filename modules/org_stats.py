@@ -7,7 +7,7 @@ import boto3
 from decimal import Decimal
 
 # Setup Database
-dynamodb = boto3.resource('dynamodb', region_name='us-east-2') 
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1') 
 table = dynamodb.Table('orgstats')
 
 def calculate_cost(tokens, images):

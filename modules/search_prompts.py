@@ -7,7 +7,7 @@ import boto3
 from boto3.dynamodb.conditions import Key, Attr
 
 # Initialize Database
-dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 table = dynamodb.Table('prompts')
 
 def search_prompts(email=None, organization=None, start_date=None, end_date=None, start_time=None, end_time=None):

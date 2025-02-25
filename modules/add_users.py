@@ -7,7 +7,7 @@ import boto3
 import csv
 
 # Setup Database
-dynamodb = boto3.resource('dynamodb', region_name='us-east-2')  # Change to your region
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')  # Change to your region
 table = dynamodb.Table('users')
 
 # Function to add users from a file to DynamoDB

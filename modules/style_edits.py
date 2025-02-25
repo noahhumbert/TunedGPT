@@ -10,7 +10,7 @@ import shutil
 import boto3
 
 # Setup Database
-dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 table = dynamodb.Table('orgstyles')
 
 # Function to update or insert styles
