@@ -2,7 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     color: var(--text-color);
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     margin: 0;
     padding: 0;
     display: flex;
@@ -15,7 +15,7 @@ body {
 
 /* Container Styles */
 form {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     padding: 20px; /* Reduced padding for a more compact form */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -51,7 +51,7 @@ select {
     font-size: 0.9em; /* Adjusted font size to fit better with compact design */
     border: 2px solid var(--text-color);
     border-radius: 5px;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: var(--text-color);
     width: 100%;
     box-sizing: border-box;
