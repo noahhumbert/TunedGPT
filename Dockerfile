@@ -18,12 +18,6 @@ USER root
 COPY --chown=www-data:www-data ./ /var/www/TunedGPT
 # Move into codebase
 WORKDIR /var/www/TunedGPT
-# Set up Python VENV
-RUN apt-get install python3-venv \
-    && python3 -m venv /var/www/TunedGPT/venv 
-RUN /var/www/TunedGPT/venv/bin/pip install --upgrade pip \
-    && /var/www/TunedGPT/venv/bin/pip install -r /var/www/TunedGPT/requirements.txt
-
 # Touch the .env file for future use
 RUN touch .env \
     && chown www-data:www-data .env \
