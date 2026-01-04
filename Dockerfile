@@ -1,5 +1,5 @@
 # Grab the Python3 Base
-FROM python:3 AS BASE
+FROM python:3 AS base
 # Switch to root user
 USER root
 # Install Apache2
@@ -16,7 +16,7 @@ RUN rm -f /etc/apache2/sites-available/000-default.conf \
     && a2ensite tunedgpt
 
 # Artifact of our prod/dev environments    
-FROM BASE AS artifact
+FROM base AS artifact
 # Set user to root
 USER root
 # Copy files to directory
