@@ -1,14 +1,26 @@
-from flask import Flask
 import os
+from flask import Flask
 
 def create_app():
+    """
+    Flask application factory
+    """
+
     app = Flask(__name__)
 
-    # Load config from environment variables
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev_key')  # fallback for dev
+    # ------------------------
+    # Load configuration from environment
+    # ------------------------
+    app.config.from_mapping(
+        SECRET_KEY=os.environ.get("SECRET_KEY", "devsecret"),
+        DEBUG=os.environ.get("DEBUG", "False").lower() in ("true", "1", "t"),
+        PREFERRED_URL_SCHEME=os.environ.get("PREFERRED_URL_SCHEME", "https")
+    )
 
-    # Register routes
-    from .routes import main
-    app.register_blueprint(main)
+    # ------------------------
+    # Register Blueprints
+    # ------------------------
+    from app.routes.chat_route import chat_bp  # <-- updated to match your new filename
+    app.register_blueprint(chat_bp)
 
     return app
