@@ -11,10 +11,11 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+    # Copy app
+COPY . /var/www/turnedgpt
 # Set working directory for Flask app
 WORKDIR /var/www/tunedgpt
-# Copy app
-COPY . .
+
 
 FROM base AS artifact
 # Copy requirements and install
