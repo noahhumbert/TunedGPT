@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='search_results_style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='org.ico')}}">
+    <title>Search Results</title>
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: {{ secondary_color }};
+            --text-color: {{ text_color }};
+            --org-logo: {{ org_logo }}
+        }
+    </style>
+    <script>
+        function toggleResponse(id) {
+            var response = document.getElementById(id);
+            var menuItem = document.getElementById('menu-' + id);
+
+            if (response.classList.contains('show')) {
+                response.classList.remove('show');
+                setTimeout(function() {
+                    response.style.display = 'none';
+                }, 300); // Delay to match the animation duration
+                menuItem.classList.remove('open', 'active');
+            } else {
+                response.style.display = 'block';
+                setTimeout(function() {
+                    response.classList.add('show');
+                }, 10); // Short delay to ensure display is applied before fading in
+                menuItem.classList.add('open', 'active');
+            }
+}
+    </script>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo-label-container">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='org.ico') }}" alt="Organization Logo">
+            </div>
+        </div>
+        <a href="{{ url_for('ai') }}" class="label no-link-style">{{ org_name }}</a>
+        <div class="hamburger-menu">
+            <span>&#9776;</span> <!-- Hamburger icon -->
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdown-menu">
+        <ul>
+            <li><a href="{{ url_for('ai') }}">AI Dashboard</a></li>
+            {% if is_admin %}
+                <li><a href="{{ url_for('search') }}">Search Database</a></li>
+            {% endif %}
+            {% if is_zone %}
+                <li><a href="{{ url_for('styling') }}">Organization Styling</a></li>
+                {% if not is_individual %}
+                    <li><a href="{{ url_for('add_users') }}">Add Users</a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+    
+    <div class="container">
+        <h1>Search Results</h1>
+        {% for result in search %}
+        <div>
+            <div id="menu-{{ loop.index }}" class="menu-item" onclick="toggleResponse('{{ loop.index }}')">
+                {{ result.email }} | {{ result.organization }} | {{ result.date }} | {{ result.time }} | {{ result.question }} | {{ result.stop_reason }} | {{ result.tokens }}
+            </div>
+            <div id="{{ loop.index }}" class="response">
+                {% if result.tokens == 'image' %}
+                    <p><img src="{{ result.response }}" alt="AI Image" class="resized-image"/></p>
+                {% else %}
+                    <p><strong>Response:</strong> {{ result.response }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+<footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+        
+            hamburgerMenu.addEventListener('click', function () {
+                dropdownMenu.classList.toggle('show');
+            });
+        });
+    </script>
+</footer>
+</html>

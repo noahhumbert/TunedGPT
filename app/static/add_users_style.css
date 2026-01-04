@@ -1,0 +1,189 @@
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+    padding-top: 20px; /* Add padding to avoid touching the top of the page */
+}
+
+/* Container Styles */
+form {
+    background-color: var(--secondary-color);
+    padding: 20px; /* Reduced padding for a more compact form */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Adjust as needed */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Reduced gap for elements to be closer together */
+    margin-top: 100px; /* Add margin to move the form down */
+}
+
+/* Heading Styles */
+form h1 {
+    color: var(--text-color);
+    margin-top: 0; /* Remove top margin to align with form padding */
+    margin-bottom: 15px; /* Adjusted bottom margin for spacing */
+    text-align: center;
+}
+
+/* Label Styles */
+label {
+    font-size: 1em; /* Adjusted font size to fit better with compact design */
+    color: var(--text-color);
+}
+
+/* Input Styles */
+input[type="email"],
+input[type="password"],
+input[type="file"],
+select {
+    padding: 8px; /* Reduced padding for a tighter fit */
+    font-size: 0.9em; /* Adjusted font size to fit better with compact design */
+    border: 2px solid var(--text-color);
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Button Styles */
+button {
+    padding: 12px; /* Reduced padding for a tighter fit */
+    font-size: 1em; /* Adjusted font size to fit better with compact design */
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    border: 2px solid var(--text-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background-color: var(--text-color);
+    color: var(--secondary-color);
+}
+
+/* Message Styles */
+p {
+    color: var(--text-color);
+    text-align: center;
+    margin-top: 15px; /* Adjusted margin for spacing */
+}
+
+/* Top Bar Styles */
+.top-bar {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 30px; /* Increased height for better visibility */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width of the page */
+    position: fixed; /* Keep it fixed at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Move Hamburger Menu to the Right */
+.hamburger-menu {
+    cursor: pointer;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Push it to the right */
+    margin-right: 40px;
+}
+
+/* Existing Image Container */
+.image-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+/* Adjust logo size */
+.image-container img {
+    width: 40px; /* Increased logo size */
+    height: auto;
+    position: absolute;
+    top: -5px;
+    display: block;
+    margin: 0;
+}
+
+/* Label Styles */
+.label {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-left: 30px; /* Move label 40px to the right */
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    background-color: var(--secondary-color);
+    width: 200px; /* Set a fixed width */
+    max-width: 100%; /* Ensure it doesn't exceed the viewport */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Checkbox to control the dropdown */
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0px;
+}
+
+/* Dropdown Menu Hover Effect Fix */
+.dropdown-menu li {
+    padding: 0; /* Remove padding from li to let a tag control the space */
+}
+
+.dropdown-menu li a {
+    padding: 10px 20px; /* Set padding inside a tag for full hover area */
+    text-decoration: none;
+    color: var(--text-color);
+    display: block;
+    width: 100%; /* Ensure it takes full width */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: var(--text-color);
+    color: var(--secondary-color);
+}
+
+.no-link-style {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Keep the color the same as the surrounding text */
+    cursor: pointer; /* Keep the pointer cursor */
+}
+
+.no-link-style:hover {
+    color: inherit; /* Prevent hover effect from changing the color */
+    text-decoration: none; /* No underline on hover */
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/login_style.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>Login</title>
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: {{ secondary_color }};
+            --text-color: {{ text_color }};
+        }
+    </style>
+    <script>
+        function handleFormSubmission(action) {
+            const form = document.getElementById('loginForm');
+            document.getElementById('actionInput').value = action;
+
+            if (action === 'register') {
+                form.noValidate = true; // Disable validation
+            } else {
+                form.noValidate = false; // Enable validation
+            }
+
+            form.submit(); // Submit the form
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <br>
+        <form id="loginForm" method="POST">
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+            <input type="hidden" id="actionInput" name="action" value="login">
+            <!-- Login button -->
+            <button type="button" onclick="handleFormSubmission('login')">Login</button>
+            <br>
+            </form>
+        <br>
+        <!-- Register button -->
+        <div id="registerForm">
+            <a href="{{ url_for('register') }}" id="register" class="button">Register</a>
+        </div>
+    </div>
+</body>
+<footer>
+    <script>
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                // Prevent default form submission if the action is not set
+                event.preventDefault();
+                const action = document.getElementById('actionInput').value;
+                handleFormSubmission(action); // Call the function to submit
+            }
+        });
+    </script>
+</footer>
+</html>
