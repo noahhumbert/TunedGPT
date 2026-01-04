@@ -40,7 +40,7 @@ WORKDIR /var/www/TunedGPT
 # Copy dev env over env
 COPY .env.dev .env
 # Start the Server
-CMD ["apache2-foreground"]
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
 # prod environment
 FROM artifact AS prod
@@ -49,4 +49,4 @@ WORKDIR /var/www/TunedGPT
 # Copy production .env 
 COPY .env.prod .env
 # Start the Server
-CMD ["apache2-foreground"]
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
