@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatGPT Style Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body class="bg-dark text-white">
+<div class="container py-4" style="max-width: 700px;">
+    <h2 class="mb-3">ChatGPT Clone</h2>
+
+    <div id="chat-window" class="border rounded p-3 mb-3 bg-secondary" style="height: 500px; overflow-y: auto;">
+        <!-- Messages appear here -->
+    </div>
+
+    <form id="chat-form" class="d-flex">
+        <input type="text" id="user-input" class="form-control me-2" placeholder="Type a message...">
+        <button class="btn btn-primary" type="submit">Send</button>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
