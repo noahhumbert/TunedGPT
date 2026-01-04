@@ -8,12 +8,11 @@ def chat_screen():
     if request.method == "POST":
         data = request.json
         user_message = data.get("message")
-        dropdown_value = data.get("dropdown")  # new value from dropdown
+        dropdown_value = data.get("dropdown") 
 
         if not user_message:
             return jsonify({"error": "No message provided"}), 400
 
-        # You can use dropdown_value however you want in your service
         ai_response = get_chat_response(user_message, mode=dropdown_value)
 
         return jsonify({"response": ai_response})
