@@ -1,47 +1,41 @@
-# Base image: official Apache HTTPD
-FROM httpd:2.4 AS base
-
+# Base image
+FROM ubuntu:22.04 AS base
 # Switch to root
 USER root
-
-# Install Python 3 and venv
-RUN apt-get update \
-    && apt-get install -y python3 python3-venv python3-pip \
+# Install Apache, mod_wsgi, Python, pip, and required tools
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    libapache2-mod-wsgi-py3 \
+    python3 \
+    python3-pip \
+    python3-venv \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+# Set working directory for Flask app
+WORKDIR /var/www/tunedgpt
+# Copy app
+COPY . .
 
-# Copy Apache configs
-COPY ./apache2/apache2.conf /usr/local/apache2/conf/httpd.conf
-COPY ./apache2/tunedgpt.conf /usr/local/apache2/conf/extra/tunedgpt.conf
-
-# Include the tunedgpt site in main Apache config
-RUN echo 'Include conf/extra/tunedgpt.conf' >> /usr/local/apache2/conf/httpd.conf
-
-# Artifact stage: copy application
 FROM base AS artifact
+# Copy requirements and install
+RUN python3 -m venv venv \
+    && ./venv/bin/pip install --upgrade pip \
+    && ./venv/bin/pip install -r requirements.txt
+# Set up Apache config
+COPY apache2/tunedgpt.conf /etc/apache2/sites-available/000-default.conf
+# Enable mod_wsgi (should already be enabled with libapache2-mod-wsgi-py3)
+RUN a2enmod wsgi
 
-# Create app directory
-WORKDIR /usr/local/apache2/htdocs/TunedGPT
-COPY --chown=www-data:www-data ./ ./ 
-
-# Set up Python virtual environment
-RUN python3 -m venv /usr/local/apache2/htdocs/TunedGPT/venv \
-    && /usr/local/apache2/htdocs/TunedGPT/venv/bin/pip install --upgrade pip \
-    && /usr/local/apache2/htdocs/TunedGPT/venv/bin/pip install -r /usr/local/apache2/htdocs/TunedGPT/requirements.txt
-
-# Touch .env for future use
-RUN touch .env \
-    && chown www-data:www-data .env \
-    && chmod ug+rw .env
-
-# Dev environment
+# Dev Environment
 FROM artifact AS dev
-WORKDIR /usr/local/apache2/htdocs/TunedGPT
+# Copy env file
 COPY .env.dev .env
-# Run Apache in foreground
-CMD ["httpd-foreground"]
+# Start Apache in the foreground
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+# Prod Environment
 
-# Prod environment
 FROM artifact AS prod
-WORKDIR /usr/local/apache2/htdocs/TunedGPT
+# Copy env file
 COPY .env.prod .env
-CMD ["httpd-foreground"]
+# Start Apache in the foreground
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
