@@ -24,23 +24,23 @@ COPY --chown=www-data:www-data ./ /var/www/TunedGPT
 # Move into codebase
 WORKDIR /var/www/TunedGPT
 # Set up Python VENV
-RUN python -m venv /var/www/TunedGPT/venv \
-    && source ./venv/bin/pip install --upgrade pip \
-    && source ./venv/bin/pip install -r /var/www/TunedGPT/requirements.txt
+RUN python -m venv /var/www/TunedGPT/venv 
+RUN source ./venv/bin/pip install --upgrade pip 
+RUN source ./venv/bin/pip install -r /var/www/TunedGPT/requirements.txt
 # Touch the .env file for future use
 RUN touch .env \
     && chown www-data:www-data .env \
     && chmod ug+rw .env
 
 # dev environment
-FROM artifact as dev
+FROM artifact AS dev
 # Set working dir to root of project
 WORKDIR /var/www/TunedGPT
 # Copy dev env over env
 COPY .env.dev .env
 
 # prod environment
-FROM artifact as prod
+FROM artifact AS prod
 # Set working dir to root of project
 WORKDIR /var/www/TunedGPT
 # Copy production .env 
