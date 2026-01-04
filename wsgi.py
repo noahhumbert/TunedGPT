@@ -1,5 +1,4 @@
 import sys
-import os
 
 project_dir = "/var/www/TunedGPT"
 if project_dir not in sys.path:
