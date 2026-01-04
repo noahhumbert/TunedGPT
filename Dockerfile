@@ -1,53 +1,47 @@
-# Ubuntu Base
-FROM ubuntu:22.04 AS base
-# Switch to root user
+# Base image: official Apache HTTPD
+FROM httpd:2.4 AS base
+
+# Switch to root
 USER root
-# Install apache2
+
+# Install Python 3 and venv
 RUN apt-get update \
-    && apt-get install -y apache2 apache2-bin apache2-utils  python3-venv \
+    && apt-get install -y python3 python3-venv python3-pip \
     && rm -rf /var/lib/apt/lists/*
-# Copy apache2 configs
-COPY ./apache2/apache2.conf /etc/apache2/apache2.conf 
-COPY ./apache2/tunedgpt.conf /etc/apache2/sites-available/tunedgpt.conf
-# Delete the old apache2 configs. Enable the new ones and enable sites and mods
-RUN rm -f /etc/apache2/sites-available/000-default.conf \
-    && rm -f /etc/apache2/sites-available/000-ssl.conf \
-    && a2enmod mpm_event \
-    && a2ensite tunedgpt 
-# Artifact
+
+# Copy Apache configs
+COPY ./apache2/apache2.conf /usr/local/apache2/conf/httpd.conf
+COPY ./apache2/tunedgpt.conf /usr/local/apache2/conf/extra/tunedgpt.conf
+
+# Include the tunedgpt site in main Apache config
+RUN echo 'Include conf/extra/tunedgpt.conf' >> /usr/local/apache2/conf/httpd.conf
+
+# Artifact stage: copy application
 FROM base AS artifact
-# Root user
-USER root
-# Copy files to directory
-COPY --chown=www-data:www-data ./ ./var/www/TunedGPT
-# Move to the new codebase
-WORKDIR /var/www/TunedGPT
-# Force noninteractive APT and set timezone
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=UTC
-# Set up Python VENV
-RUN python3 -m venv /var/www/TunedGPT/venv \
-    && /var/www/TunedGPT/venv/bin/pip install --upgrade pip \
-    && /var/www/TunedGPT/venv/bin/pip install -r /var/www/TunedGPT/requirements.txt
-# Touch the .env file for future use
+
+# Create app directory
+WORKDIR /usr/local/apache2/htdocs/TunedGPT
+COPY --chown=www-data:www-data ./ ./ 
+
+# Set up Python virtual environment
+RUN python3 -m venv /usr/local/apache2/htdocs/TunedGPT/venv \
+    && /usr/local/apache2/htdocs/TunedGPT/venv/bin/pip install --upgrade pip \
+    && /usr/local/apache2/htdocs/TunedGPT/venv/bin/pip install -r /usr/local/apache2/htdocs/TunedGPT/requirements.txt
+
+# Touch .env for future use
 RUN touch .env \
     && chown www-data:www-data .env \
     && chmod ug+rw .env
 
-# dev environment
+# Dev environment
 FROM artifact AS dev
-# Set working dir to root of project
-WORKDIR /var/www/TunedGPT
-# Copy dev env over env
+WORKDIR /usr/local/apache2/htdocs/TunedGPT
 COPY .env.dev .env
-# Start the Server
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+# Run Apache in foreground
+CMD ["httpd-foreground"]
 
-# prod environment
+# Prod environment
 FROM artifact AS prod
-# Set working dir to root of project
-WORKDIR /var/www/TunedGPT
-# Copy production .env 
+WORKDIR /usr/local/apache2/htdocs/TunedGPT
 COPY .env.prod .env
-# Start the Server
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+CMD ["httpd-foreground"]
