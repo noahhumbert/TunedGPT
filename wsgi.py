@@ -2,6 +2,8 @@ import sys
 import os
 
 project_dir = "/var/www/TunedGPT"
-sys.path.insert(0, project_dir)
+if project_dir not in sys.path:
+    sys.path.insert(0, project_dir)
 
-from app import app as application
+from app import create_app
+application = create_app()
