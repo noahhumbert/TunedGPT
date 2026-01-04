@@ -1,5 +1,5 @@
 # Grab the Python3 Base
-FROM ubuntu/python:3.13-25.04_stable AS base
+FROM dm4rnde/flask-app-base-apache2-wsgi-py3-ubuntu:latest AS base
 # Switch to root user
 USER root
 # Install Apache2
