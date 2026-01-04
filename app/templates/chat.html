@@ -6,21 +6,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
-<body>
-    <!-- ChatGPT UI -->
-    <div class="container">
-        <div class="row">
-            <h2 class="mb-3">TunedGPT</h2>
-        </div>
-        <div class="row">
-            <form id="chat-form" class="d-flex">
-                <input type="text" id="user-input" class="form-control me-2" placeholder="Type a message...">
-                <button class="btn btn-primary" type="submit">Send</button>
-            </form>
-        </div>
+<body class="d-flex flex-column vh-100">
+    <!-- Header -->
+    <div class="p-3 bg-light border-bottom">
+        <h2 class="m-0">TunedGPT</h2>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Chat window -->
+    <div class="flex-grow-1 overflow-auto p-3 border-bottom">
+        <!-- Messages will go here -->
+    </div>
+
+    <!-- Input + button -->
+    <div class="p-3 d-flex border-top">
+        <input type="text" class="form-control me-2" placeholder="Type a message...">
+        <button class="btn btn-primary">Send</button>
+    </div>
 </body>
 </html>
+
+
+
