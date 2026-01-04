@@ -3,13 +3,20 @@ from flask import Flask
 
 def create_app():
     """
-    Flask application factory
+    Flask application factory — clean, production-ready, fresh start
     """
 
-    app = Flask(__name__)
+    # ------------------------
+    # Initialize Flask app with explicit template and static folders
+    # ------------------------
+    app = Flask(
+        __name__,
+        template_folder="templates",  # ensures Flask finds chat.html
+        static_folder="static"        # ensures CSS/JS load properly
+    )
 
     # ------------------------
-    # Load configuration from environment
+    # Load configuration from environment variables
     # ------------------------
     app.config.from_mapping(
         SECRET_KEY=os.environ.get("SECRET_KEY", "devsecret"),
@@ -18,9 +25,13 @@ def create_app():
     )
 
     # ------------------------
-    # Register Blueprints
+    # Register routes / Blueprints
     # ------------------------
-    from app.routes.chat_route import chat_bp  # <-- updated to match your new filename
-    app.register_blueprint(chat_bp)
+    from app.routes.chat_route import chat_bp
+    app.register_blueprint(chat_bp)  # serves '/' and '/message'
+
+    # ------------------------
+    # Optional: add any other setup here (DB, login manager, etc.)
+    # ------------------------
 
     return app
