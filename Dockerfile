@@ -21,6 +21,9 @@ USER root
 COPY --chown=www-data:www-data ./ ./var/www/TunedGPT
 # Move to the new codebase
 WORKDIR /var/www/TunedGPT
+# Force noninteractive APT and set timezone
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
 # Set up Python VENV
 RUN python3 -m venv /var/www/TunedGPT/venv \
     && /var/www/TunedGPT/venv/bin/pip install --upgrade pip \
@@ -37,9 +40,7 @@ WORKDIR /var/www/TunedGPT
 # Copy dev env over env
 COPY .env.dev .env
 # Start the Server
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
-# Switch to www-data
-USER www-data
+CMD ["apache2-foreground"]
 
 # prod environment
 FROM artifact AS prod
@@ -48,6 +49,4 @@ WORKDIR /var/www/TunedGPT
 # Copy production .env 
 COPY .env.prod .env
 # Start the Server
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
-# Switch to www-data
-USER www-data
+CMD ["apache2-foreground"]
