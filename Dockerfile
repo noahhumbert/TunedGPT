@@ -4,14 +4,14 @@ FROM ubuntu:22.04 AS base
 USER root
 # Install apache2
 RUN apt-get update \
-    && apt-get install -y apache2 apache2-bin apache2-utils  python3-venv
+    && apt-get install -y apache2 apache2-bin apache2-utils  python3-venv \
+    && rm -rf /var/lib/apt/lists/*
 # Copy apache2 configs
 COPY ./apache2/apache2.conf /etc/apache2/apache2.conf 
 COPY ./apache2/tunedgpt.conf /etc/apache2/sites-available/tunedgpt.conf
 # Delete the old apache2 configs. Enable the new ones and enable sites and mods
 RUN rm -f /etc/apache2/sites-available/000-default.conf \
     && rm -f /etc/apache2/sites-available/000-ssl.conf \
-    && a2dismod mpm_prefork mpm_worker || true \
     && a2enmod mpm_event \
     && a2ensite tunedgpt 
 # Artifact
