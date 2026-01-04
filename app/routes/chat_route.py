@@ -1,3 +1,4 @@
+# Imports
 from flask import Blueprint, render_template, request, jsonify
 from app.services.chat_service import get_chat_response
 
