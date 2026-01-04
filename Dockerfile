@@ -4,7 +4,7 @@ FROM ubuntu:rolling AS base
 USER root
 # Install apache2
 RUN apt-get update \
-    && apt-get install apache2
+    && apt-get install -y apache2
 # Copy apache2 configs
 COPY ./apache2/apache2.conf /etc/apache2/apache2.conf 
 COPY ./apache2/tunedgpt.conf /etc/apache2/sites-available/tunedgpt.conf
@@ -14,7 +14,7 @@ RUN rm -f /etc/apache2/sites-available/000-default.conf \
     && a2ensite tunedgpt
 
 # Artifact
-FROM base as artifact
+FROM base AS artifact
 # Root user
 USER root
 # Copy files to directory
