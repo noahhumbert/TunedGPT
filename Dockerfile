@@ -11,6 +11,7 @@ COPY ./apache2/tunedgpt.conf /etc/apache2/sites-available/tunedgpt.conf
 # Delete the old apache2 configs. Enable the new ones and enable sites and mods
 RUN rm -f /etc/apache2/sites-available/000-default.conf \
     && rm -f /etc/apache2/sites-available/000-ssl.conf \
+    && a2dismod mpm_prefork mpm_worker || true \
     && a2enmod mpm_event \
     && a2ensite tunedgpt 
 # Artifact
