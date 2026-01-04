@@ -1,0 +1,19 @@
+services:
+  php:
+    build:
+      context: .
+      target: dev
+    image: tunedgpt:dev
+    env_file:
+      - .env.dev
+    container_name: dev
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/TunedGPT
+    networks:
+      - network
+
+networks:
+  network:
+    external: true 

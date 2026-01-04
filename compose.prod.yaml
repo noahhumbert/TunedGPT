@@ -1,0 +1,18 @@
+services:
+  php:
+    build:
+      context: .
+      target: prod
+    image: tunedgpt:prod
+    env_file:
+      - .env.prod
+    container_name: prod
+    ports:
+      - "8080:80"
+    volumes: []  # does not change the container code as local changes are made
+    networks:
+      - network
+
+networks:
+  network:
+    external: true
