@@ -7,7 +7,7 @@ chat_bp = Blueprint("chat", __name__)
 # Render the chat page
 @chat_bp.route("/", methods=["GET"])
 def chat_screen():
-    return render_template("chat.html")
+    return render_template("home.html")
 
 # Handle user messages asynchronously
 @chat_bp.route("/message", methods=["POST"])
