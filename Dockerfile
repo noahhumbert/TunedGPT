@@ -1,10 +1,11 @@
 # Grab the Python3 Base
-FROM python:3 AS base
+FROM ubuntu:22 AS base
 # Switch to root user
 USER root
-# Install Apache2
+# Install Apache2 and python3
 RUN apt-get update \
-    && apt-get install -y apache2 apache2-bin apache2-utils apache2-dev libapache2-mod-wsgi-py3 python3-venv 
+    && apt-get install -y python3 python3-pip python3-dev build-essential curl \
+    && apache2 apache2-bin apache2-utils apache2-dev libapache2-mod-wsgi-py3 python3-venv 
 # Enable WSGI for Apache
 RUN a2enmod wsgi \
     && a2enmod mpm_event
