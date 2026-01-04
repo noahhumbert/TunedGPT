@@ -1,29 +1,31 @@
-# Grab the Python3 Base
-FROM dm4rnde/flask-app-base-apache2-wsgi-py3-ubuntu:latest AS base
+# Ubuntu Base
+FROM ubuntu:rolling AS base
 # Switch to root user
 USER root
-# Copy apache2 config
+# Install apache2
+RUN apt-get update \
+    && apt-get install apache2
+# Copy apache2 configs
 COPY ./apache2/apache2.conf /etc/apache2/apache2.conf 
 COPY ./apache2/tunedgpt.conf /etc/apache2/sites-available/tunedgpt.conf
-# Create the main apache2 config and delete the default
+# Delete the old apache2 configs. Enable the new one
 RUN rm -f /etc/apache2/sites-available/000-default.conf \
     && rm -f /etc/apache2/sites-available/000-ssl.conf \
     && a2ensite tunedgpt
 
-# Artifact of our prod/dev environments    
-FROM base AS artifact
-# Set user to root
+# Artifact
+FROM base as artifact
+# Root user
 USER root
 # Copy files to directory
-COPY --chown=www-data:www-data ./ /var/www/TunedGPT
-# Move into codebase
+COPY --chown=www-data:www-data ./ ./var/www/TunedGPT
+# Move to the new codebase
 WORKDIR /var/www/TunedGPT
 # Set up Python VENV
 RUN apt-get install python3-venv \
-    && python3 -m venv /var/www/TunedGPT/venv 
-RUN /var/www/TunedGPT/venv/bin/pip install --upgrade pip \
+    && python3 -m venv /var/www/TunedGPT/venv \
+    && /var/www/TunedGPT/venv/bin/pip install --upgrade pip \
     && /var/www/TunedGPT/venv/bin/pip install -r /var/www/TunedGPT/requirements.txt
-
 # Touch the .env file for future use
 RUN touch .env \
     && chown www-data:www-data .env \
