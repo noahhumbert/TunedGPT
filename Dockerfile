@@ -1,5 +1,5 @@
 # Ubuntu Base
-FROM ubuntu:rolling AS base
+FROM ubuntu:22.04 AS base
 # Switch to root user
 USER root
 # Install apache2
