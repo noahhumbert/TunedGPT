@@ -25,8 +25,9 @@ COPY --chown=www-data:www-data ./ /var/www/TunedGPT
 WORKDIR /var/www/TunedGPT
 # Set up Python VENV
 RUN python -m venv /var/www/TunedGPT/venv 
-RUN source ./venv/bin/pip install --upgrade pip 
-RUN source ./venv/bin/pip install -r /var/www/TunedGPT/requirements.txt
+RUN /var/www/TunedGPT/venv/bin/pip install --upgrade pip \
+    && /var/www/TunedGPT/venv/bin/pip install -r /var/www/TunedGPT/requirements.txt
+
 # Touch the .env file for future use
 RUN touch .env \
     && chown www-data:www-data .env \
