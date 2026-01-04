@@ -19,7 +19,7 @@ COPY --chown=www-data:www-data ./ /var/www/TunedGPT
 # Move into codebase
 WORKDIR /var/www/TunedGPT
 # Set up Python VENV
-RUN python -m venv /var/www/TunedGPT/venv 
+RUN python3 -m venv /var/www/TunedGPT/venv 
 RUN /var/www/TunedGPT/venv/bin/pip install --upgrade pip \
     && /var/www/TunedGPT/venv/bin/pip install -r /var/www/TunedGPT/requirements.txt
 
