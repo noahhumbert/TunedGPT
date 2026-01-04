@@ -6,7 +6,8 @@ USER root
 RUN apt-get update \
     && apt-get install -y apache2 libapache2-mod-wsgi-py3 python3-venv
 # Enable WSGI for Apache
-RUN a2enmod wsgi
+RUN a2enmod wsgi \
+    && a2enmod mpm_event
 # Copy apache2 config
 COPY ./apache2/apache2.conf /etc/apache2/apache2.conf 
 COPY ./apache2/tunedgpt.conf /etc/apache2/sites-available/tunedgpt.conf
