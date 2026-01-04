@@ -3,8 +3,7 @@ FROM ubuntu/python:3.13-25.04_stable AS base
 # Switch to root user
 USER root
 # Install Apache2
-RUN apt-get update \
-    && apt-get install -y apache2 apache2-bin apache2-utils apache2-dev libapache2-mod-wsgi-py3 python3-venv 
+RUN apt-get install -y apache2 apache2-bin apache2-utils apache2-dev libapache2-mod-wsgi-py3 python3-venv 
 # Enable WSGI for Apache
 RUN a2enmod wsgi \
     && a2enmod mpm_event
