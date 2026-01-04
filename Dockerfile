@@ -2,11 +2,6 @@
 FROM dm4rnde/flask-app-base-apache2-wsgi-py3-ubuntu:latest AS base
 # Switch to root user
 USER root
-# Install Apache2
-RUN apt-get install -y apache2 apache2-bin apache2-utils apache2-dev libapache2-mod-wsgi-py3 python3-venv 
-# Enable WSGI for Apache
-RUN a2enmod wsgi \
-    && a2enmod mpm_event
 # Copy apache2 config
 COPY ./apache2/apache2.conf /etc/apache2/apache2.conf 
 COPY ./apache2/tunedgpt.conf /etc/apache2/sites-available/tunedgpt.conf
