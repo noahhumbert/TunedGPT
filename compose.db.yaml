@@ -10,7 +10,7 @@ services:
     env_file:
       - .env.db
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
     networks:
       - network
     ports:
