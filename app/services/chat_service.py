@@ -31,12 +31,14 @@ def get_chat_response(message: str, model: str):
             "temperature": 0.7
         }
     
+    # Run the post request
+    response = requests.post(url, headers=headers, json=data)
+    response.raise_for_status()
+    result = response.json()
+
     # Inject Data into SQL DB
 
 
     # Run the 7 day check
 
-    response = requests.post(url, headers=headers, json=data)
-    response.raise_for_status()
-    result = response.json()
-    return result["choices"][0]["message"]["content"]
+    
