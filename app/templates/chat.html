@@ -20,13 +20,21 @@
     <!-- Input + button -->
     <div class="p-3 d-flex border-top">
         <form method="post w-100">
-            <input type="text" name="message" class="form-control me-2" placeholder="Type a message...">
-            <select id="mode-select" name="mode-select" class="form-select me-2" style="width: auto;">
-                <option value="chatgpt-5-mini" selected>ChatGPT-5 Mini</option>
-                <option value="chatgpt-5" selected>ChatGPT-5</option>
-                <option value="imagegen">Image Generation</option>
-            </select>
-            <button class="btn btn-primary" type="submit">Send</button>
+            <div class="row">
+                <div class="col-8">
+                    <input type="text" name="message" class="form-control me-2" placeholder="Type a message...">
+                </div>
+                <div class="col-2">
+                    <select id="mode-select" name="mode-select" class="form-select me-2" style="width: auto;">
+                        <option value="chatgpt-5-mini" selected>ChatGPT-5 Mini</option>
+                        <option value="chatgpt-5" selected>ChatGPT-5</option>
+                        <option value="imagegen">Image Generation</option>
+                    </select>
+                </div>
+                </div class="col-1">
+                    <button class="btn btn-primary" type="submit">Send</button>
+                </div>
+            </div>
         </form>
     </div>
 </body>
