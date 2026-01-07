@@ -1,9 +1,9 @@
 import os
 import requests
 
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")  # Inject via Docker Compose
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
-def get_chat_response(message: str) -> str:
+def get_chat_response(message: str, mode: str):
     """
     Sends the user's message to OpenAI's ChatGPT API and returns the AI response.
     """
