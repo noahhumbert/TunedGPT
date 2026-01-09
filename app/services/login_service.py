@@ -8,7 +8,7 @@ def authenticate(username, password):
     NH_AUTH_TOKEN = os.environ.get("NH_AUTH_TOKEN")
 
     # API url
-    url = "https://noahhumbert.com/api/check-role"
+    url = "https://www.noahhumbert.com/api/check-role"
 
     # Headers
     headers = {
