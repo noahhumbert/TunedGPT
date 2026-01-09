@@ -30,15 +30,8 @@
                     <a type="submit" class="btn btn-primary" href="https://noahhumbert.com/login">Register</a>
                 </div>
             </form>
-            {% if debug_info %}
-                <div class="container mt-3">
-                    <div class="card">
-                        <div class="card-header">Debug Info</div>
-                        <div class="card-body">
-                            <pre style="white-space: pre-wrap;">{{ debug_info | join('\n') }}</pre>
-                        </div>
-                    </div>
-                </div>
+            {% if error %}
+                <p class="text-danger">{{ error }}</p>
             {% endif %}
         </div>
 

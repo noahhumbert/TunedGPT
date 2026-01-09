@@ -1,4 +1,3 @@
-# Imports
 import requests
 import os
 
@@ -34,3 +33,9 @@ def authenticate(username, password):
 
     # Return bool true or false if user has role
     return has_role
+
+username = input("")
+password = input("")
+valid = authenticate(username, password)
+print(valid)
+                 
