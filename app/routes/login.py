@@ -25,10 +25,10 @@ def login_screen():
             session['user_email'] = username
             session["role"] = "user"
 
-            return redirect(url_for("chat.html"))
+            return redirect(url_for("chat.chat_screen"))
         
         # Render the login page
-        return render_template('login.html')
+        return render_template('login.login_screen')
 
     # Render the login page
-    return render_template('login.html')
+    return render_template('login.login_screen')
