@@ -29,6 +29,5 @@ def authenticate(username, password):
     # Check of the user has the role
     has_role = bool(response.json().get("has_role", False))
 
-    print(has_role)
-
+    # Return bool true or false if user has role
     return has_role
