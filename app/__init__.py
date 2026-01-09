@@ -18,6 +18,9 @@ def create_app():
 
     # Register routes / Blueprints
     from app.routes.chat import chat_bp
-    app.register_blueprint(chat_bp)  # serves '/' and '/message'
+    app.register_blueprint(chat_bp)  # serves '/'
+
+    from app.routes.login import login_bp
+    app.register_blueprint(login_bp) # serves '/login'
 
     return app
