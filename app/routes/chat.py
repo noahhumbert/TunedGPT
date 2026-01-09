@@ -5,7 +5,6 @@ from flask import Blueprint, render_template, request, jsonify, session, redirec
 from app.services.chat_service import get_chat_response, parse_chat_response, inject_chat_interaction, cleanup_chat_history, get_chat_history
 
 chat_bp = Blueprint("chat", __name__)
-
 @chat_bp.route("/", methods=["GET", "POST"])
 def chat_screen():
     # If the user isn't logged in, redirect them to login

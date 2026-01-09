@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 # Pull in service
 from app.services.login_service import authenticate
 
-login_bp = Blueprint("chat", __name__)
+login_bp = Blueprint("login", __name__)
 @login_bp.route("/login", methods=["GET", "POST"])
 def login_screen():
     # If the user is logged in, redirect them to chat
