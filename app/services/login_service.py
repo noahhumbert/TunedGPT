@@ -24,7 +24,7 @@ def authenticate(username, password):
     }
 
     # POST request and grab response
-    response = requests.POST(url, headers=headers, json=body)
+    response = requests.post(url, headers=headers, json=body)
 
     # Check of the user has the role
     has_role = bool(response.json().get("has_role", False))
