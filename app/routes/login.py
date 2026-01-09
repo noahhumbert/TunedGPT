@@ -26,6 +26,9 @@ def login_screen():
             session["role"] = "user"
 
             return redirect(url_for("chat.html"))
+        
+        # Render the login page
+        return render_template('login.html')
 
     # Render the login page
-    render_template('login.html')
+    return render_template('login.html')

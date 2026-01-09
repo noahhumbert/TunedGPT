@@ -32,6 +32,12 @@ def chat_screen():
         # Cleanup chat DB
         cleanup_chat_history()
 
+        # Pull the chat history for the template
+        chat_history = get_chat_history(session["user_email"])
+
+        return render_template("chat.html", chat_history=chat_history)
+
+    # Pull the chat history for the template
     chat_history = get_chat_history(session["user_email"])
 
     return render_template("chat.html", chat_history=chat_history)
