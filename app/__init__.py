@@ -1,9 +1,6 @@
 import os
 from flask import Flask
 
-# Logging
-import logging
-
 def create_app():
     # Initialize Flask app with explicit template and static folders
     app = Flask(
@@ -11,11 +8,7 @@ def create_app():
         template_folder="templates",  # ensures Flask finds chat.html
         static_folder="static"        # ensures CSS/JS load properly
     )
-
-    # Enable debug logging
-    app.logger.setLevel(logging.DEBUG)
-
-
+    
     # Load configuration from environment variables
     app.config.from_mapping(
         SECRET_KEY=os.environ.get("SECRET_KEY", "devsecret"),

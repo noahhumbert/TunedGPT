@@ -28,7 +28,7 @@ def login_screen():
             return redirect(url_for("chat.chat_screen"))
         
         # Render the login page
-        return render_template('login.html', error="Invalid username or password")
+        return render_template('login.html')
 
     # Render the login page
     return render_template('login.html')
