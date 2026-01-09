@@ -18,7 +18,7 @@ def login_screen():
         password = request.form.get("_password")
 
         # Check if the credentials are valid
-        valid = authenticate(username, password)
+        valid, debug_info = authenticate(username, password)
 
         if valid:
             session['logged_in'] = True
@@ -28,7 +28,7 @@ def login_screen():
             return redirect(url_for("chat.chat_screen"))
         
         # Render the login page
-        return render_template('login.html')
+        return render_template('login.html', debug_info=debug_info)
 
     # Render the login page
     return render_template('login.html')
