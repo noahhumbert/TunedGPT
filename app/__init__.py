@@ -2,10 +2,6 @@ import os
 from flask import Flask
 
 def create_app():
-    """
-    Flask application factory — clean, production-ready, fresh start
-    """
-
     # Initialize Flask app with explicit template and static folders
     app = Flask(
         __name__,

@@ -1,43 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>TunedGPT</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
-</head>
-<body class="d-flex flex-column vh-100">
-    <!-- Header -->
-    <div class="p-3 border-bottom">
-        <h2 class="m-0">TunedGPT</h2>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <title>TunedGPT</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+    </head>
+    <body class="d-flex flex-column vh-100">
+        <!-- Header -->
+        <div class="p-3 border-bottom">
+            <h2 class="m-0">TunedGPT</h2>
+        </div>
 
-    <!-- Chat window -->
-    <div class="flex-grow-1 overflow-auto p-3 border-bottom">
-        <!-- Messages will go here -->
-    </div>
+        <!-- Chat window -->
+        <div class="flex-grow-1 overflow-auto p-3 border-bottom">
+            {% for msg in chat_history %}
+                <!-- User message -->
+                <div class="align-self-end bg-primary text-white p-2 rounded mb-2" style="max-width: 70%;">
+                    {{ msg.user_message }}
+                </div>
 
-    <!-- Input + button -->
-    <div class="p-3 d-flex border-top">
-        <form method="post" class="w-100">
-            <div class="row">
-                <div class="col-9">
-                    <input type="text" name="message" class="form-control me-2" placeholder="Type a message...">
+                <!-- AI response -->
+                <div class="align-self-start bg-light text-dark p-2 rounded mb-2" style="max-width: 70%;">
+                    {{ msg.response }}
                 </div>
-                <div class="col-2">
-                    <select id="mode-select" name="mode-select" class="form-select me-2" style="width: auto;">
-                        <option value="chatgpt-5-mini" selected>ChatGPT-5 Mini</option>
-                        <option value="chatgpt-5" selected>ChatGPT-5</option>
-                        <option value="imagegen">Image Generation</option>
-                    </select>
+            {% endfor %}
+        </div>
+
+        <!-- Input + button -->
+        <div class="p-3 d-flex border-top">
+            <form method="post" class="w-100">
+                <div class="row">
+                    <div class="col-9">
+                        <input type="text" name="message" class="form-control me-2" placeholder="Type a message...">
+                    </div>
+                    <div class="col-2">
+                        <select id="mode-select" name="mode-select" class="form-select me-2" style="width: auto;">
+                            <option value="chatgpt-5-mini" selected>ChatGPT-5 Mini</option>
+                            <option value="chatgpt-5" selected>ChatGPT-5</option>
+                            <option value="imagegen">Image Generation</option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-primary" type="submit">Send</button>
+                    </div>
                 </div>
-                <div class="col-1">
-                    <button class="btn btn-primary" type="submit">Send</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</body>
+            </form>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}">
+
+        <!-- Custom One-Off JS -->
+        <script>
+            const chatContainer = document.getElementById("chat-container");
+            if (chatContainer) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        </script>
+    </body>
 </html>
 
 
