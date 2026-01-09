@@ -2,6 +2,10 @@
 import requests
 import os
 
+# Logging
+import logging
+logger = logging.getLogger(__name__)
+
 # Returns booleon true/false if authed successfully or not
 def authenticate(username, password):
     # Snag the auth token from the environment
@@ -16,6 +20,8 @@ def authenticate(username, password):
         "Content-type": "application/json"
     }
 
+    logger.debug(headers)
+    
     # Body 
     body = {
         "email": username,
@@ -23,8 +29,12 @@ def authenticate(username, password):
         "role": "ROLE_TUNEDGPT"
     }
 
+    logger.debug(body)
+
     # POST request and grab response
     response = requests.post(url, headers=headers, json=body)
+
+    logger.debug(response)
 
     # Parse it with JSON
     data = response.json()
@@ -33,4 +43,5 @@ def authenticate(username, password):
     has_role = bool(data['has_role'])
 
     # Return bool true or false if user has role
+    logger.debug(has_role)
     return has_role
