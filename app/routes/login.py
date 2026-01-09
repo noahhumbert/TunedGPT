@@ -12,9 +12,9 @@ def login_screen():
         return redirect(url_for('chat.chat_screen'))
     
     # On form submit
-    if request.method == 'post':
+    if request.method == 'POST':
         # Grab username and password form form
-        username = request.form.get("_username")
+        username = request.form.get("_email")
         password = request.form.get("_password")
 
         # Check if the credentials are valid
@@ -28,7 +28,7 @@ def login_screen():
             return redirect(url_for("chat.chat_screen"))
         
         # Render the login page
-        return render_template('login.login_screen')
+        return render_template('login.html')
 
     # Render the login page
-    return render_template('login.login_screen')
+    return render_template('login.html')
