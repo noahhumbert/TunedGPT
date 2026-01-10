@@ -84,6 +84,8 @@
     background-color: var(--chat_textbox_focus_background);
     color: var(--chat_textbox_focus_text);
     outline: none;
+    box-shadow: none;      
+    -webkit-box-shadow: none;
 }
 
 /* Model Dropdown Styling */
