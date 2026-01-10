@@ -43,6 +43,9 @@ def pull_chat_history(email: str):
         ORDER BY timestamp ASC
     """
 
+    # Initialze rows
+    rows = []
+
     # Execute Command
     try:
         cursor.execute(sql, (email,))
@@ -64,8 +67,8 @@ def pull_chat_history(email: str):
     # Iterate through the messages and append the questions and responses from the DB
     for row in rows:
         # Append to conversation
-        conversation.append({"role": "user", "content": row[0]})
-        conversation.append({"role": "assistant", "content": row[1]})
+        conversation.append({"role": "user", "content": f"{row[0]}"})
+        conversation.append({"role": "assistant", "content": f"{row[1]}"})
 
     # return the conversation
     return conversation
