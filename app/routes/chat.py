@@ -1,5 +1,5 @@
 # Import libraries
-from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for
 
 # Pull in service
 from app.services.chat_service import get_chat_response, parse_chat_response, inject_chat_interaction, cleanup_chat_history, get_chat_history
@@ -19,7 +19,7 @@ def chat_screen():
 
         if not user_message:
             chat_history = get_chat_history(session["user_email"])
-            return render_template("chat.html", chat_history=chat_history, email=session["user_email"])
+            return render_template("chat.html", chat_history=chat_history, email=session["user_email"], session=session)
 
         # Use the message and model to get a response json
         result = get_chat_response(user_message, dropdown_value, session["user_email"])
@@ -36,9 +36,9 @@ def chat_screen():
         # Pull the chat history for the template
         chat_history = get_chat_history(session["user_email"])
 
-        return render_template("chat.html", chat_history=chat_history, email=session["user_email"])
+        return render_template("chat.html", chat_history=chat_history, email=session["user_email"], session=session)
 
     # Pull the chat history for the template
     chat_history = get_chat_history(session["user_email"])
 
-    return render_template("chat.html", chat_history=chat_history, email=session["user_email"])
+    return render_template("chat.html", chat_history=chat_history, email=session["user_email"], session=session)
