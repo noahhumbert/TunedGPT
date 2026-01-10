@@ -97,6 +97,12 @@
     color: var(--chat_dropdown_text);
 }
 
+.chat_mode_dropdown:focus {
+    outline: none;
+    box-shadow: none;      
+    -webkit-box-shadow: none;
+}
+
 /* submit button styling */
 .message_send_button {
     background-color: var(--submit_button_background);
