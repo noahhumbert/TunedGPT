@@ -18,7 +18,8 @@ def chat_screen():
         dropdown_value = request.form.get("mode-select") 
 
         if not user_message:
-            return jsonify({"error": "No message provided"}), 400
+            chat_history = get_chat_history(session["user_email"])
+            return render_template("chat.html", chat_history=chat_history)
 
         # Use the message and model to get a response json
         result = get_chat_response(user_message, dropdown_value, session["user_email"])
