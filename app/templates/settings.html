@@ -115,11 +115,107 @@
                     name="chat_background_color"
                     value="{{ settings_data.get('chat_background_color', '#949494') }}">
 
-                <!-- Footer -->
+                <!-- Chat Footer -->
                 <h5 class="mt-4">Chat Footer</h5>
                 <input type="color" class="form-control form-control-color"
                     name="chat_footer_background"
                     value="{{ settings_data.get('chat_footer_background', '#949494') }}">
+
+                <!-- Chat Text Box -->
+                <h5 class="mt-4">Chat Text Box</h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_textbox_background"
+                            value="{{ settings_data.get('chat_textbox_background', '#949494') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_textbox_text"
+                            value="{{ settings_data.get('chat_textbox_text', '#FFFFFF') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Focus Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_textbox_focus_background"
+                            value="{{ settings_data.get('chat_textbox_focus_background', '#949494') }}">
+                    </div>
+                    <div class="col-md-4 mt-1">
+                        <label class="form-label">Focus Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_textbox_focus_text"
+                            value="{{ settings_data.get('chat_textbox_focus_text', '#FFFFFF') }}">
+                    </div>
+                    <div class="col-md-4 mt-1">
+                        <label class="form-label">Focus Border</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_textbox_focus_border"
+                            value="{{ settings_data.get('chat_textbox_focus_border', '#FFFFFF') }}">
+                    </div>
+                </div>
+
+                <!-- Dropdown Menu -->
+                <h5 class="mt-4">Dropdown Menu</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_dropdown_background"
+                            value="{{ settings_data.get('chat_dropdown_background', '#949494') }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_dropdown_text"
+                            value="{{ settings_data.get('chat_dropdown_text', '#FFFFFF') }}">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <h5 class="mt-4">Submit Button</h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="submit_button_background"
+                            value="{{ settings_data.get('submit_button_background', '#949494') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="submit_button_text"
+                            value="{{ settings_data.get('submit_button_text', '#FFFFFF') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Border</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="submit_button_border"
+                            value="{{ settings_data.get('submit_button_border', '#FFFFFF') }}">
+                    </div>
+                </div>
+
+                <div class="row g-3 mt-1">
+                    <div class="col-md-4">
+                        <label class="form-label">Hover Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="submit_button_hover_background"
+                            value="{{ settings_data.get('submit_button_hover_background', '#FFFFFF') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Hover Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="submit_button_hover_text"
+                            value="{{ settings_data.get('submit_button_hover_text', '#949494') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Hover Border</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="submit_button_hover_border"
+                            value="{{ settings_data.get('submit_button_hover_border', '#949494') }}">
+                    </div>
+                </div>
 
                 <!-- Submit -->
                 <div class="mt-5">
