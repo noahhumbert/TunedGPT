@@ -2,7 +2,7 @@
 import os
 import mysql.connector
 from mysql.connector import Error
-import datetime
+from datetime import datetime
 
 # Pull in database initialization
 from app.services.database_init import initialize_database_connection
