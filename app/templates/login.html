@@ -31,7 +31,16 @@
                 </div>
             </form>
             {% if error %}
-                <p class="text-danger">{{ error }}</p>
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+
+            {% if debug %}
+                <div class="card mt-3">
+                    <div class="card-header">DEBUG</div>
+                    <div class="card-body">
+                        <pre>{{ debug }}</pre>
+                    </div>
+                </div>
             {% endif %}
         </div>
 
