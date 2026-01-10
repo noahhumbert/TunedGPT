@@ -25,6 +25,10 @@
     /* Chat Text Box Formatting while focused */
     --chat_textbox_focus_background: #949494;
     --chat_textbox_focus_text: #FFFFFF;
+
+    /* Chat dropdown menu formatting */
+    --chat_dropdown_background: #949494;
+    --chat_dropdown_text: #FFFFFF;
 }
 
 /* Header Formatting */
@@ -65,7 +69,15 @@
     color: var(--chat_textbox_text);
 }
 
+/* Message Text Box while being typed in formatting */
 .chat_textbox:focus {
     background-color: var(--chat_textbox_focus_background);
     color: var(--chat_textbox_focus_text);
+}
+
+/* Model Dropdown Styling */
+.chat_model_dropdown {
+    width: auto;
+    background-color: var(--chat_dropdown_background);
+    color: var(--chat_dropdown_text);
 }
