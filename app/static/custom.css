@@ -57,6 +57,11 @@ html, body {
     color: var(--chat_header_text);
 }
 
+.cog {
+    font-family: "Segoe UI Symbol", "Arial", sans-serif;
+    font-size: 24px;
+}
+
 /* User message styling and formatting */
 .user_chat_message {
     color: var(--user_message_text);
