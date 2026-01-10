@@ -17,6 +17,10 @@
 
     /* Chat footer formatting */
     --chat_footer_background: #949494;
+
+    /* Chat Text Box Formatting */
+    --chat_textbox_background: #949494;
+    --chat_textbox_text: #FFFFFF;
 }
 
 /* Header Formatting */
@@ -49,4 +53,10 @@
 /* Chat footer formatting */
 .chat_footer {
     background-color: var(--chat_footer_background);
+}
+
+/* Message Text Box Formatting */
+.chat_textbox {
+    background-color: var(--chat_textbox_background);
+    color: var(--chat_textbox_text);
 }
