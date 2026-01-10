@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>TunedGPT</title>
+        <title>{{ styles.chat_name }}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <style>
             :root {
@@ -65,7 +65,7 @@
         <!-- Header -->
         <div class="p-3 row chat_header">
             <div class="col-11">
-                <h2 class="m-0">TunedGPT</h2>
+                <h2 class="m-0">{{ styles.chat_name }}</h2>
             </div>
             <div class="col-1">
                 <a class="btn btn-primary settings_button" href="{{ url_for('settings.settings_screen') }}">Settings</a>
