@@ -44,4 +44,4 @@ def chat_screen():
     # Pull the chat history for the template
     chat_history = get_chat_history(user_email)
 
-    return render_template("chat.html", chat_history=chat_history)
+    return render_template("chat.html", chat_history=chat_history, email=user_email)
