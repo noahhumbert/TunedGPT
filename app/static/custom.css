@@ -88,7 +88,6 @@ html, body {
     border-color: var(--user_message_border);
     width: fit-content;
     max-width: 65%;
-    border-width: 2px;
 }
 
 /* AI message styling and formatting */
@@ -98,7 +97,6 @@ html, body {
     border-color: var(--ai_message_border);
     width: fit-content;
     max-width: 65%;
-    border-width: 2px;
 }
 
 /* Chat container styling and formatting */
