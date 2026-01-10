@@ -33,10 +33,12 @@
     /* submit button styling */
     --submit_button_background: #949494;
     --submit_button_text: #FFFFFF;
+    --submit_button_border: #949494;
 
     /* submit button while being hovered styling */
     --submit_button_hover_background: #FFFFFF;
     --submit_button_hover_text: #949494;
+    --submit_button_hover_border: #FFFFFF;
 }
 
 /* Header Formatting */
@@ -81,6 +83,7 @@
 .chat_textbox:focus {
     background-color: var(--chat_textbox_focus_background);
     color: var(--chat_textbox_focus_text);
+    outline: none;
 }
 
 /* Model Dropdown Styling */
@@ -94,10 +97,12 @@
 .message_send_button {
     background-color: var(--submit_button_background);
     color: var(--submit_button_text);
+    border-color: var(--submit_button_border);
 }
 
 /* Submit button while being hovered */
 .message_send_button:hover {
     background-color: var(--submit_button_hover_background);
     color: var(--submit_button_hover_text);
+    border-color: var(--submit_button_hover_border)
 }
