@@ -15,6 +15,7 @@
 
     /* Chat window colors */
     --chat_background_color: #949494;
+    --chat_border_color: #949494;
 
     /* Chat footer formatting */
     --chat_footer_background: #949494;
@@ -67,7 +68,7 @@
 /* Chat container styling and formatting */
 .chat_container {
     background-color: var(--chat_background_color);
-    border-color: var(--chat_footer_border);
+    border-color: var(--chat_border_color);
 }
 
 /* Chat footer formatting */
