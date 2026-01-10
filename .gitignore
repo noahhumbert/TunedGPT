@@ -1,4 +1,9 @@
 .env.prod
 .env.dev
 .env.local
+.env.db
 .env
+
+app/__pycache__/
+app/routes/__pycache__/
+app/services/__pycache__/
