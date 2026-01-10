@@ -13,15 +13,15 @@
         </div>
 
         <!-- Chat window -->
-        <div id="chat-container" class="flex-grow-1 overflow-auto p-3 border-bottom">
+        <div class="chat-container flex-grow-1 overflow-auto p-3 border-bottom">
             {% for msg in chat_history %}
                 <!-- User message -->
-                <div class="align-self-end bg-primary text-white p-2 rounded mb-2" style="max-width: 70%;">
+                <div class="align-self-end user_chat_message p-2 rounded mb-2" style="max-width: 70%;">
                     {{ msg.user_message }}
                 </div>
 
                 <!-- AI response -->
-                <div class="align-self-start bg-light text-dark p-2 rounded mb-2" style="max-width: 70%;">
+                <div class="align-self-start ai_chat_message p-2 rounded mb-2" style="max-width: 70%;">
                     {{ msg.response }}
                 </div>
             {% endfor %}
