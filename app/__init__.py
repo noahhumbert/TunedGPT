@@ -28,4 +28,7 @@ def create_app():
     from app.routes.login import login_bp
     app.register_blueprint(login_bp) # serves '/login'
 
+    from app.routes.logout import logout_bp
+    app.register_blueprint(logout_bp) # serves '/logout'
+
     return app
