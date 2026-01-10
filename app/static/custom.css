@@ -29,6 +29,14 @@
     /* Chat dropdown menu formatting */
     --chat_dropdown_background: #949494;
     --chat_dropdown_text: #FFFFFF;
+
+    /* submit button styling */
+    --submit_button_background: #949494;
+    --submit_button_text: #FFFFFF;
+
+    /* submit button while being hovered styling */
+    --submit_button_hover_background: #FFFFFF;
+    --submit_button_hover_text: #FFFFFF;
 }
 
 /* Header Formatting */
@@ -80,4 +88,16 @@
     width: auto;
     background-color: var(--chat_dropdown_background);
     color: var(--chat_dropdown_text);
+}
+
+/* submit button styling */
+.message_send_button {
+    background-color: var(--submit_button_background);
+    color: var(--submit_button_text);
+}
+
+/* Submit button while being hovered */
+.message_send_button:hover {
+    background-color: var(--submit_button_hover_background);
+    color: var(--submit_button_hover_text);
 }
