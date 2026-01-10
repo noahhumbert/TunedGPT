@@ -97,7 +97,7 @@
     color: var(--chat_dropdown_text);
 }
 
-.chat_mode_dropdown:active {
+.chat_mode_dropdown:focus {
     outline: none;
     box-shadow: none;      
     -webkit-box-shadow: none;
