@@ -17,28 +17,31 @@ def chat_screen():
         user_message = request.form.get("message")
         dropdown_value = request.form.get("mode-select") 
 
+        # Get email
+        user_email = session["user_email"]
+
         if not user_message:
-            chat_history = get_chat_history(session["user_email"])
+            chat_history = get_chat_history(user_email)
             return render_template("chat.html", chat_history=chat_history)
 
         # Use the message and model to get a response json
-        result = get_chat_response(user_message, dropdown_value, session["user_email"])
+        result = get_chat_response(user_message, dropdown_value, user_email)
 
         # Parse the result json
         id, timestamp, response, tokens_used = parse_chat_response(result)
 
         # Inject reply into the DB
-        inject_chat_interaction(session["user_email"], id, timestamp, user_message, dropdown_value, response, tokens_used)
+        inject_chat_interaction(user_email, id, timestamp, user_message, dropdown_value, response, tokens_used)
 
         # Cleanup chat DB
         cleanup_chat_history()
 
         # Pull the chat history for the template
-        chat_history = get_chat_history(session["user_email"])
+        chat_history = get_chat_history(user_email)
 
         return render_template("chat.html", chat_history=chat_history)
 
     # Pull the chat history for the template
-    chat_history = get_chat_history(session["user_email"])
+    chat_history = get_chat_history(user_email)
 
     return render_template("chat.html", chat_history=chat_history)
