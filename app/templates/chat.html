@@ -5,60 +5,60 @@
         <title>TunedGPT</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <style>
-            /* Root colors. This is where all other colors will be selected */
             :root {
                 /* Chat Header Formatting */
-                --chat_header_background: #949494;
-                --chat_header_text: #000000;
+                --chat_header_background: {{ styles.chat_header_background }};
+                --chat_header_text: {{ styles.chat_header_text }};
 
                 /* Settings Button Formatting */
-                --settings_button_background: #949494;
-                --settings_button_text: #FFFFFF;
-                --settings_button_border: #FFFFFF;
+                --settings_button_background: {{ styles.settings_button_background }};
+                --settings_button_text: {{ styles.settings_button_text }};
+                --settings_button_border: {{ styles.settings_button_border }};
 
-                /* settings button formatting while hovering */
-                --settings_button_hover_background: #FFFFFF;
-                --settings_button_hover_text: #949494;
-                --settings_button_hover_border: #949494;
+                /* Settings button hover formatting */
+                --settings_button_hover_background: {{ styles.settings_button_hover_background }};
+                --settings_button_hover_text: {{ styles.settings_button_hover_text }};
+                --settings_button_hover_border: {{ styles.settings_button_hover_border }};
 
                 /* User message colors */
-                --user_message_text: #FFFFFF;
-                --user_message_background: #000000;
+                --user_message_text: {{ styles.user_message_text }};
+                --user_message_background: {{ styles.user_message_background }};
 
                 /* AI message colors */
-                --ai_message_text: #000000;
-                --ai_message_background: #FFFFFF;
+                --ai_message_text: {{ styles.ai_message_text }};
+                --ai_message_background: {{ styles.ai_message_background }};
 
                 /* Chat window colors */
-                --chat_background_color: #949494;
+                --chat_background_color: {{ styles.chat_background_color }};
 
                 /* Chat footer formatting */
-                --chat_footer_background: #949494;
+                --chat_footer_background: {{ styles.chat_footer_background }};
 
                 /* Chat Text Box Formatting */
-                --chat_textbox_background: #949494;
-                --chat_textbox_text: #FFFFFF;
+                --chat_textbox_background: {{ styles.chat_textbox_background }};
+                --chat_textbox_text: {{ styles.chat_textbox_text }};
 
                 /* Chat Text Box Formatting while focused */
-                --chat_textbox_focus_background: #949494;
-                --chat_textbox_focus_text: #FFFFFF;
-                --chat_textbox_focus_border: #FFFFFF;
+                --chat_textbox_focus_background: {{ styles.chat_textbox_focus_background }};
+                --chat_textbox_focus_text: {{ styles.chat_textbox_focus_text }};
+                --chat_textbox_focus_border: {{ styles.chat_textbox_focus_border }};
 
                 /* Chat dropdown menu formatting */
-                --chat_dropdown_background: #949494;
-                --chat_dropdown_text: #FFFFFF;
+                --chat_dropdown_background: {{ styles.chat_dropdown_background }};
+                --chat_dropdown_text: {{ styles.chat_dropdown_text }};
 
-                /* submit button styling */
-                --submit_button_background: #949494;
-                --submit_button_text: #FFFFFF;
-                --submit_button_border: #FFFFFF;
+                /* Submit button styling */
+                --submit_button_background: {{ styles.submit_button_background }};
+                --submit_button_text: {{ styles.submit_button_text }};
+                --submit_button_border: {{ styles.submit_button_border }};
 
-                /* submit button while being hovered styling */
-                --submit_button_hover_background: #FFFFFF;
-                --submit_button_hover_text: #949494;
-                --submit_button_hover_border: #949494;
+                /* Submit button hover styling */
+                --submit_button_hover_background: {{ styles.submit_button_hover_background }};
+                --submit_button_hover_text: {{ styles.submit_button_hover_text }};
+                --submit_button_hover_border: {{ styles.submit_button_hover_border }};
             }
         </style>
+
         <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
     </head>
     <body class="d-flex flex-column vh-100">
