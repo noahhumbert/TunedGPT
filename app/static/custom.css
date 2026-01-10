@@ -100,7 +100,7 @@
     -webkit-box-shadow: none;
 }
 
-.chat_mode_dropdown:focus {
+.chat_mode_dropdown:hover {
     outline: none;
     box-shadow: none;      
     -webkit-box-shadow: none;
