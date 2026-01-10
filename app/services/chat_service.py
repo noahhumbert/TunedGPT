@@ -33,7 +33,7 @@ def pull_chat_history(email: str):
     conn = initialize_message_database
 
     # Initialize Cursor
-    cursor = conn.cursor(Dictionary=True)
+    cursor = conn.cursor()
 
     # SQL query
     sql = """
@@ -212,7 +212,7 @@ def get_chat_history(email: str):
     conn = initialize_message_database()
 
     # Initialize the Cursor
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
 
     # SQL Query
     sql = """
