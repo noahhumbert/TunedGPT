@@ -15,7 +15,8 @@
                 <!-- Chat Name -->
                 <div class="mb-4">
                     <label class="form-label">Chat Name</label>
-                    <input type="text"class="form-control" name="chat_name">
+                    <input type="text" class="form-control" name="chat_name"
+                        value="{{ settings_data.get('chat_name', 'TunedGPT') }}">
                 </div>
 
                 <!-- Chat Header -->
@@ -24,12 +25,14 @@
                     <div class="col-md-6">
                         <label class="form-label">Header Background</label>
                         <input type="color" class="form-control form-control-color"
-                            name="chat_header_background" value="#949494">
+                            name="chat_header_background"
+                            value="{{ settings_data.get('chat_header_background', '#949494') }}">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Header Text</label>
                         <input type="color" class="form-control form-control-color"
-                            name="chat_header_text" value="#000000">
+                            name="chat_header_text"
+                            value="{{ settings_data.get('chat_header_text', '#000000') }}">
                     </div>
                 </div>
 
@@ -39,17 +42,20 @@
                     <div class="col-md-4">
                         <label class="form-label">Background</label>
                         <input type="color" class="form-control form-control-color"
-                            name="settings_button_background" value="#949494">
+                            name="settings_button_background"
+                            value="{{ settings_data.get('settings_button_background', '#949494') }}">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Text</label>
                         <input type="color" class="form-control form-control-color"
-                            name="settings_button_text" value="#FFFFFF">
+                            name="settings_button_text"
+                            value="{{ settings_data.get('settings_button_text', '#FFFFFF') }}">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Border</label>
                         <input type="color" class="form-control form-control-color"
-                            name="settings_button_border" value="#FFFFFF">
+                            name="settings_button_border"
+                            value="{{ settings_data.get('settings_button_border', '#FFFFFF') }}">
                     </div>
                 </div>
 
@@ -57,17 +63,20 @@
                     <div class="col-md-4">
                         <label class="form-label">Hover Background</label>
                         <input type="color" class="form-control form-control-color"
-                            name="settings_button_hover_background" value="#FFFFFF">
+                            name="settings_button_hover_background"
+                            value="{{ settings_data.get('settings_button_hover_background', '#FFFFFF') }}">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Hover Text</label>
                         <input type="color" class="form-control form-control-color"
-                            name="settings_button_hover_text" value="#949494">
+                            name="settings_button_hover_text"
+                            value="{{ settings_data.get('settings_button_hover_text', '#949494') }}">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Hover Border</label>
                         <input type="color" class="form-control form-control-color"
-                            name="settings_button_hover_border" value="#949494">
+                            name="settings_button_hover_border"
+                            value="{{ settings_data.get('settings_button_hover_border', '#949494') }}">
                     </div>
                 </div>
 
@@ -77,34 +86,40 @@
                     <div class="col-md-6">
                         <label class="form-label">User Message Text</label>
                         <input type="color" class="form-control form-control-color"
-                            name="user_message_text" value="#FFFFFF">
+                            name="user_message_text"
+                            value="{{ settings_data.get('user_message_text', '#FFFFFF') }}">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">User Message Background</label>
                         <input type="color" class="form-control form-control-color"
-                            name="user_message_background" value="#000000">
+                            name="user_message_background"
+                            value="{{ settings_data.get('user_message_background', '#000000') }}">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">AI Message Text</label>
                         <input type="color" class="form-control form-control-color"
-                            name="ai_message_text" value="#000000">
+                            name="ai_message_text"
+                            value="{{ settings_data.get('ai_message_text', '#000000') }}">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">AI Message Background</label>
                         <input type="color" class="form-control form-control-color"
-                            name="ai_message_background" value="#FFFFFF">
+                            name="ai_message_background"
+                            value="{{ settings_data.get('ai_message_background', '#FFFFFF') }}">
                     </div>
                 </div>
 
                 <!-- Chat Window -->
                 <h5 class="mt-4">Chat Window</h5>
                 <input type="color" class="form-control form-control-color"
-                    name="chat_background_color" value="#949494">
+                    name="chat_background_color"
+                    value="{{ settings_data.get('chat_background_color', '#949494') }}">
 
                 <!-- Footer -->
                 <h5 class="mt-4">Chat Footer</h5>
                 <input type="color" class="form-control form-control-color"
-                    name="chat_footer_background" value="#949494">
+                    name="chat_footer_background"
+                    value="{{ settings_data.get('chat_footer_background', '#949494') }}">
 
                 <!-- Submit -->
                 <div class="mt-5">
