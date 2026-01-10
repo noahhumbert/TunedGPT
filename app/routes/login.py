@@ -8,7 +8,7 @@ login_bp = Blueprint("login", __name__)
 @login_bp.route("/login", methods=["GET", "POST"])
 def login_screen():
     # If the user is logged in, redirect them to chat
-    if 'logged_in' in session and session['logged_in']:
+    if session['logged_in']:
         return redirect(url_for('chat.chat_screen'))
     
     # On form submit
