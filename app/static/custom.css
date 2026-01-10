@@ -2,7 +2,6 @@
 :root {
     /* Chat Header Formatting*/
     --chat_header_background: #949494;
-    --chat_header_border: #949494;
     --chat_header_text: #000000;
 
     /* User message colors */
@@ -15,11 +14,9 @@
 
     /* Chat window colors */
     --chat_background_color: #949494;
-    --chat_border_color: #949494;
 
     /* Chat footer formatting */
     --chat_footer_background: #949494;
-    --chat_footer_border: #949494;
 
     /* Chat Text Box Formatting */
     --chat_textbox_background: #949494;
@@ -45,7 +42,6 @@
 /* Header Formatting */
 .chat_header {
     background-color: var(--chat_header_background);
-    border-color: var(--chat_header_border);
     color: var(--chat_header_text);
 }
 
@@ -68,13 +64,11 @@
 /* Chat container styling and formatting */
 .chat_container {
     background-color: var(--chat_background_color);
-    border-color: var(--chat_border_color);
 }
 
 /* Chat footer formatting */
 .chat_footer {
     background-color: var(--chat_footer_background);
-    border-color: var(--chat_footer_border);
 }
 
 /* Message Text Box Formatting */
