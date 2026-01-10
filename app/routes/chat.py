@@ -11,39 +11,34 @@ def chat_screen():
     if not 'logged_in' in session:
         return redirect(url_for('login.login_screen'))
         
-    user_email = session["user_email"]
-
     # Form submit handling
     if request.method == "POST":
         # Get data from the form
         user_message = request.form.get("message")
         dropdown_value = request.form.get("mode-select") 
 
-        # Get email
-        user_email = session["user_email"]
-
         if not user_message:
-            chat_history = get_chat_history(user_email)
-            return render_template("chat.html", chat_history=chat_history, email=user_email, user_session=session)
+            chat_history = get_chat_history(session["user_email"])
+            return render_template("chat.html", chat_history=chat_history, email=session["user_email"], user_session=session)
 
         # Use the message and model to get a response json
-        result = get_chat_response(user_message, dropdown_value, user_email)
+        result = get_chat_response(user_message, dropdown_value, session["user_email"])
 
         # Parse the result json
         id, timestamp, response, tokens_used = parse_chat_response(result)
 
         # Inject reply into the DB
-        inject_chat_interaction(user_email, id, timestamp, user_message, dropdown_value, response, tokens_used)
+        inject_chat_interaction(session["user_email"], id, timestamp, user_message, dropdown_value, response, tokens_used)
 
         # Cleanup chat DB
         cleanup_chat_history()
 
         # Pull the chat history for the template
-        chat_history = get_chat_history(user_email)
+        chat_history = get_chat_history(session["user_email"])
 
-        return render_template("chat.html", chat_history=chat_history, email=user_email, user_session=session)
+        return render_template("chat.html", chat_history=chat_history, email=session["user_email"], user_session=session)
 
     # Pull the chat history for the template
-    chat_history = get_chat_history(user_email)
+    chat_history = get_chat_history(session["user_email"])
 
-    return render_template("chat.html", chat_history=chat_history, email=user_email, user_session=session)
+    return render_template("chat.html", chat_history=chat_history, email=session["user_email"], user_session=session)
