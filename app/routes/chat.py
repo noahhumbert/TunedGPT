@@ -19,7 +19,7 @@ def chat_screen():
 
         if not user_message:
             chat_history = get_chat_history(session["user_email"])
-            return render_template("chat.html", chat_history=chat_history)
+            return redirect(url_for("chat.chat_screen"))
 
         # Use the message and model to get a response json
         result = get_chat_response(user_message, dropdown_value, session["user_email"])
@@ -36,7 +36,7 @@ def chat_screen():
         # Pull the chat history for the template
         chat_history = get_chat_history(session["user_email"])
 
-        return render_template("chat.html", chat_history=chat_history)
+        return redirect(url_for("chat.chat_screen"))
 
     # Pull the chat history for the template
     chat_history = get_chat_history(session["user_email"])
