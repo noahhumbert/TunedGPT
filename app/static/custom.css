@@ -42,6 +42,14 @@
     --submit_button_hover_border: #FFFFFF;
 }
 
+/* format the page */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
 /* Header Formatting */
 .chat_header {
     background-color: var(--chat_header_background);
