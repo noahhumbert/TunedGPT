@@ -70,11 +70,13 @@ html, body {
 .settings_button {
     background-color: var(--settings_button_background);
     color: var(--settings_button_text);
+    border-color: var(--settings_button_border)
 }
 
 .settings_button:hover {
     background-color: var(--settings_button_hover_background);
     color: var(--settings_button_hover_text);
+    border-color: var(--settings_button_hover_border)
 }
 
 /* User message styling and formatting */
