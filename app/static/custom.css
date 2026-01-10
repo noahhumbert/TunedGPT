@@ -7,10 +7,12 @@
     /* Settings Button Formatting */
     --settings_button_background: #949494;
     --settings_button_text: #FFFFFF;
+    --settings_button_border: #FFFFFF;
 
     /* settings button formatting while hovering */
     --settings_button_hover_background: #FFFFFF;
     --settings_button_hover_text: #949494;
+    --settings_button_hover_border: #949494;
 
     /* User message colors */
     --user_message_text: #FFFFFF;
