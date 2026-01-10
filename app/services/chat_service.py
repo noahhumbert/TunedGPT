@@ -214,7 +214,7 @@ def get_chat_history(email: str):
     conn = initialize_message_database()
 
     # Initialize the Cursor
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
     # SQL Query
     sql = """
