@@ -93,14 +93,12 @@ def get_chat_response(message: str, model: str, email: str):
     if (model=="chatgpt-5"):
         data = {
             "model": "gpt-5",
-            "messages": conversation,
-            "temperature": 0.7
+            "messages": conversation
         }
     elif (model=="imagegen"):
         data = {
             "model": "gpt-image-1.5",
-            "messages": conversation,
-            "temperature": 0.7
+            "messages": conversation
         }
     
     # Run the post request
