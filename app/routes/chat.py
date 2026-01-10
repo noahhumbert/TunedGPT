@@ -11,6 +11,8 @@ def chat_screen():
     if not 'logged_in' in session:
         return redirect(url_for('login.login_screen'))
         
+    user_email = session["user_email"]
+
     # Form submit handling
     if request.method == "POST":
         # Get data from the form
