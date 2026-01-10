@@ -85,7 +85,7 @@ html, body {
 .user_chat_message {
     color: var(--user_message_text);
     background-color: var(--user_message_background);
-    border: var(--user_message_border);
+    border-color: var(--user_message_border);
     width: fit-content;
     max-width: 65%;
 }
@@ -94,7 +94,7 @@ html, body {
 .ai_chat_message {
     color: var(--ai_message_text);
     background-color: var(--ai_message_background);
-    border: var(--ai_message_border);
+    border-color: var(--ai_message_border);
     width: fit-content;
     max-width: 65%;
 }
