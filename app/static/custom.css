@@ -1,8 +1,16 @@
 /* Root colors. This is where all other colors will be selected */
 :root {
-    /* Chat Header Formatting*/
+    /* Chat Header Formatting */
     --chat_header_background: #949494;
     --chat_header_text: #000000;
+
+    /* Settings Button Formatting */
+    --settings_button_background: #949494;
+    --settings_button_text: #FFFFFF;
+
+    /* settings button formatting while hovering */
+    --settings_button_hover_background: #FFFFFF;
+    --settings_button_hover_text: #949494;
 
     /* User message colors */
     --user_message_text: #FFFFFF;
@@ -57,9 +65,14 @@ html, body {
     color: var(--chat_header_text);
 }
 
-.cog {
-    font-family: "Segoe UI Symbol", "Arial", sans-serif;
-    font-size: 24px;
+.settings_button {
+    background-color: var(--settings_button_background);
+    color: var(--settings_button_text);
+}
+
+.settings_button:hover {
+    background-color: var(--settings_button_hover_background);
+    color: var(--settings_button_hover_text);
 }
 
 /* User message styling and formatting */
