@@ -16,12 +16,14 @@
 .user_chat_message {
     color: var(--user_message_text);
     background-color: var(--user_message_background);
+    max-width: 65%;
 }
 
 /* AI message styling and formatting */
 .ai_chat_message {
     color: var(--ai_message_text);
     background-color: var(--ai_message_background);
+    max-width: 65%;
 }
 
 .chat_container {
