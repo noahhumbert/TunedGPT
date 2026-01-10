@@ -16,7 +16,7 @@
 .user_chat_message {
     color: var(--user_message_text);
     background-color: var(--user_message_background);
-    width: auto;
+    width: fit-content;
     max-width: 65%;
 }
 
@@ -24,7 +24,7 @@
 .ai_chat_message {
     color: var(--ai_message_text);
     background-color: var(--ai_message_background);
-    width: auto;
+    width: fit-content;
     max-width: 65%;
 }
 
