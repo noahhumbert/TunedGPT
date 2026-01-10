@@ -95,12 +95,9 @@
     width: auto;
     background-color: var(--chat_dropdown_background);
     color: var(--chat_dropdown_text);
-    outline: none;
-    box-shadow: none;      
-    -webkit-box-shadow: none;
 }
 
-.chat_mode_dropdown:hover {
+.chat_mode_dropdown:focus {
     outline: none;
     box-shadow: none;      
     -webkit-box-shadow: none;
