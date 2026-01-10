@@ -4,7 +4,7 @@ from flask import Blueprint, session, redirect, url_for
 logout_bp = Blueprint("logout", __name__)
 @logout_bp.route("/logout", methods=["GET"])
 def logout():
-    session['logged_in'] = False
+    session['logged_in'] = None
     session['user_email'] = ''
     session['role'] = ''
 
