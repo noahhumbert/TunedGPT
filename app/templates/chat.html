@@ -21,12 +21,12 @@
         <div class="chat_container d-flex flex-grow-1 flex-column overflow-auto p-3">
             {% for msg in chat_history %}
                 <!-- User message -->
-                <div class="align-self-end user_chat_message p-2 rounded mb-2 border">
+                <div class="align-self-end user_chat_message p-2 rounded mb-2">
                     {{ msg.user_message }}
                 </div>
 
                 <!-- AI response -->
-                <div class="align-self-start ai_chat_message p-2 rounded mb-2 border">
+                <div class="align-self-start ai_chat_message p-2 rounded mb-2">
                     {{ msg.response }}
                 </div>
             {% endfor %}
