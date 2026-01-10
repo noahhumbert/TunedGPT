@@ -8,220 +8,105 @@
     </head>
     <body>
         <div class="container my-4">
+            <form method="POST">
 
-            <h2 class="mb-4">Appearance Settings</h2>
+                <h2 class="mb-4">Appearance Settings</h2>
 
-            <!-- Chat Header -->
-            <h5 class="mt-4">Chat Header</h5>
-            <div class="row g-3">
-                <div class="col-md-6">
-                <label class="form-label">Header Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_header_background"
-                        value="#949494">
-                </div>
-                <div class="col-md-6">
-                <label class="form-label">Header Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_header_text"
-                        value="#000000">
-                </div>
-            </div>
-
-            <!-- Settings Button -->
-            <h5 class="mt-4">Settings Button</h5>
-            <div class="row g-3">
-                <div class="col-md-4">
-                <label class="form-label">Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="settings_button_background"
-                        value="#949494">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="settings_button_text"
-                        value="#FFFFFF">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Border</label>
-                <input type="color" class="form-control form-control-color"
-                        name="settings_button_border"
-                        value="#FFFFFF">
-                </div>
-            </div>
-
-            <div class="row g-3 mt-1">
-                <div class="col-md-4">
-                <label class="form-label">Hover Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="settings_button_hover_background"
-                        value="#FFFFFF">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Hover Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="settings_button_hover_text"
-                        value="#949494">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Hover Border</label>
-                <input type="color" class="form-control form-control-color"
-                        name="settings_button_hover_border"
-                        value="#949494">
-                </div>
-            </div>
-
-            <!-- Messages -->
-            <h5 class="mt-4">Messages</h5>
-            <div class="row g-3">
-                <div class="col-md-6">
-                <label class="form-label">User Message Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="user_message_text"
-                        value="#FFFFFF">
-                </div>
-                <div class="col-md-6">
-                <label class="form-label">User Message Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="user_message_background"
-                        value="#000000">
+                <!-- Chat Header -->
+                <h5 class="mt-4">Chat Header</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Header Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_header_background" value="#949494">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Header Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="chat_header_text" value="#000000">
+                    </div>
                 </div>
 
-                <div class="col-md-6">
-                <label class="form-label">AI Message Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="ai_message_text"
-                        value="#000000">
+                <!-- Settings Button -->
+                <h5 class="mt-4">Settings Button</h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="settings_button_background" value="#949494">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="settings_button_text" value="#FFFFFF">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Border</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="settings_button_border" value="#FFFFFF">
+                    </div>
                 </div>
-                <div class="col-md-6">
-                <label class="form-label">AI Message Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="ai_message_background"
-                        value="#FFFFFF">
-                </div>
-            </div>
 
-            <!-- Chat Window -->
-            <h5 class="mt-4">Chat Window</h5>
-            <div class="row g-3">
-                <div class="col-md-6">
-                <label class="form-label">Chat Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_background_color"
-                        value="#949494">
+                <div class="row g-3 mt-1">
+                    <div class="col-md-4">
+                        <label class="form-label">Hover Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="settings_button_hover_background" value="#FFFFFF">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Hover Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="settings_button_hover_text" value="#949494">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Hover Border</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="settings_button_hover_border" value="#949494">
+                    </div>
                 </div>
-            </div>
 
-            <!-- Footer -->
-            <h5 class="mt-4">Chat Footer</h5>
-            <div class="row g-3">
-                <div class="col-md-6">
-                <label class="form-label">Footer Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_footer_background"
-                        value="#949494">
+                <!-- Messages -->
+                <h5 class="mt-4">Messages</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">User Message Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="user_message_text" value="#FFFFFF">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">User Message Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="user_message_background" value="#000000">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">AI Message Text</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="ai_message_text" value="#000000">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">AI Message Background</label>
+                        <input type="color" class="form-control form-control-color"
+                            name="ai_message_background" value="#FFFFFF">
+                    </div>
                 </div>
-            </div>
 
-            <!-- Text Box -->
-            <h5 class="mt-4">Chat Text Box</h5>
-            <div class="row g-3">
-                <div class="col-md-4">
-                <label class="form-label">Background</label>
+                <!-- Chat Window -->
+                <h5 class="mt-4">Chat Window</h5>
                 <input type="color" class="form-control form-control-color"
-                        name="chat_textbox_background"
-                        value="#949494">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_textbox_text"
-                        value="#FFFFFF">
-                </div>
-            </div>
+                    name="chat_background_color" value="#949494">
 
-            <div class="row g-3 mt-1">
-                <div class="col-md-4">
-                <label class="form-label">Focus Background</label>
+                <!-- Footer -->
+                <h5 class="mt-4">Chat Footer</h5>
                 <input type="color" class="form-control form-control-color"
-                        name="chat_textbox_focus_background"
-                        value="#949494">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Focus Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_textbox_focus_text"
-                        value="#FFFFFF">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Focus Border</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_textbox_focus_border"
-                        value="#FFFFFF">
-                </div>
-            </div>
+                    name="chat_footer_background" value="#949494">
 
-            <!-- Dropdown -->
-            <h5 class="mt-4">Dropdown Menu</h5>
-            <div class="row g-3">
-                <div class="col-md-6">
-                <label class="form-label">Dropdown Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_dropdown_background"
-                        value="#949494">
+                <!-- Submit -->
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-primary">
+                        Save Settings
+                    </button>
                 </div>
-                <div class="col-md-6">
-                <label class="form-label">Dropdown Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="chat_dropdown_text"
-                        value="#FFFFFF">
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <h5 class="mt-4">Submit Button</h5>
-            <div class="row g-3">
-                <div class="col-md-4">
-                <label class="form-label">Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="submit_button_background"
-                        value="#949494">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="submit_button_text"
-                        value="#FFFFFF">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Border</label>
-                <input type="color" class="form-control form-control-color"
-                        name="submit_button_border"
-                        value="#FFFFFF">
-                </div>
-            </div>
-
-            <div class="row g-3 mt-1">
-                <div class="col-md-4">
-                <label class="form-label">Hover Background</label>
-                <input type="color" class="form-control form-control-color"
-                        name="submit_button_hover_background"
-                        value="#FFFFFF">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Hover Text</label>
-                <input type="color" class="form-control form-control-color"
-                        name="submit_button_hover_text"
-                        value="#949494">
-                </div>
-                <div class="col-md-4">
-                <label class="form-label">Hover Border</label>
-                <input type="color" class="form-control form-control-color"
-                        name="submit_button_hover_border"
-                        value="#949494">
-                </div>
-            </div>
+            </form>
         </div>
     </body>
 </html>
