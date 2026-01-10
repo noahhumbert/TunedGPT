@@ -31,6 +31,14 @@
     --chat_dropdown_background: #949494;
     --chat_dropdown_text: #FFFFFF;
 
+    /* Chat dropdown item formatting */
+    --dropdown_item_background: #949494;
+    --dropdown_item_text: #FFFFFF;
+
+    /* Chat dropdown item when being hovered formatting */
+    --dropdown_item_hover_background: #FFFFFF;
+    --dropdown_item_hover_text: #949494;
+
     /* submit button styling */
     --submit_button_background: #949494;
     --submit_button_text: #FFFFFF;
@@ -101,6 +109,18 @@
     outline: none;
     box-shadow: none;      
     -webkit-box-shadow: none;
+}
+
+/* Formatting for dropdown items */
+.dropdown_item {
+    background-color: var(--dropdown_item_background);
+    background-color: var(--dropdown_item_text);
+}
+
+/* Formatting for dropdown items */
+.dropdown_item:hover {
+    background-color: var(--dropdown_item_hover_background);
+    background-color: var(--dropdown_item_hover_text);
 }
 
 /* submit button styling */
