@@ -17,10 +17,12 @@
     /* User message colors */
     --user_message_text: #FFFFFF;
     --user_message_background: #000000;
+    --user_message_border: #FFFFFF;
 
     /* AI message colors */
     --ai_message_text: #000000;
     --ai_message_background: #FFFFFF;
+    --ai_message_border:#000000;
 
     /* Chat window colors */
     --chat_background_color: #949494;
@@ -83,6 +85,7 @@ html, body {
 .user_chat_message {
     color: var(--user_message_text);
     background-color: var(--user_message_background);
+    border-color: var(--user_message_border);
     width: fit-content;
     max-width: 65%;
 }
@@ -91,6 +94,7 @@ html, body {
 .ai_chat_message {
     color: var(--ai_message_text);
     background-color: var(--ai_message_background);
+    border-color: var(--ai_message_border);
     width: fit-content;
     max-width: 65%;
 }
