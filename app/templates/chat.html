@@ -16,6 +16,7 @@
         <div id="chat-container" class="flex-grow-1 overflow-auto p-3 border-bottom">
             <pre>{{ chat_history }}</pre>
             <pre>{{ email }}</pre>
+            <pre>{{ user_session }}</pre>
             {% for msg in chat_history %}
                 <!-- User message -->
                 <div class="align-self-end bg-primary text-white p-2 rounded mb-2" style="max-width: 70%;">
