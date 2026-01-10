@@ -46,6 +46,7 @@
 .chat_header {
     background-color: var(--chat_header_background);
     color: var(--chat_header_text);
+    width: 100%;
 }
 
 /* User message styling and formatting */
