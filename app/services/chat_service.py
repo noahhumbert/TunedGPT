@@ -30,7 +30,7 @@ def initialize_message_database():
 
 def pull_chat_history(email: str):
     # Initialize conneciton
-    conn = initialize_message_database
+    conn = initialize_message_database()
 
     # Initialize Cursor
     cursor = conn.cursor()
