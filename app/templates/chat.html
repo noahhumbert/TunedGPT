@@ -8,12 +8,12 @@
     </head>
     <body class="d-flex flex-column vh-100">
         <!-- Header -->
-        <div class="border-bottom chat_header">
+        <div class="p-3 border-bottom chat_header">
             <h2 class="m-0">TunedGPT</h2>
         </div>
 
         <!-- Chat window -->
-        <div class="chat_container d-flex flex-grow-1 flex-column overflow-auto order-bottom">
+        <div class="chat_container d-flex flex-grow-1 flex-column overflow-auto p-3 border-bottom">
             {% for msg in chat_history %}
                 <!-- User message -->
                 <div class="align-self-end user_chat_message p-2 rounded mb-2">
@@ -28,7 +28,7 @@
         </div>
 
         <!-- Input + button -->
-        <div class="d-flex border-top chat_footer">
+        <div class="p-3 d-flex border-top chat_footer">
             <form method="post" class="w-100">
                 <div class="row">
                     <div class="col-9">
