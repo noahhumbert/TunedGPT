@@ -25,6 +25,7 @@
     /* Chat Text Box Formatting while focused */
     --chat_textbox_focus_background: #949494;
     --chat_textbox_focus_text: #FFFFFF;
+    --chat_textbox_focus_border: #FFFFFF;
 
     /* Chat dropdown menu formatting */
     --chat_dropdown_background: #949494;
@@ -83,6 +84,7 @@
 .chat_textbox:focus {
     background-color: var(--chat_textbox_focus_background);
     color: var(--chat_textbox_focus_text);
+    border-color: var(--chat_textbox_focus_border);
     outline: none;
     box-shadow: none;      
     -webkit-box-shadow: none;
