@@ -31,4 +31,7 @@ def create_app():
     from app.routes.logout import logout_bp
     app.register_blueprint(logout_bp) # serves '/logout'
 
+    from app.routes.settings import settings_bp 
+    app.register_blueprint(settings_bp) # serves '/settings'
+
     return app
