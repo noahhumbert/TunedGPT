@@ -67,6 +67,7 @@
 /* Chat container styling and formatting */
 .chat_container {
     background-color: var(--chat_background_color);
+    border-color: var(--chat_footer_border);
 }
 
 /* Chat footer formatting */
