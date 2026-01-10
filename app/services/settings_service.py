@@ -2,6 +2,7 @@
 import os
 import mysql.connector
 from mysql.connector import Error
+import datetime
 
 # Pull in database initialization
 from app.services.database_init import initialize_database_connection
@@ -127,3 +128,35 @@ def pull_styles(email):
         return result
     else:
         return {}
+    
+def push_settings(email: str, settings: dict):
+    # Initialize Connection
+    conn = initialize_database_connection()
+
+    # Initialize Cursor
+    cursor = conn.cursor()
+
+    # Build the Query
+    set_clause = ", ".join(f"{key} = %s" for key in settings.keys())
+    set_clause += ", updated_at = %s"  # add updated_at
+    values = list(settings.values())
+    values.append(datetime.utcnow())  # updated_at timestamp
+    values.append(email)  # for WHERE clause
+
+    # Query
+    sql = f"""
+            UPDATE user_chat_settings
+            SET {set_clause}
+            WHERE email = %s
+        """
+
+    # Execute
+    try:
+        cursor.execute(sql, values)
+        conn.commit()
+    except Exception as e:
+        print(f"[push_settings] Error: {e}")
+        return False
+    finally:
+        cursor.close()
+        conn.close()

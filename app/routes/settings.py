@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request
 
 # Pull in service
-# from app.services.settings_service import push_settings, pull_settings, apply_settings
+from app.services.settings_service import poke_styles, initialize_user_styles, push_settings, pull_styles
 
 settings_bp = Blueprint("settings", __name__)
 @settings_bp.route("/settings", methods=["GET", "POST"])
@@ -16,16 +16,20 @@ def settings_screen():
         settings_data = request.form.to_dict()
 
         # Push the settings to the DB
-        # push_settings(session['user_email'], settings_data)
-
-        # Pull the settings from the DB
-        # apply_settings(session['user_email'])
+        push_settings(session['user_email'], settings_data)
 
         # Redirect back to the chat with the new settings pulled
         return redirect(url_for('chat.chat_screen'))
 
+    # Poke Styles
+    is_styles = poke_styles(session["user_email"])
+
+    # If there are no styles tied to the email, initialize the styles
+    if not is_styles:
+        initialize_user_styles(session["user_email"])
+
     # Pull the settings to show on the template
-    # settings_data = pull_settings(session['user_email'])
+    settings_data = pull_styles(session['user_email'])
 
     # Return the template
     return render_template('settings.html', settings_data=settings_data)
