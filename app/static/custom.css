@@ -2,7 +2,7 @@
 :root {
     /* Chat Header Formatting*/
     --chat_header_background: #949494;
-    --chat_header_text: #FFFFFF;
+    --chat_header_text: #000000;
 
     /* User message colors */
     --user_message_text: #FFFFFF;
@@ -14,6 +14,9 @@
 
     /* Chat window colors */
     --chat_background_color: #949494;
+
+    /* Chat footer formatting */
+    --chat_footer_background: #949494;
 }
 
 /* Header Formatting */
@@ -41,4 +44,9 @@
 /* Chat container styling and formatting */
 .chat_container {
     background-color: var(--chat_background_color);
+}
+
+/* Chat footer formatting */
+.chat_footer {
+    background-color: var(--chat_footer_background);
 }
