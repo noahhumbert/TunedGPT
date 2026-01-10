@@ -32,7 +32,7 @@ def poke_styles(email: str):
 
     return result is not None
 
-def intitialize_user_styles(email):
+def initialize_user_styles(email):
     # Initialize database connection
     conn = initialize_database_connection()
 
