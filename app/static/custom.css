@@ -114,13 +114,13 @@
 /* Formatting for dropdown items */
 .dropdown_item {
     background-color: var(--dropdown_item_background);
-    background-color: var(--dropdown_item_text);
+    color: var(--dropdown_item_text);
 }
 
 /* Formatting for dropdown items */
 .dropdown_item:hover {
     background-color: var(--dropdown_item_hover_background);
-    background-color: var(--dropdown_item_hover_text);
+    color: var(--dropdown_item_hover_text);
 }
 
 /* submit button styling */
