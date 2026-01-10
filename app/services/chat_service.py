@@ -91,7 +91,7 @@ def get_chat_response(message: str, model: str, email: str):
             "model": "gpt-5-mini",
             "messages": conversation
         }
-    if (model=="chatgpt-5"):
+    elif (model=="chatgpt-5"):
         data = {
             "model": "gpt-5",
             "messages": conversation
