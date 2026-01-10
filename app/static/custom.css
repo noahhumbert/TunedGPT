@@ -42,12 +42,12 @@
     /* submit button styling */
     --submit_button_background: #949494;
     --submit_button_text: #FFFFFF;
-    --submit_button_border: #949494;
+    --submit_button_border: #FFFFFF;
 
     /* submit button while being hovered styling */
     --submit_button_hover_background: #FFFFFF;
     --submit_button_hover_text: #949494;
-    --submit_button_hover_border: #FFFFFF;
+    --submit_button_hover_border: #949494;
 }
 
 /* format the page */
