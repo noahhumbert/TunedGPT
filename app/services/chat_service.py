@@ -33,7 +33,7 @@ def pull_chat_history(email: str):
     conn = initialize_message_database()
 
     # Initialize Cursor
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
     # SQL query
     sql = """
@@ -67,8 +67,8 @@ def pull_chat_history(email: str):
     # Iterate through the messages and append the questions and responses from the DB
     for row in rows:
         # Append to conversation
-        conversation.append({"role": "user", "content": f"{row[0]}"})
-        conversation.append({"role": "assistant", "content": f"{row[1]}"})
+        conversation.append({"role": "user", "content": row['user_message']})
+        conversation.append({"role": "assistant", "content": row['response']})
 
     # return the conversation
     return conversation
