@@ -3,30 +3,13 @@ import os
 import mysql.connector
 from mysql.connector import Error
 
-# Database connection initialization
-def initialize_message_database():
-    # Grab environment variables
-    DB_HOST = os.environ.get("DB_HOST")
-    DB_USER = os.environ.get("DB_USER")
-    DB_PASSWORD = os.environ.get("DB_PASSWORD")
-    DB_NAME = os.environ.get("DB_NAME")
-    DB_PORT = os.environ.get("DB_PORT")
-
-    # Create Connection
-    conn = mysql.connector.connect(
-        host=f"{DB_HOST}",
-        user=f"{DB_USER}",
-        password=f"{DB_PASSWORD}",
-        database=f"{DB_NAME}",
-        port=int(DB_PORT),
-        autocommit=False
-    )
-
-    return conn
+# Pull in database initialization
+from app.services.database_init import initialize_database_connection
+    
 
 def poke_styles(email: str):
     # Initialize Connection
-    conn = initialize_message_database()
+    conn = initialize_database_connection()
 
     # SQL Query
     sql = "SELECT 1 FROM user_chat_settings WHERE email = %s LIMIT 1"
@@ -49,8 +32,98 @@ def poke_styles(email: str):
 
     return result is not None
 
-def intitialize_user_styles():
-    print("initializing...")
+def intitialize_user_styles(email):
+    # Initialize database connection
+    conn = initialize_database_connection()
 
-def pull_styles():
-    print("pulling...")
+    # Initialize Cursor
+    cursor = conn.cursor()
+
+    # Default CSS values
+    DEFAULT_STYLES = {
+        "chat_name": "TunedGPT",
+        "chat_header_background": "#949494",
+        "chat_header_text": "#000000",
+        "settings_button_background": "#949494",
+        "settings_button_text": "#FFFFFF",
+        "settings_button_border": "#FFFFFF",
+        "settings_button_hover_background": "#FFFFFF",
+        "settings_button_hover_text": "#949494",
+        "settings_button_hover_border": "#949494",
+        "user_message_text": "#FFFFFF",
+        "user_message_background": "#000000",
+        "ai_message_text": "#000000",
+        "ai_message_background": "#FFFFFF",
+        "chat_background_color": "#949494",
+        "chat_footer_background": "#949494",
+        "chat_textbox_background": "#949494",
+        "chat_textbox_text": "#FFFFFF",
+        "chat_textbox_focus_background": "#949494",
+        "chat_textbox_focus_text": "#FFFFFF",
+        "chat_textbox_focus_border": "#FFFFFF",
+        "chat_dropdown_background": "#949494",
+        "chat_dropdown_text": "#FFFFFF",
+        "submit_button_background": "#949494",
+        "submit_button_text": "#FFFFFF",
+        "submit_button_border": "#FFFFFF",
+        "submit_button_hover_background": "#FFFFFF",
+        "submit_button_hover_text": "#949494",
+        "submit_button_hover_border": "#949494"
+    }
+
+    # Build Query Dynamically
+    columns = ["email"] + list(DEFAULT_STYLES.keys())
+    values_placeholders = ["%s"] * len(columns)
+    values = [email] + list(DEFAULT_STYLES.values())
+
+    # SQL Query
+    sql = f"INSERT INTO user_chat_settings ({', '.join(columns)}) VALUES ({', '.join(values_placeholders)})"
+
+    # Execute
+    try:
+        cursor.execute(sql, values)
+        conn.commit()
+        print(f"Initialized default styles for {email}.")
+    # Except any errors
+    except Error as e:
+        print(f"[initialize_user_styles] Database error: {e}")
+    # Finally close connection
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+def pull_styles(email):
+    # Initialize Connection
+    conn = initialize_database_connection()
+
+    # Initialize Cursor
+    cursor = conn.cursor(dictionary=True)
+
+    # Query
+    sql = "SELECT * FROM user_chat_settings WHERE email = %s"
+
+    # Execute Query
+    try:
+        cursor.execute(sql, (email,))
+        result = cursor.fetchone()
+    # Except any errors
+    except Error as e:
+        print(f"[load_styles] Database error: {e}")
+        return {}
+    # Finally close the connection
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+    if result:
+        # Remove email and timestamps if you don't want them in the CSS dict
+        result.pop("email", None)
+        result.pop("created_at", None)
+        result.pop("updated_at", None)
+        return result
+    else:
+        return {}

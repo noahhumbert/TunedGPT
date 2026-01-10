@@ -4,33 +4,15 @@ import requests
 import mysql.connector
 import time
 
+# Get SQL initializer
+from app.services.database_init import initialize_database_connection
+
 # Snag the API key from the enviornment veriable
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
-# Database connection initialization
-def initialize_message_database():
-    # Grab environment variables
-    DB_HOST = os.environ.get("DB_HOST")
-    DB_USER = os.environ.get("DB_USER")
-    DB_PASSWORD = os.environ.get("DB_PASSWORD")
-    DB_NAME = os.environ.get("DB_NAME")
-    DB_PORT = os.environ.get("DB_PORT")
-
-    # Create Connection
-    conn = mysql.connector.connect(
-        host=f"{DB_HOST}",
-        user=f"{DB_USER}",
-        password=f"{DB_PASSWORD}",
-        database=f"{DB_NAME}",
-        port=int(DB_PORT),
-        autocommit=False
-    )
-
-    return conn
-
 def pull_chat_history(email: str):
     # Initialize conneciton
-    conn = initialize_message_database()
+    conn = initialize_database_connection()
 
     # Initialize Cursor
     cursor = conn.cursor(dictionary=True)
@@ -131,7 +113,7 @@ def parse_chat_response(response):
 
 def inject_chat_interaction(email, id, timestamp, user_message, dropdown_value, response, tokens_used):
     # Initialize the DB connection
-    conn = initialize_message_database()
+    conn = initialize_database_connection()
 
     # Create the cursor
     cursor = conn.cursor()
@@ -183,7 +165,7 @@ def cleanup_chat_history():
     oldest_time = current_time-retention_time
 
     # Initialize the DB connection
-    conn = initialize_message_database()
+    conn = initialize_database_connection()
 
     # Create the cursor
     cursor = conn.cursor()
@@ -211,7 +193,7 @@ def cleanup_chat_history():
 
 def get_chat_history(email: str):
     # Initialize the connection
-    conn = initialize_message_database()
+    conn = initialize_database_connection()
 
     # Initialize the Cursor
     cursor = conn.cursor(dictionary=True)
