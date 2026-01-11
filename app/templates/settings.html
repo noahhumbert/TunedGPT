@@ -215,7 +215,7 @@
 
                 <!-- Chat Text Box -->
                 <h5 class="mt-5 text-center">Prompt Text Box</h5>
-                <div class="row mb-5 g-3">
+                <div class="row justify-content-center g-3">
                     <div class="col-2">
                         <div class="row text-center">
                             <label class="form-label">Background</label>
@@ -227,28 +227,44 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <label class="form-label">Text</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="chat_textbox_text"
-                            value="{{ settings_data.get('chat_textbox_text', '#FFFFFF') }}">
+                        <div class="row text-center">
+                            <label class="form-label">Text</label>
+                        </div>
+                        <div class="row justify-content-center">
+                            <input type="color" class="form-control form-control-color"
+                                name="chat_textbox_text"
+                                value="{{ settings_data.get('chat_textbox_text', '#FFFFFF') }}">
+                        </div>
                     </div>
                     <div class="col-2">
-                        <label class="form-label">Focus Background</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="chat_textbox_focus_background"
-                            value="{{ settings_data.get('chat_textbox_focus_background', '#949494') }}">
+                        <div class="row text-center">
+                            <label class="form-label">Focus Background</label>
+                        </div>
+                        <div class="row justify-content-center">
+                            <input type="color" class="form-control form-control-color"
+                                name="chat_textbox_focus_background"
+                                value="{{ settings_data.get('chat_textbox_focus_background', '#949494') }}">
+                        </div>
                     </div>
                     <div class="col-2">
-                        <label class="form-label">Focus Text</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="chat_textbox_focus_text"
-                            value="{{ settings_data.get('chat_textbox_focus_text', '#FFFFFF') }}">
+                        <div class="row text-center">
+                            <label class="form-label">Focus Text</label>
+                        </div>
+                        <div class="row justify-content-center">
+                            <input type="color" class="form-control form-control-color"
+                                name="chat_textbox_focus_text"
+                                value="{{ settings_data.get('chat_textbox_focus_text', '#FFFFFF') }}">
+                        </div>
                     </div>
                     <div class="col-2">
-                        <label class="form-label">Focus Border</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="chat_textbox_focus_border"
-                            value="{{ settings_data.get('chat_textbox_focus_border', '#FFFFFF') }}">
+                        <div class="row text-center">
+                            <label class="form-label">Focus Border</label>
+                        </div>
+                        <div class="row justify-content-center">
+                            <input type="color" class="form-control form-control-color"
+                                name="chat_textbox_focus_border"
+                                value="{{ settings_data.get('chat_textbox_focus_border', '#FFFFFF') }}">
+                        </div>
                     </div>
                 </div>
 
