@@ -57,6 +57,7 @@ html, body {
 .chat_textbox {
     background-color: var(--chat_textbox_background);
     color: var(--chat_textbox_text);
+    border-color: var(--chat_textbox_border);
 }
 
 /* Message Text Box while being typed in formatting */

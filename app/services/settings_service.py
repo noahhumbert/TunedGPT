@@ -1,6 +1,4 @@
 # Imports
-import os
-import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
 
@@ -43,33 +41,34 @@ def initialize_user_styles(email):
     # Default CSS values
     DEFAULT_STYLES = {
         "chat_name": "TunedGPT",
-        "chat_header_background": "#949494",
-        "chat_header_text": "#000000",
-        "settings_button_background": "#949494",
+        "chat_header_background": "#000000",
+        "chat_header_text": "#FFFFFF",
+        "settings_button_background": "#000000",
         "settings_button_text": "#FFFFFF",
         "settings_button_border": "#FFFFFF",
         "settings_button_hover_background": "#FFFFFF",
-        "settings_button_hover_text": "#949494",
-        "settings_button_hover_border": "#949494",
+        "settings_button_hover_text": "#000000",
+        "settings_button_hover_border": "#000000",
         "user_message_text": "#FFFFFF",
         "user_message_background": "#000000",
         "ai_message_text": "#000000",
         "ai_message_background": "#FFFFFF",
-        "chat_background_color": "#949494",
-        "chat_footer_background": "#949494",
-        "chat_textbox_background": "#949494",
+        "chat_background_color": "#DCE1E6",
+        "chat_footer_background": "#000000",
+        "chat_textbox_background": "#000000",
         "chat_textbox_text": "#FFFFFF",
-        "chat_textbox_focus_background": "#949494",
-        "chat_textbox_focus_text": "#FFFFFF",
-        "chat_textbox_focus_border": "#FFFFFF",
-        "chat_dropdown_background": "#949494",
+        "chat_textbox_border": "#FFFFFF",
+        "chat_textbox_focus_background": "#FFFFFF",
+        "chat_textbox_focus_text": "#000000",
+        "chat_textbox_focus_border": "#000000",
+        "chat_dropdown_background": "#000000",
         "chat_dropdown_text": "#FFFFFF",
-        "submit_button_background": "#949494",
+        "submit_button_background": "#000000",
         "submit_button_text": "#FFFFFF",
         "submit_button_border": "#FFFFFF",
         "submit_button_hover_background": "#FFFFFF",
-        "submit_button_hover_text": "#949494",
-        "submit_button_hover_border": "#949494"
+        "submit_button_hover_text": "#000000",
+        "submit_button_hover_border": "#000000"
     }
 
     # Build Query Dynamically

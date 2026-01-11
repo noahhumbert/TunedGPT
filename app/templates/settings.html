@@ -219,7 +219,7 @@
                     <div class="col-5">
                         <p class="fs-5 text-center">Text Box</p>
                         <div class="row justify-content-center">
-                            <div class="col-5">
+                            <div class="col-4">
                                 <div class="row text-center">
                                     <label class="form-label">Background</label>
                                 </div>
@@ -229,7 +229,7 @@
                                         value="{{ settings_data.get('chat_textbox_background', '#949494') }}">
                                 </div>
                             </div>
-                            <div class="col-5">
+                            <div class="col-4">
                                 <div class="row text-center">
                                     <label class="form-label">Text</label>
                                 </div>
@@ -237,6 +237,16 @@
                                     <input type="color" class="form-control form-control-color"
                                         name="chat_textbox_text"
                                         value="{{ settings_data.get('chat_textbox_text', '#FFFFFF') }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="row text-center">
+                                    <label class="form-label">Border</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="chat_textbox_border"
+                                        value="{{ settings_data.get('chat_textbox_border', '#FFFFFF') }}">
                                 </div>
                             </div>
                         </div>
