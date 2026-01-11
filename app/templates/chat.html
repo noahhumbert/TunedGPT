@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ styles.chat_name }}</title>
+        <link rel="icon" href="{{ url_for('static', filename='images/dial.png') }}" type="image/x-icon">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <style>
+            :root {
+                /* Chat Header Formatting */
+                --chat_header_background: {{ styles.chat_header_background }};
+                --chat_header_text: {{ styles.chat_header_text }};
+
+                /* Settings Button Formatting */
+                --settings_button_background: {{ styles.settings_button_background }};
+                --settings_button_text: {{ styles.settings_button_text }};
+                --settings_button_border: {{ styles.settings_button_border }};
+
+                /* Settings button hover formatting */
+                --settings_button_hover_background: {{ styles.settings_button_hover_background }};
+                --settings_button_hover_text: {{ styles.settings_button_hover_text }};
+                --settings_button_hover_border: {{ styles.settings_button_hover_border }};
+
+                /* User message colors */
+                --user_message_text: {{ styles.user_message_text }};
+                --user_message_background: {{ styles.user_message_background }};
+
+                /* AI message colors */
+                --ai_message_text: {{ styles.ai_message_text }};
+                --ai_message_background: {{ styles.ai_message_background }};
+
+                /* Chat window colors */
+                --chat_background_color: {{ styles.chat_background_color }};
+
+                /* Chat footer formatting */
+                --chat_footer_background: {{ styles.chat_footer_background }};
+
+                /* Chat Text Box Formatting */
+                --chat_textbox_background: {{ styles.chat_textbox_background }};
+                --chat_textbox_text: {{ styles.chat_textbox_text }};
+                --chat_textbox_border: {{ styles.chat_textbox_border }};
+
+                /* Chat Text Box Formatting while focused */
+                --chat_textbox_focus_background: {{ styles.chat_textbox_focus_background }};
+                --chat_textbox_focus_text: {{ styles.chat_textbox_focus_text }};
+                --chat_textbox_focus_border: {{ styles.chat_textbox_focus_border }};
+
+                /* Chat dropdown menu formatting */
+                --chat_dropdown_background: {{ styles.chat_dropdown_background }};
+                --chat_dropdown_text: {{ styles.chat_dropdown_text }};
+
+                /* Submit button styling */
+                --submit_button_background: {{ styles.submit_button_background }};
+                --submit_button_text: {{ styles.submit_button_text }};
+                --submit_button_border: {{ styles.submit_button_border }};
+
+                /* Submit button hover styling */
+                --submit_button_hover_background: {{ styles.submit_button_hover_background }};
+                --submit_button_hover_text: {{ styles.submit_button_hover_text }};
+                --submit_button_hover_border: {{ styles.submit_button_hover_border }};
+            }
+        </style>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+    </head>
+    <body class="d-flex flex-column vh-100">
+        <!-- Header -->
+        <div class="p-3 row chat_header">
+            <div class="col-11">
+                <h2 class="m-0">{{ styles.chat_name }}</h2>
+            </div>
+            <div class="col-1">
+                <a class="btn btn-primary settings_button" href="{{ url_for('settings.settings_screen') }}">Settings</a>
+            </div>
+        </div>
+
+        <!-- Chat window -->
+        <div class="chat_container d-flex flex-grow-1 flex-column overflow-auto p-3">
+            {% for msg in chat_history %}
+                <!-- User message -->
+                <div class="align-self-end user_chat_message p-2 rounded mb-2">
+                    {{ msg.user_message }}
+                </div>
+
+                <!-- AI response -->
+                <div class="align-self-start ai_chat_message p-2 rounded mb-2">
+                    {{ msg.response }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Input + button -->
+        <div class="p-3 d-flex chat_footer">
+            <form method="post" class="w-100">
+                <div class="row">
+                    <div class="col-9">
+                        <input type="text" name="message" class="form-control me-2 chat_textbox">
+                    </div>
+                    <div class="col-2">
+                        <select id="mode-select" name="mode-select" class="form-select me-2 chat_model_dropdown">
+                            <option value="chatgpt-5-mini" selected>ChatGPT-5 Mini</option>
+                            <option value="chatgpt-5">ChatGPT-5</option>
+                            <option value="imagegen" disabled>Image Generation</option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-primary message_send_button" type="submit">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+        <!-- Custom One-Off JS -->
+        <script>
+            const chatContainer = document.getElementById("chat-container");
+            if (chatContainer) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        </script>
+    </body>
+</html>
+
+
+
+

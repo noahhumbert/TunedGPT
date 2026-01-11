@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Something Went Wrong</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+</head>
+<body class="bg-light">
+
+<div class="container text-center mt-5">
+    <h1 class="display-4">500</h1>
+    <p class="lead">
+        Something went wrong on our end.<br>
+        Please try again in a moment.
+    </p>
+
+    <a href="{{ url_for('chat.chat_screen') }}" class="btn btn-primary">
+        Refresh
+    </a>
+</div>
+
+</body>
+</html>

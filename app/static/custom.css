@@ -1,0 +1,92 @@
+/* Colors handled by DB and settings page/service. Pulled directely into chat.html */
+
+/* format the page */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Header Formatting */
+.chat_header {
+    background-color: var(--chat_header_background);
+    color: var(--chat_header_text);
+}
+
+.settings_button {
+    background-color: var(--settings_button_background);
+    color: var(--settings_button_text);
+    border-color: var(--settings_button_border)
+}
+
+.settings_button:hover {
+    background-color: var(--settings_button_hover_background);
+    color: var(--settings_button_hover_text);
+    border-color: var(--settings_button_hover_border)
+}
+
+/* User message styling and formatting */
+.user_chat_message {
+    color: var(--user_message_text);
+    background-color: var(--user_message_background);
+    width: fit-content;
+    max-width: 65%;
+}
+
+/* AI message styling and formatting */
+.ai_chat_message {
+    color: var(--ai_message_text);
+    background-color: var(--ai_message_background);
+    width: fit-content;
+    max-width: 65%;
+}
+
+/* Chat container styling and formatting */
+.chat_container {
+    background-color: var(--chat_background_color);
+}
+
+/* Chat footer formatting */
+.chat_footer {
+    background-color: var(--chat_footer_background);
+}
+
+/* Message Text Box Formatting */
+.chat_textbox {
+    background-color: var(--chat_textbox_background);
+    color: var(--chat_textbox_text);
+    border-color: var(--chat_textbox_border);
+}
+
+/* Message Text Box while being typed in formatting */
+.chat_textbox:focus {
+    background-color: var(--chat_textbox_focus_background);
+    color: var(--chat_textbox_focus_text);
+    border-color: var(--chat_textbox_focus_border);
+    outline: none;
+    box-shadow: none;      
+    -webkit-box-shadow: none;
+}
+
+/* Model Dropdown Styling */
+.chat_model_dropdown {
+    width: auto;
+    background-color: var(--chat_dropdown_background);
+    color: var(--chat_dropdown_text);
+}
+
+/* submit button styling */
+.message_send_button {
+    background-color: var(--submit_button_background);
+    color: var(--submit_button_text);
+    border-color: var(--submit_button_border);
+}
+
+/* Submit button while being hovered */
+.message_send_button:hover {
+    background-color: var(--submit_button_hover_background);
+    color: var(--submit_button_hover_text);
+    border-color: var(--submit_button_hover_border)
+}
