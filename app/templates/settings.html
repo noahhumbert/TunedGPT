@@ -198,16 +198,20 @@
                     </div>
                 </div>
                         
-            
-
-                <!-- Chat Window -->
-                
-
                 <!-- Chat Footer -->
                 <h5 class="mt-4">Chat Footer</h5>
-                <input type="color" class="form-control form-control-color"
-                    name="chat_footer_background"
-                    value="{{ settings_data.get('chat_footer_background', '#949494') }}">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row text-center">
+                            <label class="form-label">Background</label>
+                        </div>
+                        <div class="row justify-content-center">
+                            <input type="color" class="form-control form-control-color"
+                                name="chat_footer_background"
+                                value="{{ settings_data.get('chat_footer_background', '#949494') }}">
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Chat Text Box -->
                 <h5 class="mt-4">Chat Text Box</h5>
