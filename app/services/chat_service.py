@@ -12,10 +12,7 @@ from app.services.database_init import initialize_database_connection
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 # Pull the user memory from the DB
-def pull_user_memory(email):
-# Initialize Database Connection
-    conn = initialize_database_connection()
-
+def pull_user_memory(email, conn):
     # Initialize Cursor
     cursor = conn.cursor(dictionary=True)
     
@@ -72,13 +69,13 @@ def pull_chat_history(email: str):
     # Except generic error
     except Exception as e:
         print(f"Unexpected error: {e}")
-    # Finally close the session
-    finally:
-        cursor.close()
-        conn.close()
 
     # Get old user memory
-    old_memory = pull_user_memory(email)
+    old_memory = pull_user_memory(email, conn)
+
+    # Close teh connection
+    cursor.close()
+    conn.close()
 
     # Initialize conversation history list with system at index 0
     conversation = [{"role": "system", "content": f"Long Term User Information: {old_memory}"}]
@@ -334,8 +331,11 @@ def initialize_user_memory(email):
 
 # Manipulate the user long term memory
 def manipulate_user_memory(message, response, email):
+    # Initialize connection
+    conn = initialize_database_connection()
+
     # Get old memory
-    old_memory = pull_user_memory(email)
+    old_memory = pull_user_memory(email, conn)
 
     # Pull the system prompt from my .txt file
     memory_prompt_file = Path("app/prompts/memory_prompt.txt")
@@ -382,8 +382,7 @@ def manipulate_user_memory(message, response, email):
     if len(new_memory) > 2000:
         return
     
-    # Initialize connection
-    conn = initialize_database_connection()
+    # INITIALIZEWD CONNECTION AT BEGINNING
 
     # Initialize cursor
     cursor = conn.cursor()
