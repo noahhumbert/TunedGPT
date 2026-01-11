@@ -3,6 +3,7 @@ import os
 import requests
 import mysql.connector
 import time
+from pathlib import Path
 
 # Get SQL initializer
 from app.services.database_init import initialize_database_connection
@@ -10,6 +11,39 @@ from app.services.database_init import initialize_database_connection
 # Snag the API key from the enviornment veriable
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
+# Pull the user memory from the DB
+def pull_user_memory(email):
+# Initialize Database Connection
+    conn = initialize_database_connection()
+
+    # Initialize Cursor
+    cursor = conn.cursor(dictionary=True)
+    
+    # Query
+    sql = """
+        SELECT memory_summary
+        FROM user_memory
+        WHERE email = %s
+    """
+
+    # Initialize the query
+    try:
+        cursor.execute(sql, (email,))
+        old_memory = cursor.fetchone()
+    # Except SQL connection error
+    except mysql.connector.Error as e:
+        print(f"Database error: {e}")
+    # Except Generic Error
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    # Finally
+    finally:
+        cursor.close()
+        conn.close()
+
+    return old_memory
+
+# Pull the user's chat history
 def pull_chat_history(email: str):
     # Initialize conneciton
     conn = initialize_database_connection()
@@ -43,8 +77,11 @@ def pull_chat_history(email: str):
         cursor.close()
         conn.close()
 
+    # Get old user memory
+    old_memory = pull_user_memory(email)
+
     # Initialize conversation history list with system at index 0
-    conversation = [{"role": "system", "content": "You are a helpful assistant."}]
+    conversation = [{"role": "system", "content": f"Long Term User Information: {old_memory}"}]
 
     # Iterate through the messages and append the questions and responses from the DB
     for row in rows:
@@ -111,6 +148,7 @@ def parse_chat_response(response):
 
     return id, timestamp, chat_response, tokens
 
+# Inject the chat interaction into the chat history db
 def inject_chat_interaction(email, id, timestamp, user_message, dropdown_value, response, tokens_used):
     # Initialize the DB connection
     conn = initialize_database_connection()
@@ -191,6 +229,7 @@ def cleanup_chat_history():
         cursor.close()
         conn.close()
 
+# Get the chat history
 def get_chat_history(email: str):
     # Initialize the connection
     conn = initialize_database_connection()
@@ -209,7 +248,7 @@ def get_chat_history(email: str):
     # Create chat history list
     chat_history = []
 
-    # Initialize the cursor
+    # Initialize the query
     try:
         cursor.execute(sql, (email,))
         rows = cursor.fetchall()
@@ -232,3 +271,79 @@ def get_chat_history(email: str):
         conn.close()
 
     return chat_history
+
+# Manipulate the user long term memory
+def manipulate_user_memory(message, response, email):
+    # Get old memory
+    old_memory = pull_user_memory(email)
+
+    # Pull the system prompt from my .txt file
+    memory_prompt_file = Path("app/prompts/memory_prompt.txt")
+    if not memory_prompt_file.exists():
+        raise FileNotFoundError(f"Prompt file not found: {memory_prompt_file}")
+    system_prompt = memory_prompt_file.read_text("utf-8")
+    
+    # Combine the question and response to create new_memory
+    new_entry = f"Question: {message} Response: {response} Old Memory: {old_memory}"
+
+    # Build the API query
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {OPENAI_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    
+    # Data
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [
+            {"role": "system", "content": f"{system_prompt}"},
+            {"role": "user", "content": f"{new_entry}"}
+        ]
+    }
+
+    # Run the post request
+    response = requests.post(url, headers=headers, json=data)
+    response.raise_for_status()
+    result = response.json()
+
+    # New Memory
+    new_memory = result.choices[0].message.content.strip()
+
+    # Did the memory get changed?
+    if new_memory.strip() == old_memory.strip():
+        return
+    
+    # Is the new memory too long?
+    if len(new_memory) > 2000:
+        return
+    
+    # Initialize connection
+    conn = initialize_database_connection()
+
+    # Initialize cursor
+    cursor = conn.cursor()
+
+    # Query
+    sql = """
+        INSERT INTO user_memory (email, memory_summary)
+        VALUES (%s, %s)
+        ON DUPLICATE KEY UPDATE
+            memory_summary = VALUES(memory_summary),
+            updated_at = CURRENT_TIMESTAMP
+    """
+
+    # Execute
+    try:
+        cursor.execute(sql, (email, new_memory))
+        conn.commit()
+    # Except SQL connection error
+    except mysql.connector.Error as e:
+        print(f"Database error: {e}")
+    # Except Generic Error
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    # Finally
+    finally:
+        cursor.close()
+        conn.close()

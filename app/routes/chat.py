@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 
 # Pull in service
-from app.services.chat_service import get_chat_response, parse_chat_response, inject_chat_interaction, cleanup_chat_history, get_chat_history
+from app.services.chat_service import get_chat_response, parse_chat_response, inject_chat_interaction, cleanup_chat_history, get_chat_history, manipulate_user_memory
 from app.services.settings_service import poke_styles, initialize_user_styles, pull_styles
 
 chat_bp = Blueprint("chat", __name__)
@@ -30,6 +30,9 @@ def chat_screen():
 
         # Inject reply into the DB
         inject_chat_interaction(session["user_email"], id, timestamp, user_message, dropdown_value, response, tokens_used)
+
+        # Pull the message and reply into the sender data db
+        manipulate_user_memory(user_message, response, session["user_email"])
 
         # Cleanup chat DB
         cleanup_chat_history()
