@@ -46,11 +46,7 @@ def chat_screen():
 
         return redirect(url_for("chat.chat_screen"))
 
-    # Poke Styles
-    is_styles = poke_styles(session["user_email"])
-
-    # If there are no styles tied to the email, initialize the styles
-    if not is_styles:
+    if not poke_styles(session["user_email"]):
         initialize_user_styles(session["user_email"])
 
     # Pull Styles in

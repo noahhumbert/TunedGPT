@@ -367,8 +367,8 @@ def manipulate_user_memory(message, response, email):
     response.raise_for_status()
     result = response.json()
 
-    # New Memory
-    new_memory = result.choices[0].message.content.strip()
+    # Extract new memory
+    new_memory = result["choices"][0]["message"]["content"].strip()
 
     # Did the memory get changed?
     if new_memory.strip() == old_memory.strip():
