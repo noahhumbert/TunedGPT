@@ -22,7 +22,7 @@ COPY cron/cleanup_cron /etc/cron.d/cleanup_cron
 RUN chmod 0644 /etc/cron.d/cleanup_cron \
     && crontab /etc/cron.d/cleanup_cron
 # Ensure cleanup script is executable
-RUN chmod +x /app/cron/cleanup_script.py
+RUN chmod +x /cron/cleanup_script.py
 
 # Production image
 FROM artifact AS prod
