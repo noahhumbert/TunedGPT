@@ -26,10 +26,10 @@ RUN chmod +x cron/cleanup_script.py
 
 # Production image
 FROM artifact AS prod
-# Start Gunicorn
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "--reload", "app:create_app()" && "cron"]
+# Start Gunicorn and cron
+CMD ["sh", "-c", "cron && gunicorn -w 4 -b 0.0.0.0:80 --reload 'app:create_app()'"]
 
 # Dev image
 FROM artifact AS dev
-# Start Gunicorn
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "app:create_app()" && "cron"]
+# Start Gunicorn and cron
+CMD ["sh", "-c", "cron && gunicorn -w 4 -b 0.0.0.0:80 'app:create_app()'"]
