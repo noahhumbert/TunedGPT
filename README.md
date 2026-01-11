@@ -1,5 +1,3 @@
-This project is currently in rebuild mode
-
 To add a new feature in settings
 
 Push new column to DB with default value
