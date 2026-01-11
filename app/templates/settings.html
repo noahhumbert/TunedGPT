@@ -13,10 +13,12 @@
                 <h2 class="mb-4 text-center">Appearance Settings</h2>
 
                 <!-- Chat Name -->
-                <div class="mb-4">
-                    <label class="form-label">Chat Name</label>
-                    <input type="text" class="form-control" name="chat_name"
-                        value="{{ settings_data.get('chat_name', 'TunedGPT') }}">
+                <div class="row justify-content-center">
+                    <div class="col-8 mb-4">
+                        <label class="form-label">Chat Name</label>
+                        <input type="text" class="form-control" name="chat_name"
+                            value="{{ settings_data.get('chat_name', 'TunedGPT') }}">
+                    </div>
                 </div>
 
                 <!-- Chat Header -->
