@@ -1,0 +1,2 @@
+# m h  dom mon dow   command
+0 2 * * * root python /app/scripts/cleanup_script.py >> /app/logs/cleanup.log 2>&1

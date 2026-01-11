@@ -38,9 +38,6 @@ def chat_screen():
         # Pull the message and reply into the sender data db
         manipulate_user_memory(user_message, response, session["user_email"])
 
-        # Cleanup chat DB
-        cleanup_chat_history()
-
         # Pull the chat history for the template
         chat_history = get_chat_history(session["user_email"])
 
