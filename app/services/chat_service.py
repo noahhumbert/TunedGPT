@@ -363,9 +363,13 @@ def manipulate_user_memory(message, response, email):
     }
 
     # Run the post request
-    response = requests.post(url, headers=headers, json=data)
-    response.raise_for_status()
-    result = response.json()
+    api_response = requests.post(url, headers=headers, json=data)
+    api_response.raise_for_status()
+    result = api_response.json()
+
+    # Check if 'choices' exists
+    if "choices" not in result or len(result["choices"]) == 0:
+        raise ValueError(f"Unexpected API response: {result}")
 
     # Extract new memory
     new_memory = result["choices"][0]["message"]["content"].strip()
