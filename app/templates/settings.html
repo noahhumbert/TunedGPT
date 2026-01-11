@@ -152,16 +152,14 @@
                     </div>
                     <div class="col-3">
                         <p class="fs-5 text-center">Chat Box Formatting</p>
-                        <div class="row text-center">
-                            <div class="row">
-                                <div class="row text-center">
-                                    <label class="form-label">Chat Box Background</label>
-                                </div>
-                                <div class="row justify-content-center">
-                                    <input type="color" class="form-control form-control-color"
-                                        name="chat_background_color"
-                                        value="{{ settings_data.get('chat_background_color', '#949494') }}">
-                                </div>
+                        <div class="row">
+                            <div class="row text-center">
+                                <label class="form-label">Chat Box Background</label>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input type="color" class="form-control form-control-color"
+                                    name="chat_background_color"
+                                    value="{{ settings_data.get('chat_background_color', '#949494') }}">
                             </div>
                         </div>
                     </div>
