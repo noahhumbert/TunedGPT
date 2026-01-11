@@ -307,53 +307,87 @@
                 </div>
 
                 <!-- Submit Button -->
-                <h5 class="mt-4">Submit Button</h5>
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <label class="form-label">Background</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="submit_button_background"
-                            value="{{ settings_data.get('submit_button_background', '#949494') }}">
+                <h5 class="mt-5">Send Button</h5>
+                <div class="row mb-5">
+                    <div class="col-5">
+                        <p class="fs-5 text-center">Button</p>
+                        <div class="row">
+                            <div class="col-4 justify-content-center">
+                                <div class="row text-center">
+                                    <label class="form-label">Background</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="submit_button_background"
+                                        value="{{ settings_data.get('submit_button_background', '#949494') }}">
+                                </div>
+                            </div>
+                            <div class="col-4 justify-content-center">
+                                <div class="row text-center">
+                                    <label class="form-label">Text</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="submit_button_text"
+                                        value="{{ settings_data.get('submit_button_text', '#FFFFFF') }}">
+                                </div>
+                            </div>
+                            <div class="col-4 justify-content-center">
+                                <div class="row text-center">
+                                    <label class="form-label">Border</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="submit_button_border"
+                                        value="{{ settings_data.get('submit_button_border', '#FFFFFF') }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Text</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="submit_button_text"
-                            value="{{ settings_data.get('submit_button_text', '#FFFFFF') }}">
+                    <div class="col-1">
+                        <!-- Seperator -->
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Border</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="submit_button_border"
-                            value="{{ settings_data.get('submit_button_border', '#FFFFFF') }}">
-                    </div>
-                </div>
-
-                <div class="row g-3 mt-1">
-                    <div class="col-md-4">
-                        <label class="form-label">Hover Background</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="submit_button_hover_background"
-                            value="{{ settings_data.get('submit_button_hover_background', '#FFFFFF') }}">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Hover Text</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="submit_button_hover_text"
-                            value="{{ settings_data.get('submit_button_hover_text', '#949494') }}">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Hover Border</label>
-                        <input type="color" class="form-control form-control-color"
-                            name="submit_button_hover_border"
-                            value="{{ settings_data.get('submit_button_hover_border', '#949494') }}">
+                    <div class="col-5">
+                        <p class="fs-5 text-center">Button When Hovered</p>
+                        <div class="row">
+                            <div class="col-4 justify-content-center">
+                                <div class="row text-center">
+                                    <label class="form-label">Hover Background</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="submit_button_hover_background"
+                                        value="{{ settings_data.get('submit_button_hover_background', '#FFFFFF') }}">
+                                </div>
+                            </div>
+                            <div class="col-4 justify-content-center">
+                                <div class="row text-center">
+                                    <label class="form-label">Hover Text</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="submit_button_hover_text"
+                                        value="{{ settings_data.get('submit_button_hover_text', '#949494') }}">
+                                </div>
+                            </div>
+                            <div class="col-4 justify-content-center">
+                                <div class="row text-center">
+                                    <label class="form-label">Hover Border</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="submit_button_hover_border"
+                                        value="{{ settings_data.get('submit_button_hover_border', '#949494') }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Submit -->
-                <div class="mt-5">
+                <div class="mt-5 row">
                     <button type="submit" class="btn btn-primary">
-                        Save Settings
+                        Apply Settings
                     </button>
                 </div>
             </form>
