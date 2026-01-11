@@ -41,7 +41,7 @@ def pull_user_memory(email):
         cursor.close()
         conn.close()
 
-    return old_memory
+    return old_memory.get("memory_summary", "")
 
 # Pull the user's chat history
 def pull_chat_history(email: str):
