@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 
 def create_app():
     # Initialize Flask app with explicit template and static folders
@@ -33,5 +33,14 @@ def create_app():
 
     from app.routes.settings import settings_bp 
     app.register_blueprint(settings_bp) # serves '/settings'
+
+    # Error handling callouts
+    @app.errorhandler(404)
+    def not_found(error):
+        return render_template("404.html"), 404
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        return render_template("500.html"), 500
 
     return app
