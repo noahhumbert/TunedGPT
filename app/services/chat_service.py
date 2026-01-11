@@ -272,6 +272,66 @@ def get_chat_history(email: str):
 
     return chat_history
 
+# Poke user memory for a row
+def poke_user_memory(email):
+    # Initialize DB connection
+    conn = initialize_database_connection()
+
+    # Intitialize Cursor
+    cursor = conn.cursor()
+
+    # SQL query
+    sql = "SELECT 1 FROM user_memory WHERE email = %s LIMIT 1"
+
+    # Execute
+    try:
+        cursor.execute(sql, (email, ))
+        row = cursor.fetchone()
+    # Except SQL connection error
+    except mysql.connector.Error as e:
+        print(f"Database error: {e}")
+    # Except Generic Error
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    # Finally
+    finally:
+        cursor.close()
+        conn.close()
+
+    return bool(row)
+
+# Initialize a user's long term memory
+def initialize_user_memory(email):
+    # Initialize DB connection
+    conn = initialize_database_connection()
+
+    # Initialize Cursor
+    cursor = conn.cursor()
+
+    # Query
+    sql = """
+        INSERT INTO user_memory (email, memory_summary)
+        VALUES (%s, %s)
+        ON DUPLICATE KEY UPDATE
+            memory_summary = memory_summary
+    """
+
+    # Execute
+    try:
+        cursor.execute(sql, (email, "NO MEMORY"))
+        conn.commit()
+    # Except SQL connection error
+    except mysql.connector.Error as e:
+        print(f"Database error: {e}")
+    # Except Generic Error
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    # Finally
+    finally:
+        cursor.close()
+        conn.close()
+    
+
 # Manipulate the user long term memory
 def manipulate_user_memory(message, response, email):
     # Get old memory
