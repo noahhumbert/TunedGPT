@@ -63,16 +63,24 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <label class="form-label">Text</label>
-                                <input type="color" class="form-control form-control-color"
-                                    name="settings_button_text"
-                                    value="{{ settings_data.get('settings_button_text', '#FFFFFF') }}">
+                                <div class="row">
+                                    <label class="form-label">Text</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="settings_button_text"
+                                        value="{{ settings_data.get('settings_button_text', '#FFFFFF') }}">
+                                </div>
                             </div>
                             <div class="col-4">
-                                <label class="form-label">Border</label>
-                                <input type="color" class="form-control form-control-color"
-                                    name="settings_button_border"
-                                    value="{{ settings_data.get('settings_button_border', '#FFFFFF') }}">
+                                <div class="row">
+                                    <label class="form-label">Border</label>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="color" class="form-control form-control-color"
+                                        name="settings_button_border"
+                                        value="{{ settings_data.get('settings_button_border', '#FFFFFF') }}">
+                                </div>
                             </div>
                         </div>
                     </div>
