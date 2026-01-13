@@ -1,9 +1,9 @@
 # Imports
 import os
-import requests
 import mysql.connector
 import time
 from pathlib import Path
+from openai import OpenAI
 
 # Get SQL initializer
 from app.services.database_init import initialize_database_connection
@@ -90,14 +90,7 @@ def pull_chat_history(email: str):
     return conversation
 
 # Get the chat response from OpenAI
-def get_chat_response(message: str, model: str, email: str):
-    # Creat the API request
-    url = "https://api.openai.com/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {OPENAI_API_KEY}",
-        "Content-Type": "application/json"
-    }
-
+def get_chat_response_stream(message: str, model: str, email: str):
     # Snag the full chat history
     conversation = pull_chat_history(email)
 
@@ -106,42 +99,48 @@ def get_chat_response(message: str, model: str, email: str):
 
     # Logic to choose data json input
     if (model=="chatgpt-5-mini"):
-        data = {
-            "model": "gpt-5-mini",
-            "messages": conversation
-        }
+       chat_model = "gpt-5-mini"
     elif (model=="chatgpt-5"):
-        data = {
-            "model": "gpt-5",
-            "messages": conversation
-        }
+        chat_model = "gpt-5"
     elif (model=="imagegen"):
-        data = {
-            "model": "gpt-image-1.5",
-            "messages": conversation
-        }
+        chat_model = "gpt-image-1.5"
     
-    # Run the post request
-    response = requests.post(url, headers=headers, json=data)
-    response.raise_for_status()
-    result = response.json()
+    # Initialize OpenAI Client
+    client = OpenAI()
 
-    # Return the datas
-    return result
+    # Initialize stream
+    stream = client.responses.stream(
+        model=chat_model,
+        input=conversation,
+        stream=True
+    )
+
+    # for event coming from the stream
+    for event in stream:
+        # If its a new portion of the response
+        if event.type=="response.output_text.delta":
+            # Add the delta to the full response and yield the change
+            yield event.delta, None
+        elif event.type=="response.completed":
+            # Return the full response
+            yield None, event.response
 
 # Parse the result data
 def parse_chat_response(response):
     # Snag the ID from the response JSON
-    id = response["id"]
+    id = response.id
 
     # Pull the timestamp
-    timestamp = response["created"]
+    timestamp = response.created
 
     # Pull the response
-    chat_response = response['choices'][0]['message']['content']
-
+    if hasattr(response, "_full_text"):
+        chat_response = response._full_text
+    else:
+        chat_response = response.choices[0].message.content
+    
     # Pull the tokens
-    tokens = response['usage']['total_tokens']
+    tokens = response.usage.total_tokens
 
     return id, timestamp, chat_response, tokens
 
@@ -346,33 +345,24 @@ def manipulate_user_memory(message, response, email):
     # Combine the question and response to create new_memory
     new_entry = f"Question: {message} Response: {response} Old Memory: {old_memory}"
 
-    # Build the API query
-    url = "https://api.openai.com/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {OPENAI_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    
-    # Data
-    data = {
-        "model": "gpt-4o-mini",
-        "messages": [
+    # Initialize openai client
+    client = OpenAI()
+
+    # Call openai api
+    response = client.response.create(
+        model="gpt-4o-mini",
+        input=[
             {"role": "system", "content": f"{system_prompt}"},
             {"role": "user", "content": f"{new_entry}"}
         ]
-    }
-
-    # Run the post request
-    api_response = requests.post(url, headers=headers, json=data)
-    api_response.raise_for_status()
-    result = api_response.json()
+    )
 
     # Check if 'choices' exists
-    if "choices" not in result or len(result["choices"]) == 0:
-        raise ValueError(f"Unexpected API response: {result}")
+    if "choices" not in response or len(response.choices) == 0:
+        raise ValueError(f"Unexpected API response: {response}")
 
     # Extract new memory
-    new_memory = result["choices"][0]["message"]["content"].strip()
+    new_memory = (response.choices[0].message.content).strip()
 
     # Did the memory get changed?
     if new_memory.strip() == old_memory.strip():
@@ -382,7 +372,7 @@ def manipulate_user_memory(message, response, email):
     if len(new_memory) > 2000:
         return
     
-    # INITIALIZEWD CONNECTION AT BEGINNING
+    # INITIALIZED CONNECTION AT BEGINNING
 
     # Initialize cursor
     cursor = conn.cursor()

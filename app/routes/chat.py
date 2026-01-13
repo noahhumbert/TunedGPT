@@ -1,8 +1,8 @@
 # Import libraries
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, Response, render_template, redirect, url_for, stream_with_context, request, session
 
 # Pull in service
-from app.services.chat_service import get_chat_response, parse_chat_response, inject_chat_interaction, cleanup_chat_history, get_chat_history, manipulate_user_memory, poke_user_memory, initialize_user_memory
+from app.services.chat_service import get_chat_response_stream, parse_chat_response, inject_chat_interaction, get_chat_history, manipulate_user_memory, poke_user_memory, initialize_user_memory
 from app.services.settings_service import poke_styles, initialize_user_styles, pull_styles
 
 chat_bp = Blueprint("chat", __name__)
@@ -19,29 +19,43 @@ def chat_screen():
         dropdown_value = request.form.get("mode-select") 
 
         if not user_message:
+            # Pull the chat history for the template
             chat_history = get_chat_history(session["user_email"])
-            return redirect(url_for("chat.chat_screen"))
 
-        # Use the message and model to get a response json
-        result = get_chat_response(user_message, dropdown_value, session["user_email"])
+            return render_template("chat.html", chat_history=chat_history, styles=styles)
 
-        # Parse the result json
-        id, timestamp, response, tokens_used = parse_chat_response(result)
+        # Create our generator
+        def generate():
+            # start the stream
+            for token, chat_response in get_chat_response_stream(
+                user_message,
+                dropdown_value,
+                session["user_email"]
+            ):
+                # If its a delta
+                if token:
+                    yield f"data: {token}\n\n"
+                # If its the full text
+                if chat_response:
+                    # Parse the result json
+                    id, timestamp, response, tokens_used = parse_chat_response(response)
 
-        # Inject reply into the DB
-        inject_chat_interaction(session["user_email"], id, timestamp, user_message, dropdown_value, response, tokens_used)
+                    # Inject reply into the DB
+                    inject_chat_interaction(session["user_email"], id, timestamp, user_message, dropdown_value, response, tokens_used)
 
-        # If user doesn't have memory, initialize it
-        if not poke_user_memory(session["user_email"]):
-            initialize_user_memory(session["user_email"])
+                    # If user doesn't have memory, initialize it
+                    if not poke_user_memory(session["user_email"]):
+                        initialize_user_memory(session["user_email"])
 
-        # Pull the message and reply into the sender data db
-        manipulate_user_memory(user_message, response, session["user_email"])
+                    # Pull the message and reply into the sender data db
+                    manipulate_user_memory(user_message, response, session["user_email"])
 
-        # Pull the chat history for the template
-        chat_history = get_chat_history(session["user_email"])
+                    yield "data: [DONE]\n\n"
 
-        return redirect(url_for("chat.chat_screen"))
+        return Response(
+            stream_with_context(generate()),
+            mimetype="text/plain"
+        )
 
     if not poke_styles(session["user_email"]):
         initialize_user_styles(session["user_email"])

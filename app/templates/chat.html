@@ -5,6 +5,8 @@
         <title>{{ styles.chat_name }}</title>
         <link rel="icon" href="{{ url_for('static', filename='images/dial.png') }}" type="image/x-icon">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+        <!-- CSS to do the color magic -->
         <style>
             :root {
                 /* Chat Header Formatting */
@@ -61,6 +63,13 @@
             }
         </style>
 
+        <!-- CSS to do the streaming magic -->
+        <style>
+            #user-message, #live-response {
+                display: none;
+            }
+        </style>
+
         <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
     </head>
     <body class="d-flex flex-column vh-100">
@@ -75,18 +84,26 @@
         </div>
 
         <!-- Chat window -->
-        <div class="chat_container d-flex flex-grow-1 flex-column overflow-auto p-3">
+        <div id="chat-container" class="chat_container d-flex flex-grow-1 flex-column overflow-auto p-3">
             {% for msg in chat_history %}
-                <!-- User message -->
-                <div class="align-self-end user_chat_message p-2 rounded mb-2">
-                    {{ msg.user_message }}
-                </div>
+            <!-- User message -->
+            <div class="align-self-end user_chat_message p-2 rounded mb-2">
+                {{ msg.user_message }}
+            </div>
 
-                <!-- AI response -->
-                <div class="align-self-start ai_chat_message p-2 rounded mb-2">
-                    {{ msg.response }}
-                </div>
+            <!-- AI response -->
+            <div class="align-self-start ai_chat_message p-2 rounded mb-2">
+                {{ msg.response }}
+            </div>
             {% endfor %}
+
+            <div class="align-self-start user_chat_message p-2 rounded mb-2">
+                <span id="user-message"></span>
+            </div>
+
+            <div class="align-self-start ai_chat_message p-2 rounded mb-2">
+                <span id="live-response"></span>
+            </div>
         </div>
 
         <!-- Input + button -->
@@ -114,12 +131,10 @@
         <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 
         <!-- Custom One-Off JS -->
-        <script>
-            const chatContainer = document.getElementById("chat-container");
-            if (chatContainer) {
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-        </script>
+        <script src="{{ url_for('static', filename='scroll_bottom.js') }}"></script>
+
+        <!-- Streaming JS -->
+        <script src="{{ url_for('static', filename='response_streaming.js') }}"></script>
     </body>
 </html>
 
