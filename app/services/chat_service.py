@@ -121,7 +121,7 @@ def get_chat_response_stream(message: str, model: str, email: str):
                 text = getattr(event, "delta", "")
                 # If text, yield it
                 if text:
-                     yield f"data: {text}\n\n".encode("utf-8")                
+                     yield f"data: {text}\n\n".encode("utf-8"), None                
             elif event.type=="response.completed":
                 # Return the full response
                 yield None, event.response
@@ -129,7 +129,7 @@ def get_chat_response_stream(message: str, model: str, email: str):
                 # event.error is usually a dict with message
                 message = getattr(event, "error", {})
                 error_text = message.get("message", "Unknown error")
-                yield f"data: [ERROR] {error_text}\n\n".encode("utf-8")
+                yield f"data: [ERROR] {error_text}\n\n".encode("utf-8"), None
 
 # Parse the result data
 def parse_chat_response(response):
