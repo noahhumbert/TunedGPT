@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Show placeholders and insert user message
         userSpan.style.display = "inline";
         userSpan.textContent = userMessage;
-        userContainer.classList.remove('hidden')
+        userContainer.hidden = false;
 
         aiSpan.style.display = "inline";
         aiSpan.textContent = "";
-        aiContainer.classList.remove("hidden")
+        aiContainer.hidden = false;
 
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
