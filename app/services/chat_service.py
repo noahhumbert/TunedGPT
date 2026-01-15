@@ -135,7 +135,7 @@ def get_chat_response_stream(message: str, model: str, email: str):
                 message = getattr(event, "error", {})
                 error_text = message.get("message", "Unknown error")
                 yield f"data: [ERROR] {error_text}\n\n".encode("utf-8"), None
-                
+
         # Always signal the end
         yield b"data: [DONE]\n\n"
 
@@ -145,7 +145,7 @@ def parse_chat_response(response):
     id = response.id
 
     # Pull the timestamp
-    timestamp = response.created
+    timestamp = response.created_at
 
     # Pull the response
     if hasattr(response, "_full_text"):
