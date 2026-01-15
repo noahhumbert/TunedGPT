@@ -27,8 +27,8 @@ def chat_screen():
         # Create our generator
         def generate():
             # Flushes headers
-            yield "data: \n\n"
-            
+            yield b"data: \n\n"
+
             # start the stream
             for token, chat_response in get_chat_response_stream(
                 user_message,
@@ -37,7 +37,7 @@ def chat_screen():
             ):
                 # If its a delta
                 if token:
-                    yield f"data: {token}\n\n"
+                    yield f"data: {token}\n\n".encode("utf-8")
                 # If its the full text
                 if chat_response:
                     # Parse the result json
@@ -53,7 +53,7 @@ def chat_screen():
                     # Pull the message and reply into the sender data db
                     manipulate_user_memory(user_message, response, session["user_email"])
 
-                    yield "data: [DONE]\n\n"
+                    yield b"data: [DONE]\n\n"
 
         return Response(
             stream_with_context(generate()),
