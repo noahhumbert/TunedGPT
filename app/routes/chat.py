@@ -26,6 +26,9 @@ def chat_screen():
 
         # Create our generator
         def generate():
+            # Flushes headers
+            yield "data: \n\n"
+            
             # start the stream
             for token, chat_response in get_chat_response_stream(
                 user_message,
@@ -54,7 +57,12 @@ def chat_screen():
 
         return Response(
             stream_with_context(generate()),
-            mimetype="text/plain"
+            mimetype="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                "X-Accel-Buffering": "no"  # VERY IMPORTANT for nginx
+            },
+            direct_passthrough=True
         )
 
     if not poke_styles(session["user_email"]):
