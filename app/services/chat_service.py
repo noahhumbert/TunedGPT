@@ -121,7 +121,7 @@ def get_chat_response_stream(message: str, model: str, email: str):
                 text = getattr(event, "delta", "")
                 # If text, yield it
                 if text:
-                     yield f"data: {text}\n\n".encode("utf-8"), None                
+                     yield text, None           
             elif event.type=="response.completed":
                 # Return the full response
                 yield None, event.response
