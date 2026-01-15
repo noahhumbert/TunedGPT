@@ -40,9 +40,6 @@ def chat_screen():
 
                     manipulate_user_memory(user_message, response_text, session["user_email"])
 
-            # Always signal the end
-            yield b"data: [DONE]\n\n"
-
         return Response(
             stream_with_context(generate()),
             mimetype="text/event-stream",

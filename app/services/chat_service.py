@@ -119,6 +119,11 @@ def get_chat_response_stream(message: str, model: str, email: str):
             if event.type=="response.output_text.delta":
                 # Rip the data
                 text = getattr(event, "delta", "")
+                # Make sure it's a string
+                if isinstance(text, dict) and "content" in text:
+                    text = text["content"]
+                elif isinstance(text, list):
+                    text = "".join([part.get("content", "") for part in text])
                 # If text, yield it
                 if text:
                      yield text, None           
@@ -130,6 +135,9 @@ def get_chat_response_stream(message: str, model: str, email: str):
                 message = getattr(event, "error", {})
                 error_text = message.get("message", "Unknown error")
                 yield f"data: [ERROR] {error_text}\n\n".encode("utf-8"), None
+                
+        # Always signal the end
+        yield b"data: [DONE]\n\n"
 
 # Parse the result data
 def parse_chat_response(response):
