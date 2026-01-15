@@ -109,20 +109,19 @@ def get_chat_response_stream(message: str, model: str, email: str):
     client = OpenAI()
 
     # Initialize stream
-    stream = client.responses.stream(
+    with client.responses.stream(
         model=chat_model,
         input=conversation
-    )
-
-    # for event coming from the stream
-    for event in stream:
-        # If its a new portion of the response
-        if event.type=="response.output_text.delta":
-            # Add the delta to the full response and yield the change
-            yield event.delta, None
-        elif event.type=="response.completed":
-            # Return the full response
-            yield None, event.response
+    ) as stream:
+        # for event coming from the stream
+        for event in stream:
+            # If its a new portion of the response
+            if event.type=="response.output_text.delta":
+                # Add the delta to the full response and yield the change
+                yield event.delta, None
+            elif event.type=="response.completed":
+                # Return the full response
+                yield None, event.response
 
 # Parse the result data
 def parse_chat_response(response):
