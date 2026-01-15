@@ -117,8 +117,11 @@ def get_chat_response_stream(message: str, model: str, email: str):
         for event in stream:
             # If its a new portion of the response
             if event.type=="response.output_text.delta":
-                # Add the delta to the full response and yield the change
-                yield event.delta, None
+                # Rip the data
+                text = getattr(event, "delta", "")
+                # If text, yield it
+                if text:
+                     yield f"data: {text}\n\n".encode("utf-8")                
             elif event.type=="response.completed":
                 # Return the full response
                 yield None, event.response
