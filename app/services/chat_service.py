@@ -114,7 +114,7 @@ def get_chat_response_stream(message: str, model: str, email: str):
         input=conversation
     ) as stream:
         # for event coming from the stream
-        for event in stream.events():
+        for event in stream:
             # If its a new portion of the response
             if event.type=="response.output_text.delta":
                 # Add the delta to the full response and yield the change
