@@ -111,8 +111,7 @@ def get_chat_response_stream(message: str, model: str, email: str):
     # Initialize stream
     stream = client.responses.stream(
         model=chat_model,
-        input=conversation,
-        stream=True
+        input=conversation
     )
 
     # for event coming from the stream
