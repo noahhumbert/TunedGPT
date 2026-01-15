@@ -122,6 +122,11 @@ def get_chat_response_stream(message: str, model: str, email: str):
             elif event.type=="response.completed":
                 # Return the full response
                 yield None, event.response
+            elif event.type=="error":
+                # event.error is usually a dict with message
+                message = getattr(event, "error", {})
+                error_text = message.get("message", "Unknown error")
+                yield f"data: [ERROR] {error_text}\n\n".encode("utf-8")
 
 # Parse the result data
 def parse_chat_response(response):
