@@ -38,9 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Once done, hide placeholders again
-        userSpan.style.display = "none";
-        aiSpan.style.display = "none";
+        // userSpan.style.display = "none";
+        // aiSpan.style.display = "none";
 
-        form.reset();
+        // form.reset();
     });
 });

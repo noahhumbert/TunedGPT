@@ -30,11 +30,7 @@ def chat_screen():
             yield b"data: \n\n"
 
             # start the stream
-            for token, chat_response in get_chat_response_stream(
-                user_message,
-                dropdown_value,
-                session["user_email"]
-            ):
+            for token, chat_response in get_chat_response_stream(user_message, dropdown_value, session["user_email"]):
                 # If its a delta
                 if token:
                     yield f"data: {token}\n\n".encode("utf-8")
