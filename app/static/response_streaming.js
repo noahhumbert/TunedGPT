@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
     const userSpan = document.getElementById("user-message");
+    const userContainer = document.getElementById("user-message-container");
     const aiSpan = document.getElementById("live-response");
+    const aiContainer = document.getElementById("ai-message-container");
 
     const chatContainer = document.getElementById("chat-container");
 
@@ -15,9 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Show placeholders and insert user message
         userSpan.style.display = "inline";
         userSpan.textContent = userMessage;
+        userContainer.classList.remove('hidden')
 
         aiSpan.style.display = "inline";
         aiSpan.textContent = "";
+        aiContainer.classList.remove("hidden")
 
         chatContainer.scrollTop = chatContainer.scrollHeight;
 

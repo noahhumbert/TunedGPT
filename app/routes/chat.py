@@ -28,7 +28,7 @@ def chat_screen():
         def generate():
             for token, chat_response in get_chat_response_stream(user_message, dropdown_value, session["user_email"]):
                 if token:
-                    yield f"data: {token}\n\n".encode("utf-8")
+                    yield token.encode("utf-8")
 
                 if chat_response:
                     # Parse and store the final response
