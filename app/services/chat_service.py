@@ -363,7 +363,7 @@ def manipulate_user_memory(message, response, email):
     client = OpenAI()
 
     # Call openai api
-    response = client.response.create(
+    response = client.responses.create(
         model="gpt-4o-mini",
         input=[
             {"role": "system", "content": f"{system_prompt}"},
