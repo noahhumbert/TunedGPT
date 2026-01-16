@@ -42,9 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Once done, hide placeholders again
-        // userSpan.style.display = "none";
-        // aiSpan.style.display = "none";
+        userSpan.style.display = "none";
+        userContainer.hidden = true;
+        aiSpan.style.display = "none";
+        aiContainer.hidden = true;
 
-        // form.reset();
+        form.reset();
     });
 });

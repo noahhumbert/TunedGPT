@@ -141,6 +141,9 @@ def get_chat_response_stream(message: str, model: str, email: str):
 
 # Parse the result data
 def parse_chat_response(response):
+    if response is None:
+        return None, None, "", 0
+    
     # Snag the ID from the response JSON
     id = response.id
 
@@ -151,7 +154,7 @@ def parse_chat_response(response):
     chat_response = response.output_text
     
     # Pull the tokens
-    tokens_used = getattr(response, "usage", {}).get("total_tokens", 0)
+    tokens_used = getattr(getattr(response, "usage", {}), "total_tokens", 0)
 
     return id, timestamp, chat_response, tokens_used
 
