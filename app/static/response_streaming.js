@@ -49,11 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         form.reset();
 
-        fetch("/").then(res => res.text()).then(html => {
-            document.open();
-            document.write(html);
-            document.close();
-            scrollToBottom();
-        });
+        fetch("/")
+            .then(res => res.text())
+            .then(html => {
+                // Replace the current page
+                document.open();
+                document.write(html);
+                document.close();
+
+                // Wait for the DOM to fully load
+                window.requestAnimationFrame(() => {
+                    // scroll_bottom.js defines this function globally
+                    if (typeof scrollToBottom === "function") {
+                        scrollToBottom();
+                    }
+                });
+            });
     });
 });
