@@ -1,6 +1,5 @@
-const chatContainer = document.getElementById("chat-container");
-
 function scrollToBottom() {
+    const chatContainer = document.getElementById("chat-container"); // get fresh element
     if (chatContainer) {
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }
@@ -10,6 +9,3 @@ function scrollToBottom() {
 document.addEventListener("DOMContentLoaded", () => {
     scrollToBottom();
 });
-
-// Call after adding new message or streaming chunk
-scrollToBottom();
