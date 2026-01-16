@@ -10,8 +10,5 @@ function scrollToBottom() {
 
 // Call after DOM loads
 window.addEventListener("load", () => {
-        const chatContainer = document.getElementById("chat-container");
-        if (chatContainer) {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-    });
+    scrollToBottom();
+});
