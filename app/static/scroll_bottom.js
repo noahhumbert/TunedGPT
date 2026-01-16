@@ -1,7 +1,10 @@
 function scrollToBottom() {
     const chatContainer = document.getElementById("chat-container"); // get fresh element
     if (chatContainer) {
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+        chatContainer.scrollTo({
+            top: chatContainer.scrollHeight,
+            behavior: "smooth"
+        })
     }
 }
 
