@@ -145,13 +145,13 @@ def parse_chat_response(response):
         return None, None, "", 0
     
     # Snag the ID from the response JSON
-    id = response.id
+    id = getattr(response, "id", None)
 
     # Pull the timestamp
-    timestamp = response.created_at
+    timestamp = getattr(response, "created_at", None)
 
     # Pull the response
-    chat_response = response.output_text
+    chat_response = getattr(response, "output_text", "")
     
     # Pull the tokens
     tokens_used = getattr(getattr(response, "usage", {}), "total_tokens", 0)
