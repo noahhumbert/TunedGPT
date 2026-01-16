@@ -54,5 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.write(html);
             document.close();
         });
+
+        scrollToBottom();
     });
 });
