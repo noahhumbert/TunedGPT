@@ -48,5 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
         aiContainer.hidden = true;
 
         form.reset();
+
+        fetch("/").then(res => res.text()).then(html => {
+            document.open();
+            document.write(html);
+            document.close();
+        });
     });
 });

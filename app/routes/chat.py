@@ -59,4 +59,4 @@ def chat_screen():
     # Pull the chat history for the template
     chat_history = get_chat_history(session["user_email"])
 
-    return redirect(url_for("chat.chat_screen"))
+    return render_template("chat.html", chat_history=chat_history, styles=styles)
