@@ -148,15 +148,12 @@ def parse_chat_response(response):
     timestamp = response.created_at
 
     # Pull the response
-    if hasattr(response, "_full_text"):
-        chat_response = response._full_text
-    else:
-        chat_response = response.choices[0].message.content
+    chat_response = response.output_text
     
     # Pull the tokens
-    tokens = response.usage.total_tokens
+    tokens_used = getattr(response, "usage", {}).get("total_tokens", 0)
 
-    return id, timestamp, chat_response, tokens
+    return id, timestamp, chat_response, tokens_used
 
 # Inject the chat interaction into the chat history db
 def inject_chat_interaction(email, id, timestamp, user_message, dropdown_value, response, tokens_used):
