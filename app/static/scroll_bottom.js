@@ -12,6 +12,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Call after adding new message or streaming chunk
-// Example inside streaming loop:
-chatContainer.appendChild(newMessageDiv); // or update innerHTML
 scrollToBottom();
