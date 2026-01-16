@@ -53,8 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.open();
             document.write(html);
             document.close();
+            scrollToBottom();
         });
-
-        scrollToBottom();
     });
 });
