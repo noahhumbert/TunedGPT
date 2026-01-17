@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const userMessage = messageInput.value.trim();
         if (!userMessage) return;
 
+        const modeSelect = form.querySelector('select[name="mode-select"]');
+        const mode = modeSelect.value;
+
         // Show placeholders and insert user message
         userSpan.style.display = "inline";
         userSpan.textContent = userMessage;
@@ -22,37 +25,69 @@ document.addEventListener("DOMContentLoaded", () => {
         aiSpan.style.display = "inline";
         aiSpan.textContent = "";
         aiContainer.hidden = false;
+        generatedImg.style.display = "none";
+        generatedImg.src = "";
+        downloadBtn.style.display = "none";
 
         chatContainer.scrollTop = chatContainer.scrollHeight;
+        
+        if (mode === "imagegen") {
+            // --- Image generation ---
+            const response = await fetch("/", {
+                method: "POST",
+                body: new URLSearchParams({ message: userMessage, "mode-select": mode })
+            });
 
-        // Start streaming
-        const response = await fetch("/", {
-            method: "POST",
-            body: new FormData(form)
-        });
+            if (!response.ok) {
+                alert("Image generation failed.");
+                return;
+            }
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
+            const blob = await response.blob();
+            const imgUrl = URL.createObjectURL(blob);
 
-        while (true) {
-            const { value, done } = await reader.read();
-            if (done) break;
-            aiSpan.textContent += decoder.decode(value, { stream: true });
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            generatedImg.src = imgUrl;
+            generatedImg.style.display = "block";
+
+            // Optional: add download button
+            downloadBtn.style.display = "inline-block";
+            downloadBtn.onclick = () => {
+                const a = document.createElement("a");
+                a.href = imgUrl;
+                a.download = "generated.png";
+                a.click();
+            };
         }
+        else {
+            // Start streaming
+            const response = await fetch("/", {
+                method: "POST",
+                body: new FormData(form)
+            });
 
-        // Once done, hide placeholders again
-        userSpan.style.display = "none";
-        userContainer.hidden = true;
-        aiSpan.style.display = "none";
-        aiContainer.hidden = true;
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
 
-        form.reset();
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                aiSpan.textContent += decoder.decode(value, { stream: true });
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
 
-        fetch("/").then(res => res.text()).then(html => {
-            document.open();
-            document.write(html);
-            document.close();
-        });
+            // Once done, hide placeholders again
+            userSpan.style.display = "none";
+            userContainer.hidden = true;
+            aiSpan.style.display = "none";
+            aiContainer.hidden = true;
+
+            form.reset();
+
+            fetch("/").then(res => res.text()).then(html => {
+                document.open();
+                document.write(html);
+                document.close();
+            });
+        }
     });
 });

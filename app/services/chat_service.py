@@ -4,6 +4,7 @@ import mysql.connector
 import time
 from pathlib import Path
 from openai import OpenAI
+import base64
 
 # Get SQL initializer
 from app.services.database_init import initialize_database_connection
@@ -102,8 +103,6 @@ def get_chat_response_stream(message: str, model: str, email: str):
        chat_model = "gpt-5-mini"
     elif (model=="chatgpt-5"):
         chat_model = "gpt-5"
-    elif (model=="imagegen"):
-        chat_model = "gpt-image-1.5"
     
     # Initialize OpenAI Client
     client = OpenAI()
@@ -138,6 +137,32 @@ def get_chat_response_stream(message: str, model: str, email: str):
 
         # Always signal the end
         yield b"data: [DONE]\n\n"
+
+# Generate image
+def get_image_generation(message: str, model: str, email: str):
+    # Get the chat model
+    if model == 'imagegen':
+        chat_model = "gpt-image-1.5"
+
+    # Initialize openai client
+    client = OpenAI()
+
+    # Call openai's api
+    result = client.images.generate(
+            model="gpt-image-1",
+            prompt=message,
+            size="1024x1024"
+        )
+    
+    # Decode the image and return it
+    image_base64 = result.data[0].b64_json
+    image_bytes = base64.b64decode(image_base64)
+
+    # Inject the chat interaction into the db
+    inject_chat_interaction(email, result.id, result.created_at, message, model, "[IMAGE]", 1)
+
+    # Return needed info
+    return image_bytes, "image/png"
 
 # Parse the result data
 def parse_chat_response(response):
