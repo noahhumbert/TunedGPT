@@ -31,63 +31,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
         chatContainer.scrollTop = chatContainer.scrollHeight;
         
-        if (mode === "imagegen") {
-            // --- Image generation ---
-            const response = await fetch("/", {
-                method: "POST",
-                body: new URLSearchParams({ message: userMessage, "mode-select": mode })
-            });
+        // Start streaming
+        const response = await fetch("/", {
+            method: "POST",
+            body: new FormData(form)
+        });
 
-            if (!response.ok) {
-                alert("Image generation failed.");
-                return;
-            }
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
 
-            const blob = await response.blob();
-            const imgUrl = URL.createObjectURL(blob);
-
-            generatedImg.src = imgUrl;
-            generatedImg.style.display = "block";
-
-            // Optional: add download button
-            downloadBtn.style.display = "inline-block";
-            downloadBtn.onclick = () => {
-                const a = document.createElement("a");
-                a.href = imgUrl;
-                a.download = "generated.png";
-                a.click();
-            };
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            aiSpan.textContent += decoder.decode(value, { stream: true });
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-        else {
-            // Start streaming
-            const response = await fetch("/", {
-                method: "POST",
-                body: new FormData(form)
-            });
 
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder();
+        // Once done, hide placeholders again
+        userSpan.style.display = "none";
+        userContainer.hidden = true;
+        aiSpan.style.display = "none";
+        aiContainer.hidden = true;
 
-            while (true) {
-                const { value, done } = await reader.read();
-                if (done) break;
-                aiSpan.textContent += decoder.decode(value, { stream: true });
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
+        form.reset();
 
-            // Once done, hide placeholders again
-            userSpan.style.display = "none";
-            userContainer.hidden = true;
-            aiSpan.style.display = "none";
-            aiContainer.hidden = true;
-
-            form.reset();
-
-            fetch("/").then(res => res.text()).then(html => {
-                document.open();
-                document.write(html);
-                document.close();
-            });
-        }
+        fetch("/").then(res => res.text()).then(html => {
+            document.open();
+            document.write(html);
+            document.close();
+        });
     });
 });
